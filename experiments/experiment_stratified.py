@@ -6,6 +6,7 @@ from tilapia.ia.utils import ia_weights, weights_to_matrix, prep_words
 from experiments.data import read_elp_format
 from scipy.stats import spearmanr, pearsonr
 from itertools import product
+from tqdm import tqdm
 from collections import defaultdict
 from copy import deepcopy
 from binningsampler import BinnedSampler
@@ -35,8 +36,7 @@ def accuracy(words, results, threshold=.7):
 
 if __name__ == "__main__":
 
-    z = defaultdict(list)
-    p = defaultdict(list)
+    results = [["word", "iteration", "rt", "freq", "cycles", "le", "ne", "spa"]]
     random.seed(44)
 
     threshold = .7
@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
         np.random.seed(44)
 
-        for idx_2 in range(100):
+        for idx_2 in tqdm(range(100)):
 
             print("{} of {}".format((idx * 100) + idx_2, total))
 
@@ -108,12 +108,14 @@ if __name__ == "__main__":
                                       strict=False)
 
             cycles = np.array([len(x['orthography']) for x in result])
-            right = cycles < n_cyc
-            cycles = cycles[right]
-            result = np.array(result)[right]
-            ortho = np.array([x['orthography'] for x in w])[right]
-
-            p[(le, ne, spa)].append((spearmanr(cycles, rt[right])[0],
-                                    pearsonr(cycles, rt[right])[0]))
-            s = accuracy(ortho, result, threshold=threshold)[0]
-            z[(le, ne, spa)].append(s / len(w))
+            right = cycles == n_cyc
+            cycles[right] = -1
+            for x, word in zip(result, w):
+                results.append([word['orthography'],
+                                (idx * 100) + idx_2,
+                                word['rt'],
+                                word['frequency'],
+                                len(x),
+                                le,
+                                ne,
+                                spa])

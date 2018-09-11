@@ -34,8 +34,7 @@ def accuracy(words, results, threshold=.7):
 
 if __name__ == "__main__":
 
-    acc = []
-    corr = []
+    results = [["word", "iteration", "rt", "freq", "cycles"]]
     random.seed(44)
 
     path = "../../corpora/lexicon_projects/elp-items.csv"
@@ -78,14 +77,11 @@ if __name__ == "__main__":
                                   strict=False)
 
         cycles = np.array([len(x['orthography']) for x in result])
-        right = cycles < n_cyc
-        cycles = cycles[right]
-        result_filter = np.array(result)[right]
-        ortho = np.array([x['orthography'] for x in w])[right]
-
-        corr.append((spearmanr(cycles, rt[right])[0],
-                     pearsonr(cycles, rt[right])[0]))
-        a = len(np.flatnonzero(np.array(accuracy(ortho,
-                                                 result_filter,
-                                                 threshold=.7)[1])))
-        acc.append(a / len(w))
+        right = cycles == n_cyc
+        cycles[right] = -1
+        for x, word in zip(result, w):
+            results.append([word['orthography'],
+                            idx,
+                            word['rt'],
+                            word['frequency'],
+                            len(x)])
