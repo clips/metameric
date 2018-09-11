@@ -6,7 +6,7 @@ from Cython.Build import cythonize
 import numpy as np
 
 setup(name='tilapia',
-      version='1.0.0',
+      version='1.0.1',
       description='Interactive activation',
       author='Stéphan Tulkens',
       author_email='stephan.tulkens@uantwerpen.be',
