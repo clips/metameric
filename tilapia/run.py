@@ -81,7 +81,7 @@ def make_run(input_file,
                          "word in your training set.")
 
     if weight:
-        weights = ia_weights(weights)
+        weights = ia_weights(max_length, weights)
 
     if space:
         for w in words:
