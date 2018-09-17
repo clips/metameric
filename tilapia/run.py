@@ -51,7 +51,8 @@ def make_run(input_file,
              step_size,
              max_cycles,
              decay_rate,
-             minimum_activation):
+             minimum_activation,
+             check_output=True):
     """Method for running."""
     if parameter_file is None:
         print("Defaulting to standard IA parameters.")
@@ -62,7 +63,7 @@ def make_run(input_file,
                              "Aborting.".format(parameter_file))
         weights = parse_parameter_file(parameter_file)
 
-    if os.path.exists(output_file):
+    if check_output and os.path.exists(output_file):
         raise ValueError("Output file {} already exists. "
                          "Aborting.".format(output_file))
     if not os.path.exists(input_file):
