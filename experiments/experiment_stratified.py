@@ -1,13 +1,12 @@
 import numpy as np
 import random
+import pandas as pd
 
 from tilapia.builder import build_model
 from tilapia.ia.utils import ia_weights, weights_to_matrix, prep_words
 from experiments.data import read_elp_format
-from scipy.stats import spearmanr, pearsonr
 from itertools import product
 from tqdm import tqdm
-from collections import defaultdict
 from copy import deepcopy
 from binningsampler import BinnedSampler
 
@@ -36,7 +35,8 @@ def accuracy(words, results, threshold=.7):
 
 if __name__ == "__main__":
 
-    results = [["word", "iteration", "rt", "freq", "cycles", "le", "ne", "spa"]]
+    header = []
+    results = []
     random.seed(44)
 
     threshold = .7
@@ -119,3 +119,6 @@ if __name__ == "__main__":
                                 le,
                                 ne,
                                 spa])
+
+    df = pd.DataFrame(results, columns=header)
+    df.to_csv("tilapia_experiment_stratified.csv", sep=",")
