@@ -1,10 +1,10 @@
 import numpy as np
 import random
+import pandas as pd
 
 from tilapia.builder import build_model
 from tilapia.ia.utils import ia_weights, weights_to_matrix, prep_words
 from experiments.data import read_elp_format
-from scipy.stats import spearmanr, pearsonr
 from copy import deepcopy
 from tqdm import tqdm
 from binningsampler import BinnedSampler
@@ -34,7 +34,8 @@ def accuracy(words, results, threshold=.7):
 
 if __name__ == "__main__":
 
-    results = [["word", "iteration", "rt", "freq", "cycles"]]
+    header = ["word", "iteration", "rt", "freq", "cycles"]
+    results = []
     random.seed(44)
 
     path = "../../corpora/lexicon_projects/elp-items.csv"
@@ -85,3 +86,6 @@ if __name__ == "__main__":
                             word['rt'],
                             word['frequency'],
                             len(x)])
+
+    df = pd.DataFrame(results, columns=header)
+    df.to_csv("tilapia_experiment_1.csv", sep=",")
