@@ -39,7 +39,7 @@ class Network(object):
     """
 
     def __init__(self,
-                 minimum,
+                 minimum=-.2,
                  step_size=1.0,
                  decay_rate=.07,
                  layertype=Layer):
@@ -58,6 +58,19 @@ class Network(object):
     def __getitem__(self, k):
         """Get a single layer by name."""
         return self.layers[k]
+
+    @property
+    def rla(self):
+        """Get the resting level activations."""
+        rla = {}
+        for k, v in self.layers.items():
+            r = v.resting
+            if np.all(r == r[0]):
+                rla[k] = r[0]
+            else:
+                rla[k] = (v.resting.min(), v.resting.mean(), v.resting.max())
+
+        return rla
 
     def create_layer(self,
                      layer_name,
@@ -98,14 +111,14 @@ class Network(object):
 
     def activate_bunch(self,
                        x,
-                       num_cycles=30,
+                       max_cycles=30,
                        threshold=.7,
                        strict=True):
         """Activate a list of items."""
         a = []
         for item in tqdm(x):
             a.append(self.activate(item,
-                                   num_cycles,
+                                   max_cycles,
                                    True,
                                    threshold,
                                    strict))
@@ -114,7 +127,7 @@ class Network(object):
 
     def activate(self,
                  x,
-                 num_cycles=30,
+                 max_cycles=30,
                  reset=True,
                  threshold=.7,
                  strict=True):
@@ -127,7 +140,7 @@ class Network(object):
             The inputs which are clamped in the first timestep.
         input_layers : list of string, optional, default ()
             The names of the layers which are clamped in the first timestep.
-        num_cycles : int, optional, default 30
+        max_cycles : int, optional, default 30
             The maximum number of cycles to run the activation for.
         reset : bool
             Whether to reset the activations of the network to 0 before
@@ -155,7 +168,7 @@ class Network(object):
 
         activations = defaultdict(list)
 
-        for idx in range(num_cycles):
+        for idx in range(max_cycles):
 
             self._single_cycle()
 
