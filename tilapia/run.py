@@ -1,16 +1,21 @@
-import os
+"""Make an IA run."""
 import numpy as np
 
 from tilapia.ia.utils import IA_WEIGHTS, prep_words
-from tilapia.ia.utils import ia_weights, weights_to_matrix
+from tilapia.ia.utils import weight_adaptation, weights_to_matrix
 from tilapia.builder import build_model
+from itertools import chain
+from collections import Counter
 from csv import reader
 
 
-def read_input_file(path):
+def read_input_file(f):
     """Read an input file."""
     items = []
-    f = reader(open(path))
+    if f.mode.startswith('rb'):
+        f = reader((x.decode('utf-8') for x in f))
+    else:
+        f = reader(f)
     header = next(f)
     for line in f:
         item = {}
@@ -26,82 +31,55 @@ def read_input_file(path):
     return items
 
 
-def parse_parameter_file(path):
+def parse_parameter_file(f):
     """Parse a parameter file."""
     weights = {}
-    for line in open(path):
+    if f.mode == 'rb':
+        f = (x.decode('utf-8') for x in f)
+    for line in f:
         orig, dest, pos, neg = line.lower().strip().split("\t")
         weights[(orig, dest)] = [float(pos), float(neg)]
 
     return weights
 
 
-def make_run(input_file,
-             test_file,
-             output_file,
-             parameter_file,
-             weight,
-             space,
-             threshold,
-             rla,
-             rla_layers,
-             input_layers,
-             output_layers,
-             global_rla,
-             step_size,
-             max_cycles,
-             decay_rate,
-             minimum_activation,
-             check_output=True):
-    """Method for running."""
-    if parameter_file is None:
+def get_model(words_file,
+              parameters,
+              weight,
+              space,
+              rla_variable,
+              rla_layers,
+              input_layers,
+              output_layers,
+              global_rla,
+              step_size,
+              decay_rate,
+              minimum_activation):
+    if parameters is None:
         print("Defaulting to standard IA parameters.")
         weights = IA_WEIGHTS
-    else:
-        if not os.path.exists(parameter_file):
-            raise ValueError("Parameter file {} does not exist. "
-                             "Aborting.".format(parameter_file))
-        weights = parse_parameter_file(parameter_file)
 
-    if check_output and os.path.exists(output_file):
-        raise ValueError("Output file {} already exists. "
-                         "Aborting.".format(output_file))
-    if not os.path.exists(input_file):
-        raise ValueError("Input file {} does not exist. "
-                         "Aborting.".format(input_file))
-
-    words = read_input_file(input_file)
-    test_words = read_input_file(test_file)
-
+    words = read_input_file(words_file)
     max_length = max([len(w['orthography']) for w in words])
 
-    max_length_test = max([len(w['orthography']) for w in test_words])
-
-    if max_length_test > max_length:
-        raise ValueError("A word from the test set if longer than the longest "
-                         "word in your training set.")
-
     if weight:
-        weights = ia_weights(max_length, weights)
-
-    if space:
-        for w in words:
-            w['orthography'] = w['orthography'].ljust(max_length)
+        weights = weight_adaptation(max_length, weights)
 
     matrix, names = weights_to_matrix(weights)
 
     if 'features' in names and 'features' not in words[0]:
         words = prep_words(words)
-        test_words = prep_words(test_words)
-    for word in test_words:
-        if set(input_layers) - set(word):
-            raise ValueError("{} does not contain all input layers."
-                             "".format(word))
+
+    if space:
+        for w in words:
+            for idx in range(len(w['orthography']), max_length):
+                w['letters'].append(" -{}".format(idx))
+            w['orthography'] = w['orthography'].ljust(max_length)
 
     rla = {k: 'global' if k not in rla_layers
-           else 'frequency' for k in names}
+           else rla_variable for k in names}
 
-    s = build_model(words,
+    m = build_model(words,
                     names,
                     matrix,
                     rla,
@@ -112,8 +90,54 @@ def make_run(input_file,
                     decay_rate=decay_rate,
                     minimum=minimum_activation)
 
-    results = s.activate_bunch(test_words,
-                               num_cycles=max_cycles,
+    return m
+
+
+def make_run(words_file,
+             test_words_file,
+             output_path,
+             parameters,
+             weight,
+             space,
+             threshold,
+             rla_variable,
+             rla_layers,
+             input_layers,
+             output_layers,
+             global_rla,
+             step_size,
+             max_cycles,
+             decay_rate,
+             minimum_activation):
+    """Method for running."""
+    test_words = read_input_file(test_words_file)
+
+    m = get_model(words_file,
+                  parameters,
+                  weight,
+                  space,
+                  rla_variable,
+                  rla_layers,
+                  input_layers,
+                  output_layers,
+                  global_rla,
+                  step_size,
+                  decay_rate,
+                  minimum_activation)
+
+    keys_words = Counter(chain.from_iterable(test_words))
+    keys_in_all = [k for k, v in keys_words.items() if v == len(test_words)]
+
+    if 'features' in m.inputs and 'features' not in test_words[0]:
+        test_words = prep_words(test_words)
+
+    for word in test_words:
+        if set(input_layers) - set(word):
+            raise ValueError("{} does not contain all input layers."
+                             "".format(word))
+
+    results = m.activate_bunch(test_words,
+                               max_cycles=max_cycles,
                                threshold=threshold,
                                strict=False)
 
@@ -122,9 +146,10 @@ def make_run(input_file,
     right = cycles < max_cycles
     cycles[~right] = -1
 
-    with open(output_file, 'w') as f:
-        k = ",".join([o for o in output_layers])
+    with open(output_path, 'w') as f:
+        k = ",".join([o for o in keys_in_all])
         f.write("{},cycles\n".format(k))
-        for a, b in zip(words, cycles):
-            a = ",".join([a[o] for o in output_layers])
+        for a, b in zip(test_words, cycles):
+            a = ",".join([x if isinstance(x, str) else " ".join(x)
+                          for x in [a[k] for k in keys_in_all]])
             f.write("{},{}\n".format(a, b))
