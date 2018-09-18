@@ -1,18 +1,15 @@
 %rebase('templates/base.tpl', title='Index')
-<form action="/" method="post" enctype="multipart/form-data">
+<form action="/analysis" method="post" enctype="multipart/form-data">
     <div class="grid">
         <label for="path_train">Path to training file</label>
         <input id=atrain type=button value="?" class="btn btn-default btn-sm"/>
         <input type="file" id="path_train" name="path_train">
-        <label for="path_test">Path to test CSV</label>
-        <input id=btrain type=button value="?" class="btn btn-default btn-sm"/>
-        <input type="file" id="path_test" name="path_test">
-        <label for="ia">Use IA structure?</label>
-        <input id=btrain type=button value="?" class="btn btn-default btn-sm"/>
-        <input type="checkbox" id="ia" name="ia">
         <label for="path_param">Path to parameter file</label>
         <input id=ctrain type=button value="?" class="btn btn-default btn-sm"/>
         <input type="file" id="path_param" name="path_param">
+        <label for="ia">Use IA structure?</label>
+        <input id=btrain type=button value="?" class="btn btn-default btn-sm"/>
+        <input type="checkbox" id="ia" name="ia"/>
         <label for="rla">RLA</label>
         <input id=dtrain type=button value="?" class="btn btn-default btn-sm"/>
         <input type="text" id="rla" name="rla" value=-.05>
@@ -40,7 +37,6 @@
         <label for="rlalayers" id="rlalayers">RLA layers</label>
         <input id=ltrain type=button value="?" class="btn btn-default btn-sm"/>
         <input name="rlalayers" type="text" value="orthography" />
-
         </div>
     <button type="submit" class="btn btn-default btn-sm">Submit</button>
 </form>
