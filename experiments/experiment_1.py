@@ -3,7 +3,7 @@ import random
 import pandas as pd
 
 from tilapia.builder import build_model
-from tilapia.ia.utils import ia_weights, weights_to_matrix, prep_words
+from tilapia.ia.utils import weight_adaptation, weights_to_matrix, prep_words
 from experiments.data import read_elp_format
 from copy import deepcopy
 from tqdm import tqdm
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         inputs = ['features']
 
         w = prep_words(w)
-        matrix, names = weights_to_matrix(ia_weights(max_len))
+        matrix, names = weights_to_matrix(weight_adaptation(max_len))
 
         rla = {k: 'global' for k in names}
         rla['orthography'] = 'frequency'
@@ -73,7 +73,7 @@ if __name__ == "__main__":
                         inputs=inputs)
 
         result = s.activate_bunch(w,
-                                  num_cycles=n_cyc,
+                                  max_cycles=n_cyc,
                                   threshold=.7,
                                   strict=False)
 
