@@ -13,7 +13,7 @@ setup(name='tilapia',
       url='https://github.com/stephantul/tilapia',
       license='MIT',
       packages=find_packages(exclude=['examples']),
-      install_requires=['numpy>=1.11.0'],
+      install_requires=['numpy>=1.11.0', 'cython'],
       classifiers=[
           'Intended Audience :: Developers',
           'Programming Language :: Python :: 2',
