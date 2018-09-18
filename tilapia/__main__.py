@@ -82,7 +82,7 @@ if __name__ == "__main__":
              open(test),
              args.output,
              args.parameters,
-             args.criterion,
+             args.threshold,
              args.rla_variable,
              args.rla_layers,
              args.input_layers,
