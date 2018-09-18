@@ -32,7 +32,7 @@ pos_fourteen = convert_fourteen(fourteen)
 neg_fourteen = convert_fourteen_neg(fourteen)
 
 
-def ia_weights(word_length, weights=IA_WEIGHTS):
+def weight_adaptation(word_length, weights=IA_WEIGHTS):
     """Rescale weights for the IA dependent on length."""
     weights = deepcopy(weights)
     weights[('letters', 'orthography')][0] /= word_length
