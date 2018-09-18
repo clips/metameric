@@ -443,7 +443,6 @@ static CYTHON_INLINE float __PYX_NAN() {
 #include <stdlib.h>
 #include "numpy/arrayobject.h"
 #include "numpy/ufuncobject.h"
-#include <math.h>
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -891,7 +890,7 @@ typedef npy_double __pyx_t_5numpy_double_t;
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
 
-/* "tilapia/core/metric.pyx":8
+/* "tilapia/core/metric.pyx":7
  * DTYPE = np.int64
  * DTYPE_F = np.float64
  * ctypedef np.int64_t DTYPE_t             # <<<<<<<<<<<<<<
@@ -900,7 +899,7 @@ typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
  */
 typedef __pyx_t_5numpy_int64_t __pyx_t_7tilapia_4core_6metric_DTYPE_t;
 
-/* "tilapia/core/metric.pyx":9
+/* "tilapia/core/metric.pyx":8
  * DTYPE_F = np.float64
  * ctypedef np.int64_t DTYPE_t
  * ctypedef np.float64_t DTYPE_F_t             # <<<<<<<<<<<<<<
@@ -1393,8 +1392,6 @@ static PyTypeObject *__pyx_ptype_5numpy_ndarray = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
-/* Module declarations from 'libc.math' */
-
 /* Module declarations from 'tilapia.core.metric' */
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t = { "DTYPE_F_t", NULL, sizeof(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t), { 0 }, 0, 'R', 0, 0 };
 #define __Pyx_MODULE_NAME "tilapia.core.metric"
@@ -1510,61 +1507,7 @@ static PyObject *__pyx_codeobj__11;
 static PyObject *__pyx_codeobj__13;
 static PyObject *__pyx_codeobj__15;
 
-/* "tilapia/core/metric.pyx":12
- * 
- * 
- * cdef inline int int_max(int a, int b): return a if a >= b else b             # <<<<<<<<<<<<<<
- * cdef inline int int_min(int a, int b): return a if a <= b else b
- * 
- */
-
-static CYTHON_INLINE int __pyx_f_7tilapia_4core_6metric_int_max(int __pyx_v_a, int __pyx_v_b) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  __Pyx_RefNannySetupContext("int_max", 0);
-  if (((__pyx_v_a >= __pyx_v_b) != 0)) {
-    __pyx_t_1 = __pyx_v_a;
-  } else {
-    __pyx_t_1 = __pyx_v_b;
-  }
-  __pyx_r = __pyx_t_1;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
 /* "tilapia/core/metric.pyx":13
- * 
- * cdef inline int int_max(int a, int b): return a if a >= b else b
- * cdef inline int int_min(int a, int b): return a if a <= b else b             # <<<<<<<<<<<<<<
- * 
- * @cython.wraparound(False)
- */
-
-static CYTHON_INLINE int __pyx_f_7tilapia_4core_6metric_int_min(int __pyx_v_a, int __pyx_v_b) {
-  int __pyx_r;
-  __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  __Pyx_RefNannySetupContext("int_min", 0);
-  if (((__pyx_v_a <= __pyx_v_b) != 0)) {
-    __pyx_t_1 = __pyx_v_a;
-  } else {
-    __pyx_t_1 = __pyx_v_b;
-  }
-  __pyx_r = __pyx_t_1;
-  goto __pyx_L0;
-
-  /* function exit code */
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "tilapia/core/metric.pyx":17
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
@@ -1602,11 +1545,11 @@ static PyObject *__pyx_pw_7tilapia_4core_6metric_1strength(PyObject *__pyx_self,
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength", 1, 2, 2, 1); __PYX_ERR(0, 17, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 2, 2, 1); __PYX_ERR(0, 13, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength") < 0)) __PYX_ERR(0, 17, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength") < 0)) __PYX_ERR(0, 13, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1619,14 +1562,14 @@ static PyObject *__pyx_pw_7tilapia_4core_6metric_1strength(PyObject *__pyx_self,
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 17, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("strength", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 13, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("tilapia.core.metric.strength", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 17, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 18, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 14, __pyx_L1_error)
   __pyx_r = __pyx_pf_7tilapia_4core_6metric_strength(__pyx_self, __pyx_v_conn, __pyx_v_mtr);
 
   /* function exit code */
@@ -1682,16 +1625,16 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
   __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 13, __pyx_L1_error)
   }
   __pyx_pybuffernd_conn.diminfo[0].strides = __pyx_pybuffernd_conn.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_conn.diminfo[0].shape = __pyx_pybuffernd_conn.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 13, __pyx_L1_error)
   }
   __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
 
-  /* "tilapia/core/metric.pyx":21
+  /* "tilapia/core/metric.pyx":17
  *     """Fast function for calculating association strength."""
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
@@ -1700,7 +1643,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
  */
   __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
 
-  /* "tilapia/core/metric.pyx":22
+  /* "tilapia/core/metric.pyx":18
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
@@ -1709,64 +1652,64 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
  */
   __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
 
-  /* "tilapia/core/metric.pyx":23
+  /* "tilapia/core/metric.pyx":19
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "tilapia/core/metric.pyx":24
+  /* "tilapia/core/metric.pyx":20
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
  * 
  *     for i in range(n_conns):
  */
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "tilapia/core/metric.pyx":23
+  /* "tilapia/core/metric.pyx":19
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 19, __pyx_L1_error)
   __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_net = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_net.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 23, __pyx_L1_error)
+      __PYX_ERR(0, 19, __pyx_L1_error)
     } else {__pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -1774,7 +1717,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
   __pyx_v_net = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "tilapia/core/metric.pyx":26
+  /* "tilapia/core/metric.pyx":22
  *                                                       dtype=DTYPE_F)
  * 
  *     for i in range(n_conns):             # <<<<<<<<<<<<<<
@@ -1785,7 +1728,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "tilapia/core/metric.pyx":27
+    /* "tilapia/core/metric.pyx":23
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -1796,7 +1739,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
     __pyx_t_9 = (((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_9) {
 
-      /* "tilapia/core/metric.pyx":28
+      /* "tilapia/core/metric.pyx":24
  *     for i in range(n_conns):
  *         if conn[i] > 0:
  *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -1807,7 +1750,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
       for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
         __pyx_v_j = __pyx_t_11;
 
-        /* "tilapia/core/metric.pyx":29
+        /* "tilapia/core/metric.pyx":25
  *         if conn[i] > 0:
  *             for j in range(n_neurons):
  *                 net[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -1821,7 +1764,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
         *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[1].strides)));
       }
 
-      /* "tilapia/core/metric.pyx":27
+      /* "tilapia/core/metric.pyx":23
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -1831,7 +1774,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
     }
   }
 
-  /* "tilapia/core/metric.pyx":31
+  /* "tilapia/core/metric.pyx":27
  *                 net[j] += conn[i] * mtr[i, j]
  * 
  *     return net             # <<<<<<<<<<<<<<
@@ -1843,7 +1786,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
   __pyx_r = ((PyObject *)__pyx_v_net);
   goto __pyx_L0;
 
-  /* "tilapia/core/metric.pyx":17
+  /* "tilapia/core/metric.pyx":13
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
@@ -1879,7 +1822,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
   return __pyx_r;
 }
 
-/* "tilapia/core/metric.pyx":35
+/* "tilapia/core/metric.pyx":31
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -1927,36 +1870,36 @@ static PyObject *__pyx_pw_7tilapia_4core_6metric_3strength_new(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_resting)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 1); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 1); __PYX_ERR(0, 31, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 2); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 2); __PYX_ERR(0, 31, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 3); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 3); __PYX_ERR(0, 31, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_minimum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 4); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 4); __PYX_ERR(0, 31, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_decay)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 5); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 5); __PYX_ERR(0, 31, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_step_size)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 6); __PYX_ERR(0, 35, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 6); __PYX_ERR(0, 31, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_new") < 0)) __PYX_ERR(0, 35, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_new") < 0)) __PYX_ERR(0, 31, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -1973,22 +1916,22 @@ static PyObject *__pyx_pw_7tilapia_4core_6metric_3strength_new(PyObject *__pyx_s
     __pyx_v_resting = ((PyArrayObject *)values[1]);
     __pyx_v_conn = ((PyArrayObject *)values[2]);
     __pyx_v_mtr = ((PyArrayObject *)values[3]);
-    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 39, __pyx_L3_error)
-    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L3_error)
-    __pyx_v_step_size = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_step_size == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 41, __pyx_L3_error)
+    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L3_error)
+    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
+    __pyx_v_step_size = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_step_size == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 35, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 31, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("tilapia.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 35, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 36, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 37, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 31, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 32, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 33, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 34, __pyx_L1_error)
   __pyx_r = __pyx_pf_7tilapia_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
@@ -2064,26 +2007,26 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
   __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_pybuffernd_activations.diminfo[0].strides = __pyx_pybuffernd_activations.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_activations.diminfo[0].shape = __pyx_pybuffernd_activations.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_pybuffernd_resting.diminfo[0].strides = __pyx_pybuffernd_resting.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_resting.diminfo[0].shape = __pyx_pybuffernd_resting.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_pybuffernd_conn.diminfo[0].strides = __pyx_pybuffernd_conn.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_conn.diminfo[0].shape = __pyx_pybuffernd_conn.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
   }
   __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
 
-  /* "tilapia/core/metric.pyx":44
+  /* "tilapia/core/metric.pyx":40
  *     """Fast function for calculating association strength."""
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
@@ -2092,7 +2035,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
  */
   __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
 
-  /* "tilapia/core/metric.pyx":45
+  /* "tilapia/core/metric.pyx":41
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
@@ -2101,64 +2044,64 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
  */
   __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
 
-  /* "tilapia/core/metric.pyx":46
+  /* "tilapia/core/metric.pyx":42
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "tilapia/core/metric.pyx":47
+  /* "tilapia/core/metric.pyx":43
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
  * 
  *     for i in range(n_conns):
  */
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "tilapia/core/metric.pyx":46
+  /* "tilapia/core/metric.pyx":42
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 42, __pyx_L1_error)
   __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_net = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_net.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 46, __pyx_L1_error)
+      __PYX_ERR(0, 42, __pyx_L1_error)
     } else {__pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -2166,7 +2109,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
   __pyx_v_net = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "tilapia/core/metric.pyx":49
+  /* "tilapia/core/metric.pyx":45
  *                                                       dtype=DTYPE_F)
  * 
  *     for i in range(n_conns):             # <<<<<<<<<<<<<<
@@ -2177,7 +2120,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "tilapia/core/metric.pyx":50
+    /* "tilapia/core/metric.pyx":46
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -2188,7 +2131,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
     __pyx_t_9 = (((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_9) {
 
-      /* "tilapia/core/metric.pyx":51
+      /* "tilapia/core/metric.pyx":47
  *     for i in range(n_conns):
  *         if conn[i] > 0:
  *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2199,7 +2142,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
       for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
         __pyx_v_j = __pyx_t_11;
 
-        /* "tilapia/core/metric.pyx":52
+        /* "tilapia/core/metric.pyx":48
  *         if conn[i] > 0:
  *             for j in range(n_neurons):
  *                 net[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -2213,7 +2156,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
         *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[1].strides)));
       }
 
-      /* "tilapia/core/metric.pyx":50
+      /* "tilapia/core/metric.pyx":46
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -2223,7 +2166,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
     }
   }
 
-  /* "tilapia/core/metric.pyx":54
+  /* "tilapia/core/metric.pyx":50
  *                 net[j] += conn[i] * mtr[i, j]
  * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2234,7 +2177,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "tilapia/core/metric.pyx":55
+    /* "tilapia/core/metric.pyx":51
  * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
@@ -2245,7 +2188,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
     __pyx_t_9 = (((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_9) {
 
-      /* "tilapia/core/metric.pyx":56
+      /* "tilapia/core/metric.pyx":52
  *     for i in range(n_neurons):
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]             # <<<<<<<<<<<<<<
@@ -2256,7 +2199,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
       __pyx_t_18 = __pyx_v_i;
       *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_activations.diminfo[0].strides)));
 
-      /* "tilapia/core/metric.pyx":55
+      /* "tilapia/core/metric.pyx":51
  * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
@@ -2266,7 +2209,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
       goto __pyx_L10;
     }
 
-    /* "tilapia/core/metric.pyx":58
+    /* "tilapia/core/metric.pyx":54
  *             net[i] *= 1.0 - activations[i]
  *         else:
  *             net[i] *= activations[i] - minimum             # <<<<<<<<<<<<<<
@@ -2280,7 +2223,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
     }
     __pyx_L10:;
 
-    /* "tilapia/core/metric.pyx":59
+    /* "tilapia/core/metric.pyx":55
  *         else:
  *             net[i] *= activations[i] - minimum
  *         net[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
@@ -2293,7 +2236,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
     *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_21, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "tilapia/core/metric.pyx":61
+  /* "tilapia/core/metric.pyx":57
  *         net[i] -= decay * (activations[i] - resting[i])
  * 
  *     return net * step_size             # <<<<<<<<<<<<<<
@@ -2301,16 +2244,16 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "tilapia/core/metric.pyx":35
+  /* "tilapia/core/metric.pyx":31
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -2350,7 +2293,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "tilapia/core/metric.pyx":66
+/* "tilapia/core/metric.pyx":62
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -2395,31 +2338,31 @@ static PyObject *__pyx_pw_7tilapia_4core_6metric_5strength_grossberg(PyObject *_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_resting)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 1); __PYX_ERR(0, 66, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 1); __PYX_ERR(0, 62, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 2); __PYX_ERR(0, 66, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 2); __PYX_ERR(0, 62, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 3); __PYX_ERR(0, 66, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 3); __PYX_ERR(0, 62, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_minimum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 4); __PYX_ERR(0, 66, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 4); __PYX_ERR(0, 62, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_decay)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 5); __PYX_ERR(0, 66, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 5); __PYX_ERR(0, 62, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_grossberg") < 0)) __PYX_ERR(0, 66, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_grossberg") < 0)) __PYX_ERR(0, 62, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -2435,21 +2378,21 @@ static PyObject *__pyx_pw_7tilapia_4core_6metric_5strength_grossberg(PyObject *_
     __pyx_v_resting = ((PyArrayObject *)values[1]);
     __pyx_v_conn = ((PyArrayObject *)values[2]);
     __pyx_v_mtr = ((PyArrayObject *)values[3]);
-    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
-    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 71, __pyx_L3_error)
+    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 66, __pyx_L3_error)
+    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 67, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 66, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 62, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("tilapia.core.metric.strength_grossberg", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 66, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 67, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 68, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 69, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 65, __pyx_L1_error)
   __pyx_r = __pyx_pf_7tilapia_4core_6metric_4strength_grossberg(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay);
 
   /* function exit code */
@@ -2539,26 +2482,26 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
   __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 66, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 62, __pyx_L1_error)
   }
   __pyx_pybuffernd_activations.diminfo[0].strides = __pyx_pybuffernd_activations.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_activations.diminfo[0].shape = __pyx_pybuffernd_activations.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 66, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 62, __pyx_L1_error)
   }
   __pyx_pybuffernd_resting.diminfo[0].strides = __pyx_pybuffernd_resting.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_resting.diminfo[0].shape = __pyx_pybuffernd_resting.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 66, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 62, __pyx_L1_error)
   }
   __pyx_pybuffernd_conn.diminfo[0].strides = __pyx_pybuffernd_conn.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_conn.diminfo[0].shape = __pyx_pybuffernd_conn.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 66, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 62, __pyx_L1_error)
   }
   __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
 
-  /* "tilapia/core/metric.pyx":74
+  /* "tilapia/core/metric.pyx":70
  * 
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
@@ -2567,7 +2510,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
  */
   __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
 
-  /* "tilapia/core/metric.pyx":75
+  /* "tilapia/core/metric.pyx":71
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
@@ -2576,64 +2519,64 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
  */
   __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
 
-  /* "tilapia/core/metric.pyx":76
+  /* "tilapia/core/metric.pyx":72
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "tilapia/core/metric.pyx":77
+  /* "tilapia/core/metric.pyx":73
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)
  */
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 77, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "tilapia/core/metric.pyx":76
+  /* "tilapia/core/metric.pyx":72
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 72, __pyx_L1_error)
   __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_exc.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_exc = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 76, __pyx_L1_error)
+      __PYX_ERR(0, 72, __pyx_L1_error)
     } else {__pyx_pybuffernd_exc.diminfo[0].strides = __pyx_pybuffernd_exc.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_exc.diminfo[0].shape = __pyx_pybuffernd_exc.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -2641,64 +2584,64 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
   __pyx_v_exc = ((PyArrayObject *)__pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "tilapia/core/metric.pyx":78
+  /* "tilapia/core/metric.pyx":74
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  * 
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_4);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_4);
   __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "tilapia/core/metric.pyx":79
+  /* "tilapia/core/metric.pyx":75
  *                                                       dtype=DTYPE_F)
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "tilapia/core/metric.pyx":78
+  /* "tilapia/core/metric.pyx":74
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
  *                                                       dtype=DTYPE_F)
  *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                       dtype=DTYPE_F)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 74, __pyx_L1_error)
   __pyx_t_6 = ((PyArrayObject *)__pyx_t_2);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inh.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_7tilapia_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
       __pyx_v_inh = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_inh.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 78, __pyx_L1_error)
+      __PYX_ERR(0, 74, __pyx_L1_error)
     } else {__pyx_pybuffernd_inh.diminfo[0].strides = __pyx_pybuffernd_inh.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inh.diminfo[0].shape = __pyx_pybuffernd_inh.rcbuffer->pybuffer.shape[0];
     }
   }
@@ -2706,7 +2649,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
   __pyx_v_inh = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "tilapia/core/metric.pyx":82
+  /* "tilapia/core/metric.pyx":78
  * 
  * 
  *     for i in range(n_conns):             # <<<<<<<<<<<<<<
@@ -2717,7 +2660,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "tilapia/core/metric.pyx":83
+    /* "tilapia/core/metric.pyx":79
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -2728,7 +2671,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
     __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "tilapia/core/metric.pyx":84
+      /* "tilapia/core/metric.pyx":80
  *     for i in range(n_conns):
  *         if conn[i] > 0:
  *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2739,7 +2682,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
       for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
         __pyx_v_j = __pyx_t_12;
 
-        /* "tilapia/core/metric.pyx":85
+        /* "tilapia/core/metric.pyx":81
  *         if conn[i] > 0:
  *             for j in range(n_neurons):
  *                 if mtr[i, j] > 0:             # <<<<<<<<<<<<<<
@@ -2751,7 +2694,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
         __pyx_t_10 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[1].strides)) > 0.0) != 0);
         if (__pyx_t_10) {
 
-          /* "tilapia/core/metric.pyx":86
+          /* "tilapia/core/metric.pyx":82
  *             for j in range(n_neurons):
  *                 if mtr[i, j] > 0:
  *                     exc[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -2764,7 +2707,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
           __pyx_t_18 = __pyx_v_j;
           *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_exc.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_17, __pyx_pybuffernd_mtr.diminfo[1].strides)));
 
-          /* "tilapia/core/metric.pyx":85
+          /* "tilapia/core/metric.pyx":81
  *         if conn[i] > 0:
  *             for j in range(n_neurons):
  *                 if mtr[i, j] > 0:             # <<<<<<<<<<<<<<
@@ -2774,7 +2717,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
           goto __pyx_L8;
         }
 
-        /* "tilapia/core/metric.pyx":88
+        /* "tilapia/core/metric.pyx":84
  *                     exc[j] += conn[i] * mtr[i, j]
  *                 else:
  *                     inh[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -2791,7 +2734,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
         __pyx_L8:;
       }
 
-      /* "tilapia/core/metric.pyx":83
+      /* "tilapia/core/metric.pyx":79
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -2801,7 +2744,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
     }
   }
 
-  /* "tilapia/core/metric.pyx":90
+  /* "tilapia/core/metric.pyx":86
  *                     inh[j] += conn[i] * mtr[i, j]
  * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2812,7 +2755,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "tilapia/core/metric.pyx":91
+    /* "tilapia/core/metric.pyx":87
  * 
  *     for i in range(n_neurons):
  *         exc[i] *= (1.0 - activations[i])             # <<<<<<<<<<<<<<
@@ -2823,7 +2766,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
     __pyx_t_24 = __pyx_v_i;
     *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_exc.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_activations.diminfo[0].strides)));
 
-    /* "tilapia/core/metric.pyx":92
+    /* "tilapia/core/metric.pyx":88
  *     for i in range(n_neurons):
  *         exc[i] *= (1.0 - activations[i])
  *         exc[i] -= (activations[i] - minimum) * inh[i]             # <<<<<<<<<<<<<<
@@ -2835,7 +2778,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
     __pyx_t_27 = __pyx_v_i;
     *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_27, __pyx_pybuffernd_exc.diminfo[0].strides) -= (((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum) * (*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_inh.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_inh.diminfo[0].strides)));
 
-    /* "tilapia/core/metric.pyx":93
+    /* "tilapia/core/metric.pyx":89
  *         exc[i] *= (1.0 - activations[i])
  *         exc[i] -= (activations[i] - minimum) * inh[i]
  *         exc[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
@@ -2848,7 +2791,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
     *__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_exc.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_7tilapia_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_29, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "tilapia/core/metric.pyx":95
+  /* "tilapia/core/metric.pyx":91
  *         exc[i] -= decay * (activations[i] - resting[i])
  * 
  *     return exc             # <<<<<<<<<<<<<<
@@ -2858,7 +2801,7 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_4strength_grossberg(CYTHON_UNUS
   __pyx_r = ((PyObject *)__pyx_v_exc);
   goto __pyx_L0;
 
-  /* "tilapia/core/metric.pyx":66
+  /* "tilapia/core/metric.pyx":62
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -5483,7 +5426,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 22, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 989, __pyx_L1_error)
@@ -5593,41 +5536,41 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "tilapia/core/metric.pyx":17
+  /* "tilapia/core/metric.pyx":13
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
  *              np.ndarray[DTYPE_F_t, ndim=2] mtr):
  *     """Fast function for calculating association strength."""
  */
-  __pyx_tuple__10 = PyTuple_Pack(7, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(7, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 13, __pyx_L1_error)
 
-  /* "tilapia/core/metric.pyx":35
+  /* "tilapia/core/metric.pyx":31
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
  *              np.ndarray[DTYPE_F_t, ndim=1] resting,
  *              np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
-  __pyx_tuple__12 = PyTuple_Pack(12, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(12, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(7, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_new, 35, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(7, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_new, 31, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 31, __pyx_L1_error)
 
-  /* "tilapia/core/metric.pyx":66
+  /* "tilapia/core/metric.pyx":62
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
  *              np.ndarray[DTYPE_F_t, ndim=1] resting,
  *              np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
-  __pyx_tuple__14 = PyTuple_Pack(12, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_exc, __pyx_n_s_inh); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(12, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_exc, __pyx_n_s_inh); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(6, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_grossberg, 66, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(6, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_grossberg, 62, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5751,78 +5694,78 @@ PyMODINIT_FUNC PyInit_metric(void)
  * cimport cython
  * cimport numpy as np
  * import numpy as np             # <<<<<<<<<<<<<<
- * from libc.math cimport fabs, sqrt, exp, cos, pow
  * 
+ * DTYPE = np.int64
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tilapia/core/metric.pyx":6
- * from libc.math cimport fabs, sqrt, exp, cos, pow
+  /* "tilapia/core/metric.pyx":5
+ * import numpy as np
  * 
  * DTYPE = np.int64             # <<<<<<<<<<<<<<
  * DTYPE_F = np.float64
  * ctypedef np.int64_t DTYPE_t
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "tilapia/core/metric.pyx":7
+  /* "tilapia/core/metric.pyx":6
  * 
  * DTYPE = np.int64
  * DTYPE_F = np.float64             # <<<<<<<<<<<<<<
  * ctypedef np.int64_t DTYPE_t
  * ctypedef np.float64_t DTYPE_F_t
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE_F, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE_F, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tilapia/core/metric.pyx":17
+  /* "tilapia/core/metric.pyx":13
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
  *              np.ndarray[DTYPE_F_t, ndim=2] mtr):
  *     """Fast function for calculating association strength."""
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_1strength, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_1strength, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength, __pyx_t_1) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength, __pyx_t_1) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tilapia/core/metric.pyx":35
+  /* "tilapia/core/metric.pyx":31
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
  *              np.ndarray[DTYPE_F_t, ndim=1] resting,
  *              np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_3strength_new, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_3strength_new, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "tilapia/core/metric.pyx":66
+  /* "tilapia/core/metric.pyx":62
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
  *              np.ndarray[DTYPE_F_t, ndim=1] resting,
  *              np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_5strength_grossberg, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_5strength_grossberg, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_grossberg, __pyx_t_1) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_grossberg, __pyx_t_1) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "tilapia/core/metric.pyx":1

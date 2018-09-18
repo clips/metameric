@@ -1,16 +1,12 @@
 cimport cython
 cimport numpy as np
 import numpy as np
-from libc.math cimport fabs, sqrt, exp, cos, pow
 
 DTYPE = np.int64
 DTYPE_F = np.float64
 ctypedef np.int64_t DTYPE_t
 ctypedef np.float64_t DTYPE_F_t
 
-
-cdef inline int int_max(int a, int b): return a if a >= b else b
-cdef inline int int_min(int a, int b): return a if a <= b else b
 
 @cython.wraparound(False)
 @cython.boundscheck(False)
