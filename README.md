@@ -1,6 +1,12 @@
 # tilapia
 
-First install with
+First make sure all requirements in requirements.txt are installed.
+
+```
+pip install -r requirements.txt
+```
+
+Then install using:
 
 ```
 python3 setup.py install

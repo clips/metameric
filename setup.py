@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Setup file."""
-from setuptools import setup
-from setuptools import find_packages
-from Cython.Build import cythonize
+from distutils.core import setup
+from distutils.extension import Extension
+from Cython.Distutils import build_ext
 import numpy as np
 
 setup(name='tilapia',
@@ -12,7 +12,6 @@ setup(name='tilapia',
       author_email='stephan.tulkens@uantwerpen.be',
       url='https://github.com/stephantul/tilapia',
       license='MIT',
-      packages=find_packages(exclude=['examples']),
       install_requires=['numpy>=1.11.0', 'cython'],
       classifiers=[
           'Intended Audience :: Developers',
@@ -20,7 +19,9 @@ setup(name='tilapia',
           'Programming Language :: Python :: 3'],
       keywords='computational psycholinguistics neural networks',
       zip_safe=False,
-      ext_modules=cythonize("tilapia/core/metric.pyx"),
+      cmdclass={'build_ext': build_ext},
+      ext_modules=[Extension("tilapia.core.metric",
+                             ["tilapia/core/metric.pyx"])],
       include_dirs=[np.get_include()],
       include_package_data=True
       )
