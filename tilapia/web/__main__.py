@@ -1,7 +1,11 @@
 """The page where params are made."""
 import os
 from bottle import run, route, request, template, static_file
-from tilapia.run import make_run
+from tilapia.run import make_run, get_model
+
+
+global m
+global max_cycles
 
 
 @route('/content/<filename:re:.*\.css>')
@@ -39,6 +43,61 @@ def default():
     return template("templates/home.tpl")
 
 
+@route("/analysis", method='GET')
+def get_analysis():
+    return template("templates/analysis.tpl")
+
+
+@route("/analysis", method='POST')
+def analysis():
+    """Analyze an IA model."""
+    input_file = request.files.get("path_train")
+    param_file = request.files.get("path_param")
+    rla = request.forms.get("rla")
+    step = request.forms.get("step")
+    decay = request.forms.get("decay")
+    min_val = request.forms.get("min")
+    max_cyc = request.forms.get("max")
+    inputlayers = request.forms.get("inputlayers")
+    outputlayers = request.forms.get("outputlayers")
+    rla_layers = request.forms.get("rlalayers")
+
+    if not param_file:
+        weights = None
+    else:
+        weights = param_file
+    words = input_file.file
+    # test_words = test_file.file
+
+    global m
+    global max_cycles
+    max_cycles = int(max_cyc)
+    m = get_model(words,
+                  weights,
+                  weight=True,
+                  space=True,
+                  rla=rla_layers,
+                  rla_layers=rla_layers,
+                  input_layers=inputlayers.split(),
+                  output_layers=outputlayers.split(),
+                  global_rla=float(rla),
+                  step_size=float(step),
+                  decay_rate=float(decay),
+                  minimum_activation=float(min_val))
+
+    return template("templates/analysis_2.tpl", inputs=inputlayers.split())
+
+
+@route("/analysis_2", method="POST")
+def post_word():
+
+    global m
+    global max_cycles
+    word = {x: request.forms.get(x).split() for x in m.inputs}
+    print(word)
+    res = m.activate(word, max_cycles=max_cycles)
+
+
 @route("/", method='POST')
 def show_plot():
     """
@@ -55,10 +114,11 @@ def show_plot():
     Output layers: <input name="outputlayers" type="text" />
     RLA layers: <input name="rlalayers" type="text" />
     """
-    input_path = request.files.get("path_train").filename
-    param_path = request.files.get("path_param")
-    test_path = request.files.get("path_test").filename
+    input_file = request.files.get("path_train")
+    param_file = request.files.get("path_param")
+    test_file = request.files.get("path_test")
     rla = request.forms.get("rla")
+    ia = request.forms.get("ia")
     step = request.forms.get("step")
     decay = request.forms.get("decay")
     min_val = request.forms.get("min")
@@ -68,15 +128,19 @@ def show_plot():
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
 
-    out_f = "run_{}.csv".format(os.path.splitext(input_path)[0])
-    if not param_path:
-        param_path = None
+    out_f = "run_{}.csv".format(os.path.splitext(input_file.filename)[0])
+
+    if not param_file:
+        weights = None
     else:
-        param_path = param_path.filename
-    make_run(input_file=input_path,
-             test_file=test_path,
-             output_file=out_f,
-             parameter_file=param_path,
+        weights = param_file
+    words = input_file.file
+    test_words = test_file.file
+
+    make_run(words,
+             test_words,
+             "test.csv",
+             weights,
              weight=True,
              space=True,
              threshold=float(threshold),
@@ -88,12 +152,12 @@ def show_plot():
              step_size=float(step),
              max_cycles=int(max_cyc),
              decay_rate=float(decay),
-             minimum_activation=float(min_val),
-             check_output=False)
+             minimum_activation=float(min_val))
 
-    return static_file(out_f, root='.', download=out_f)
+    return static_file("test.csv", root='.', download=out_f)
 
 
 if __name__ == "__main__":
 
-    run(host='localhost', port=8080, reloader=True, debug=True)
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
+    run(host='localhost', port=8080)
