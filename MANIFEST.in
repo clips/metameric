@@ -1,0 +1,3 @@
+include tilapia/web/content/*
+include tilapia/web/js/*
+include tilapia/web/templates/*
