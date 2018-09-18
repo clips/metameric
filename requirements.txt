@@ -1,0 +1,8 @@
+setuptools==39.0.1
+numpy==1.12.1
+bottle==0.12.13
+Cython==0.25.2
+tqdm==4.14.0
+pandas==0.20.3
+matplotlib==2.0.2
+wordkit==1.0.1
