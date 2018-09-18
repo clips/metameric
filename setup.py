@@ -6,7 +6,7 @@ from Cython.Build import cythonize
 import numpy as np
 
 setup(name='tilapia',
-      version='1.0.1',
+      version='1.0.2',
       description='Interactive activation',
       author='Stéphan Tulkens',
       author_email='stephan.tulkens@uantwerpen.be',
@@ -21,5 +21,6 @@ setup(name='tilapia',
       keywords='computational psycholinguistics neural networks',
       zip_safe=False,
       ext_modules=cythonize("tilapia/core/metric.pyx"),
-      include_dirs=[np.get_include()]
+      include_dirs=[np.get_include()],
+      include_package_data=True
       )
