@@ -80,14 +80,14 @@ if __name__ == "__main__":
     else:
         test = args.input
 
-    make_run(args.input,
-             test,
+    make_run(open(args.input),
+             open(test),
              args.output,
              args.parameters,
              args.W,
              args.S,
              args.criterion,
-             args.rla,
+             args.rla_variable,
              args.rla_layers,
              args.input_layers,
              args.output_layers,
