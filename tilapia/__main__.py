@@ -9,7 +9,7 @@ if __name__ == "__main__":
                         "--input",
                         required=True,
                         type=str,
-                        help="Path to the input file.")
+                        help="Path to the training file.")
     parser.add_argument("-t",
                         "--test",
                         help="Path to the test file.")
@@ -55,12 +55,10 @@ if __name__ == "__main__":
                         default=1000,
                         type=int,
                         help="The maximum number of cycles")
-    parser.add_argument("-c",
-                        "--criterion",
+    parser.add_argument("--threshold",
                         default=.7,
                         type=float,
                         help="The threshold for recognition.")
-    # look up how this works.
     parser.add_argument("--input_layers",
                         nargs='+',
                         default=('features', 'features_neg'))
@@ -84,8 +82,6 @@ if __name__ == "__main__":
              open(test),
              args.output,
              args.parameters,
-             args.W,
-             args.S,
              args.criterion,
              args.rla_variable,
              args.rla_layers,

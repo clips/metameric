@@ -45,8 +45,6 @@ def parse_parameter_file(f):
 
 def get_model(words_file,
               parameters,
-              weight,
-              space,
               rla_variable,
               rla_layers,
               input_layers,
@@ -62,19 +60,16 @@ def get_model(words_file,
     words = read_input_file(words_file)
     max_length = max([len(w['orthography']) for w in words])
 
-    if weight:
-        weights = weight_adaptation(max_length, weights)
-
+    weights = weight_adaptation(max_length, weights)
     matrix, names = weights_to_matrix(weights)
 
     if 'features' in names and 'features' not in words[0]:
         words = prep_words(words)
 
-    if space:
-        for w in words:
-            for idx in range(len(w['orthography']), max_length):
-                w['letters'].append(" -{}".format(idx))
-            w['orthography'] = w['orthography'].ljust(max_length)
+    for w in words:
+        for idx in range(len(w['orthography']), max_length):
+            w['letters'].append(" -{}".format(idx))
+        w['orthography'] = w['orthography'].ljust(max_length)
 
     rla = {k: 'global' if k not in rla_layers
            else rla_variable for k in names}
@@ -97,8 +92,6 @@ def make_run(words_file,
              test_words_file,
              output_path,
              parameters,
-             weight,
-             space,
              threshold,
              rla_variable,
              rla_layers,
@@ -114,8 +107,6 @@ def make_run(words_file,
 
     m = get_model(words_file,
                   parameters,
-                  weight,
-                  space,
                   rla_variable,
                   rla_layers,
                   input_layers,

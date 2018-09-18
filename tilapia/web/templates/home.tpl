@@ -40,6 +40,9 @@
         <label for="rlalayers" id="rlalayers">RLA layers</label>
         <input id=ltrain type=button value="?" class="btn btn-default btn-sm"/>
         <input name="rlalayers" type="text" value="orthography" />
+        <label for="rlavars" id="rlavars">RLA variable</label>
+        <input id=ltrain type=button value="?" class="btn btn-default btn-sm"/>
+        <input name="rlavars" type="text" value="frequency" />
 
         </div>
     <button type="submit" class="btn btn-default btn-sm">Submit</button>

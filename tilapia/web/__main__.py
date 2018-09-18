@@ -2,10 +2,13 @@
 import os
 from bottle import run, route, request, template, static_file
 from tilapia.run import make_run, get_model
+from tilapia.plot import result_plot
+from argparse import ArgumentParser
 
 
 global m
 global max_cycles
+global junk_folder
 
 
 @route('/content/<filename:re:.*\.css>')
@@ -61,6 +64,7 @@ def analysis():
     inputlayers = request.forms.get("inputlayers")
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
+    rla_variable = request.forms.get("rlavars")
 
     if not param_file:
         weights = None
@@ -74,9 +78,7 @@ def analysis():
     max_cycles = int(max_cyc)
     m = get_model(words,
                   weights,
-                  weight=True,
-                  space=True,
-                  rla=rla_layers,
+                  rla_variable=rla_variable,
                   rla_layers=rla_layers,
                   input_layers=inputlayers.split(),
                   output_layers=outputlayers.split(),
@@ -85,7 +87,7 @@ def analysis():
                   decay_rate=float(decay),
                   minimum_activation=float(min_val))
 
-    return template("templates/analysis_2.tpl", inputs=inputlayers.split())
+    return template("templates/analysis_2.tpl", inputs=sorted(m.inputs))
 
 
 @route("/analysis_2", method="POST")
@@ -94,8 +96,10 @@ def post_word():
     global m
     global max_cycles
     word = {x: request.forms.get(x).split() for x in m.inputs}
-    print(word)
     res = m.activate(word, max_cycles=max_cycles)
+    f = result_plot(res)
+    f.savefig(os.path.join("content", "plot.png"))
+    return template("templates/analysis_2.tpl", inputs=sorted(m.inputs))
 
 
 @route("/", method='POST')
@@ -118,7 +122,6 @@ def show_plot():
     param_file = request.files.get("path_param")
     test_file = request.files.get("path_test")
     rla = request.forms.get("rla")
-    ia = request.forms.get("ia")
     step = request.forms.get("step")
     decay = request.forms.get("decay")
     min_val = request.forms.get("min")
@@ -127,6 +130,7 @@ def show_plot():
     inputlayers = request.forms.get("inputlayers")
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
+    rla_variable = request.forms.get("rlavars")
 
     out_f = "run_{}.csv".format(os.path.splitext(input_file.filename)[0])
 
@@ -137,14 +141,14 @@ def show_plot():
     words = input_file.file
     test_words = test_file.file
 
+    global junk
+
     make_run(words,
              test_words,
-             "test.csv",
+             os.path.join(junk, "test.csv"),
              weights,
-             weight=True,
-             space=True,
              threshold=float(threshold),
-             rla=rla_layers,
+             rla_variable=rla_variable,
              rla_layers=rla_layers,
              input_layers=inputlayers.split(),
              output_layers=outputlayers.split(),
@@ -159,5 +163,19 @@ def show_plot():
 
 if __name__ == "__main__":
 
+    parser = ArgumentParser()
+    parser.add_argument("-j",
+                        "--junk",
+                        type=str,
+                        help="Path to an optional junk folder.")
+    args = parser.parse_args()
+
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
+
+    global junk
+    if args.junk:
+        junk = args.junk
+    else:
+        junk = os.getcwd()
+
     run(host='localhost', port=8080)

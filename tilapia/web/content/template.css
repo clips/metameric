@@ -93,14 +93,20 @@ a{
   grid-gap: .5em;
 }
 
-img {
-    max-width: 25%;
-    height: auto;
-    width: auto;
-}
+
 
 .center {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+img {
+    height: auto;
+    width: auto;
+}
+
+#fish {
+    width:25%; /* you can use % */
+    height: auto;
 }

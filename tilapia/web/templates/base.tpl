@@ -26,7 +26,7 @@
   </head>
   <!-- Fixed navbar -->
   <div class="container" id="topContent" bg-primary>
-      <img src="content/ChromisNiloticus.jpg" alt="Fish" class="center">
+      <img src="content/ChromisNiloticus.jpg" alt="Fish" class="center" id="fish">
   </div>
 
 <div class="container">
