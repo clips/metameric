@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    feat_names = set(args.feature_names) - set(FEATURES.keys())
+    feat_names = set(args.feature_sets) - set(FEATURES.keys())
     if feat_names:
         raise ValueError("You passed features that were not in the set of "
                          "offered features: {}".format(feat_names))
