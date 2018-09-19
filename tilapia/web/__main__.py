@@ -132,20 +132,8 @@ def post_word():
 
 
 @route("/experiment", method='POST')
-def show_plot():
+def main_experiment():
     """
-    Path to CSV: <input name="path" type="text" />
-    Path to Parameter file: <input name="path_param" type="text" />
-    Output file: <input name="path_output" type="text" />
-    Resting level Activation: <input name="rla" type="text" />
-    Step size: <input name="step" type="text" />
-    Decay: <input name="decay" type="text" />
-    Minimum Activation: <input name="min" type="text" />
-    Maximum Cycles: <input name="max" type="text" />
-    Threshold: <input name="threshold" type="text" />
-    Input layers: <input name="inputlayers" type="text" />
-    Output layers: <input name="outputlayers" type="text" />
-    RLA layers: <input name="rlalayers" type="text" />
     """
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
