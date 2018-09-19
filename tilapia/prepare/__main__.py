@@ -8,21 +8,41 @@ if __name__ == "__main__":
     parser.add_argument("-i",
                         "--input",
                         type=str,
-                        required=True)
+                        required=True,
+                        help="The path to the input data. This should be "
+                             "a CSV with a header.")
     parser.add_argument("-o",
                         "--output",
                         type=str,
-                        required=True)
+                        required=True,
+                        help="The path to the output data.")
     parser.add_argument("-d",
                         "--decomposable",
-                        nargs='+')
+                        nargs='+',
+                        help="A list of fields in the input csv which can be "
+                             "decomposed into smaller units. An example of "
+                             "this could be 'orthography', since words can "
+                             "decompose into letters.")
     parser.add_argument("--decomposable_names",
-                        nargs='+')
+                        nargs='+',
+                        help="A list of names, the length of -d, which "
+                             "specify the names of the decomposed units "
+                             "after being decomposed. When the -d flag"
+                             "includes 'orthography', this could "
+                             "read 'letters', for example.")
     parser.add_argument("-f",
                         "--add_features",
-                        nargs='+')
+                        nargs='+',
+                        help="A list of fields which should be decomposed "
+                             "into features. This can apply to fields which "
+                             "are not in the original CSV, and which are "
+                             "created through decomposition.")
     parser.add_argument("--feature_sets",
-                        nargs='+')
+                        nargs='+',
+                        help="A list of names of feature sets, the length "
+                             "of which is equal to the number of fields "
+                             "passed to -f. We currently support 2 "
+                             "orthographic and 2 phonological feature sets.")
 
     args = parser.parse_args()
 
