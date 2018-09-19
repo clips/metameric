@@ -83,7 +83,7 @@ if __name__ == "__main__":
                              decomposable=('orthography',),
                              decomposable_names=('letters',),
                              feature_layers=('letters',),
-                             feature_names=('fourteen',),
+                             feature_sets=('fourteen',),
                              negative_features=ne,
                              length_adaptation=spa)
 

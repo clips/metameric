@@ -61,7 +61,7 @@ if __name__ == "__main__":
                          decomposable=('orthography',),
                          decomposable_names=('letters',),
                          feature_layers=('letters',),
-                         feature_names=('fourteen',),
+                         feature_sets=('fourteen',),
                          negative_features=False,
                          length_adaptation=False)
         matrix, names = weights_to_matrix(weight_adaptation(4))
