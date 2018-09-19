@@ -46,7 +46,6 @@ class Layer(object):
                  minimum,
                  step_size,
                  decay_rate,
-                 static,
                  name=""):
         """Init function."""
         self.activations = np.zeros(num_nodes, dtype=np.float64)
@@ -59,7 +58,6 @@ class Layer(object):
         self.minimum = minimum
         self.decay_rate = decay_rate
         self.name = name
-        self._static = static
         self.step_size = step_size
 
     def active(self):
@@ -108,7 +106,7 @@ class Layer(object):
     @property
     def static(self):
         """Whether the activations should be updated."""
-        return self.weights is None or self._static
+        return self.weights is None
 
     def activate(self):
         """

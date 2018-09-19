@@ -54,10 +54,25 @@ class Network(object):
         self.outputs = {}
         self.inputs = {}
         self.layertype = layertype
+        self.compiled = False
 
     def __getitem__(self, k):
         """Get a single layer by name."""
         return self.layers[k]
+
+    def compile(self):
+        """Compile the network by checking whether all settings are valid."""
+        if not self.outputs:
+            raise ValueError("You did not specify any outputs.")
+
+        for k, v in self.layers.items():
+            if v.static:
+                self.inputs[k] = v
+
+        if not self.inputs:
+            raise ValueError("You did not specify any inputs.")
+
+        self.compiled = True
 
     @property
     def rla(self):
@@ -76,9 +91,7 @@ class Network(object):
                      layer_name,
                      resting_activation,
                      node_names,
-                     is_output=False,
-                     is_input=False,
-                     is_static=False):
+                     is_output=False):
         """
         Add a layer to the network.
 
@@ -100,14 +113,11 @@ class Network(object):
                                self.minimum,
                                self.step_size,
                                self.decay_rate,
-                               static=is_static,
                                name=layer_name)
 
         self.layers[layer_name] = layer
         if is_output:
             self.outputs[layer_name] = layer
-        if is_input:
-            self.inputs[layer_name] = layer
 
     def activate_bunch(self,
                        x,
@@ -151,11 +161,8 @@ class Network(object):
             current activation levels as output.
 
         """
-        if not self.outputs:
-            raise ValueError("You did not specify any outputs.")
-
-        if not self.inputs:
-            raise ValueError("You did not specify any inputs.")
+        if not self.compiled:
+            raise ValueError("Your model is not compiled.")
 
         if reset:
             self._reset()
