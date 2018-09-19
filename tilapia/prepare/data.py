@@ -59,6 +59,8 @@ def read_input_file(f):
         f = reader(f)
     header = next(f)
     for line in f:
+        if not line:
+            continue
         item = {}
         for k, v in zip(header, line):
             item[k] = v.split()
@@ -92,7 +94,7 @@ def decompose(items, field, name, length_adaptation=True):
     max_length = max(lengths)
     for item, length in zip(items, lengths):
 
-        item[name] = ["{}-{}".format(l, idx)
+        item[name] = ["{}-{}".format(l.lower(), idx)
                       for idx, l in enumerate(item[field])]
         if length_adaptation:
             item[name].extend([" -{}".format(idx)
@@ -104,17 +106,26 @@ def decompose(items, field, name, length_adaptation=True):
 def add_features(items,
                  feature_set,
                  feature_name='features',
-                 field='letters'):
+                 field='letters',
+                 strict=True):
     """Adds features to words."""
     items = deepcopy(items)
+    new_items = []
     for item in items:
         item[feature_name] = []
         for idx, letter in enumerate(item[field]):
-            letter = letter.split("-")[0]
+            try:
+                feats = feature_set[letter.split("-")[0]]
+            except KeyError as e:
+                if not strict:
+                    break
+                raise e
             item[feature_name].extend(["{}-{}".format(f, idx)
-                                       for f in feature_set[letter]])
+                                       for f in feats])
+        else:
+            new_items.append(item)
 
-    return items
+    return new_items
 
 
 def process_data(items,
@@ -123,7 +134,8 @@ def process_data(items,
                  feature_layers,
                  feature_sets,
                  negative_features=True,
-                 length_adaptation=True):
+                 length_adaptation=True,
+                 strict=True):
     """Process data, add fields, and add them to the item."""
     if decomposable_names:
         d = zip(decomposable, decomposable_names)
@@ -141,7 +153,8 @@ def process_data(items,
         items = add_features(items,
                              feats,
                              '{}-features'.format(layer_name),
-                             layer_name)
+                             layer_name,
+                             strict=strict)
 
     return items
 
@@ -151,12 +164,14 @@ def process_and_write(input_file,
                       decomposable,
                       decomposable_names,
                       feature_layers,
-                      feature_sets):
+                      feature_sets,
+                      strict):
     """Process data and write it to a file."""
     items = read_input_file(input_file)
     items = process_data(items,
                          decomposable,
                          decomposable_names,
                          feature_layers,
-                         feature_sets)
+                         feature_sets,
+                         strict=strict)
     write_file(items, output_path)
