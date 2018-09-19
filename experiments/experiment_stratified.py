@@ -3,7 +3,8 @@ import random
 import pandas as pd
 
 from tilapia.builder import build_model
-from tilapia.ia.utils import weight_adaptation, weights_to_matrix, prep_words
+from tilapia.prepare.weights import weight_adaptation, weights_to_matrix
+from tilapia.prepare.data import process_data
 from experiments.data import read_elp_format
 from itertools import product
 from tqdm import tqdm
@@ -78,6 +79,14 @@ if __name__ == "__main__":
             else:
                 max_len = 4
 
+            w = process_data(w,
+                             decomposable=('orthography',),
+                             decomposable_names=('letters',),
+                             feature_layers=('letters',),
+                             feature_names=('fourteen',),
+                             negative_features=ne,
+                             length_adaptation=spa)
+
             m = max([len(x['orthography']) for x in w])
             if space_character:
                 for w_ in w:
@@ -87,7 +96,6 @@ if __name__ == "__main__":
             if negative_evidence:
                 inputs.append('features_neg')
 
-            w = prep_words(w)
             matrix, names = weights_to_matrix(weight_adaptation(max_len))
 
             rla = {k: 'global' for k in names}
@@ -110,12 +118,12 @@ if __name__ == "__main__":
             cycles = np.array([len(x['orthography']) for x in result])
             right = cycles == n_cyc
             cycles[right] = -1
-            for x, word in zip(result, w):
+            for x, word, c in zip(result, w, cycles):
                 results.append([word['orthography'],
                                 (idx * 100) + idx_2,
                                 word['rt'],
                                 word['frequency'],
-                                len(x),
+                                c,
                                 le,
                                 ne,
                                 spa])

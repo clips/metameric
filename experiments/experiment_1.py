@@ -3,7 +3,8 @@ import random
 import pandas as pd
 
 from tilapia.builder import build_model
-from tilapia.ia.utils import weight_adaptation, weights_to_matrix, prep_words
+from tilapia.prepare.weights import weight_adaptation, weights_to_matrix
+from tilapia.prepare.data import process_data
 from experiments.data import read_elp_format
 from copy import deepcopy
 from tqdm import tqdm
@@ -54,11 +55,16 @@ if __name__ == "__main__":
         w = deepcopy(sampler.sample(1000))
         rt = np.array([x['rt'] for x in w])
 
-        max_len = 4
-        inputs = ['features']
+        inputs = ('letters-features',)
 
-        w = prep_words(w)
-        matrix, names = weights_to_matrix(weight_adaptation(max_len))
+        w = process_data(w,
+                         decomposable=('orthography',),
+                         decomposable_names=('letters',),
+                         feature_layers=('letters',),
+                         feature_names=('fourteen',),
+                         negative_features=False,
+                         length_adaptation=False)
+        matrix, names = weights_to_matrix(weight_adaptation(4))
 
         rla = {k: 'global' for k in names}
         rla['orthography'] = 'frequency'
@@ -80,12 +86,12 @@ if __name__ == "__main__":
         cycles = np.array([len(x['orthography']) for x in result])
         right = cycles == n_cyc
         cycles[right] = -1
-        for x, word in zip(result, w):
+        for x, word, c in zip(result, w, cycles):
             results.append([word['orthography'],
                             idx,
                             word['rt'],
                             word['frequency'],
-                            len(x)])
+                            c])
 
     df = pd.DataFrame(results, columns=header)
     df.to_csv("tilapia_experiment_1.csv", sep=",")
