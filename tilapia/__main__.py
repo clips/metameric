@@ -41,16 +41,6 @@ if __name__ == "__main__":
                         type=float,
                         default=-.2,
                         help="The minimum activation.")
-    parser.add_argument("-S",
-                        const=False,
-                        default=True,
-                        action='store_const',
-                        help="Removes space padding.")
-    parser.add_argument("-W",
-                        const=False,
-                        default=True,
-                        action='store_const',
-                        help="Removes weighting.")
     parser.add_argument("--max_cycles",
                         default=1000,
                         type=int,
@@ -61,12 +51,16 @@ if __name__ == "__main__":
                         help="The threshold for recognition.")
     parser.add_argument("--output_layers",
                         nargs='+',
-                        default=('orthography',))
+                        default=('orthography',),
+                        help="The layers to use as output.")
     parser.add_argument("--rla_layers",
                         nargs='+',
-                        default=('orthography'))
+                        default=('orthography'),
+                        help="The layers on which to perform variable RLA "
+                             "weighting.")
     parser.add_argument("--rla_variable",
-                        default="frequency")
+                        default="frequency",
+                        help="The variable on which to base the variable RLA")
 
     args = parser.parse_args()
 
