@@ -34,6 +34,8 @@
     <nav>
       <ul class="nav nav-pills pull-right">
          <li><a href="home">Home</a></li>
+         <li><a href="experiment">Experiment</a></li>
+         <li><a href="prepare">Prepare Data</a></li>
          <li><a href="analysis">Analysis</a></li>
          <li><a href="about">About</a></li>
          <li><a href="contact">Contact</a></li>

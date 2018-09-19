@@ -1,9 +1,12 @@
 %rebase('templates/base.tpl', title='Index')
-<form action="/analysis" method="post" enctype="multipart/form-data">
+<form action="/experiment" method="post" enctype="multipart/form-data">
     <div class="grid">
         <label for="path_train">Path to training file</label>
         <input id=atrain type=button value="?" class="btn btn-default btn-sm"/>
         <input type="file" id="path_train" name="path_train">
+        <label for="path_test">Path to test CSV</label>
+        <input id=btrain type=button value="?" class="btn btn-default btn-sm"/>
+        <input type="file" id="path_test" name="path_test">
         <label for="path_param">Path to parameter file</label>
         <input id=ctrain type=button value="?" class="btn btn-default btn-sm"/>
         <input type="file" id="path_param" name="path_param">
@@ -34,6 +37,7 @@
         <label for="rlavars" id="rlavars">RLA variable</label>
         <input id=ltrain type=button value="?" class="btn btn-default btn-sm"/>
         <input name="rlavars" type="text" value="frequency" />
+
         </div>
     <button type="submit" class="btn btn-default btn-sm">Submit</button>
 </form>
