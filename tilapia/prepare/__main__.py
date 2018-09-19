@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from data import process_and_write, FEATURES
+from tilapia.prepare.data import process_and_write, FEATURES
 
 
 if __name__ == "__main__":
@@ -43,6 +43,13 @@ if __name__ == "__main__":
                              "of which is equal to the number of fields "
                              "passed to -f. We currently support 2 "
                              "orthographic and 2 phonological feature sets.")
+    parser.add_argument("--disable_strict",
+                        action='store_const',
+                        default=True,
+                        const=False,
+                        help="If this flag is passed, any words which can "
+                             "not be featurized will be deleted. Use with "
+                             "caution.")
 
     args = parser.parse_args()
 
@@ -65,4 +72,5 @@ if __name__ == "__main__":
                       args.decomposable,
                       args.decomposable_names,
                       args.add_features,
-                      args.feature_sets)
+                      args.feature_sets,
+                      args.disable_strict)
