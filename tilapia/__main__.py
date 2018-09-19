@@ -59,9 +59,6 @@ if __name__ == "__main__":
                         default=.7,
                         type=float,
                         help="The threshold for recognition.")
-    parser.add_argument("--input_layers",
-                        nargs='+',
-                        default=('features', 'features_neg'))
     parser.add_argument("--output_layers",
                         nargs='+',
                         default=('orthography',))
@@ -85,7 +82,6 @@ if __name__ == "__main__":
              args.threshold,
              args.rla_variable,
              args.rla_layers,
-             args.input_layers,
              args.output_layers,
              args.rla,
              args.step,
