@@ -12,7 +12,6 @@ def build_model(items,
                 rla,
                 global_rla,
                 outputs=(),
-                inputs=(),
                 minimum=-.2,
                 step_size=1.0,
                 decay_rate=.07):
@@ -34,8 +33,6 @@ def build_model(items,
         The global RLA, used to scale the variable RLA.
     outputs : tuple
         The layer names that are used as output.
-    inputs : tuple
-        The layer names of the layer that are used as inputs.
     minimum : float
         The minimum activation.
     step_size : float
@@ -60,6 +57,10 @@ def build_model(items,
 
     # Gather all unique items.
     _check(items, layer_names)
+    out_layers = set(outputs) - set(layer_names)
+    if out_layers:
+        raise ValueError("Not all outputs were in your layer names."
+                         "".format(out_layers))
 
     unique_items = defaultdict(set)
 
@@ -110,8 +111,7 @@ def build_model(items,
         s.create_layer(key,
                        resting,
                        node_names,
-                       key in outputs,
-                       key in inputs)
+                       key in outputs)
 
     # Transfer matrix is a N * N * 2 matrix.
     for a, b in product(layer_names, layer_names):
@@ -152,6 +152,8 @@ def build_model(items,
 
         s.connect_layers(a, b, mtr)
 
+    s.compile()
+
     return s
 
 
@@ -159,4 +161,5 @@ def _check(items, layer_names):
     """Check whether the items are valid."""
     all_keys = set(chain.from_iterable([i.keys() for i in items]))
     if set(layer_names) - all_keys:
-        raise ValueError(set(layer_names) ^ all_keys)
+        raise ValueError("Not all layer names were present in the items: "
+                         "{}".format(set(layer_names) - all_keys))
