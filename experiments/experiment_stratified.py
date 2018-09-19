@@ -107,8 +107,7 @@ if __name__ == "__main__":
                             rla,
                             -.05,
                             step_size=.5,
-                            outputs=('orthography',),
-                            inputs=inputs)
+                            outputs=('orthography',))
 
             result = s.activate_bunch(w,
                                       max_cycles=n_cyc,
