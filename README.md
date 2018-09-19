@@ -12,7 +12,8 @@ Then install using
 python3 setup.py install
 ```
 
-Then, you can run tilapia with
+Then, you can run tilapia with.
+Note that is most likely necessary to first move to another folder before running this due to cython dependencies.
 
 ```
 python3 -m tilapia -i MY_INPUT_FILE -o MY_OUTPUT_FILE
