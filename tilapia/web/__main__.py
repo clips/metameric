@@ -3,6 +3,8 @@ import os
 from bottle import run, route, request, template, static_file
 from tilapia.run import make_run, get_model
 from tilapia.plot import result_plot
+from tilapia.prepare.data import process_and_write
+from itertools import tee
 from argparse import ArgumentParser
 
 
@@ -36,6 +38,31 @@ def about():
     return template("templates/about.tpl")
 
 
+@route("/prepare", method='GET')
+def prepare():
+    return template("templates/prepare.tpl")
+
+
+@route("/prepare", method='POST')
+def prepare_post():
+    input_file = request.files.get("path_train")
+    d_layer = request.forms.get("decomp_layer")
+    d_name = request.forms.get("decomp_name")
+    f_layers = request.forms.get("feature_layer")
+    f_set = request.forms.get("feature_set")
+
+    out_f = "prepared-{}".format(input_file.filename)
+
+    process_and_write(input_file.file,
+                      os.path.join(junk, "data.csv"),
+                      d_layer.split(),
+                      d_name.split(),
+                      f_layers.split(),
+                      f_set.split())
+
+    return static_file("data.csv", root=junk, download=out_f)
+
+
 @route("/home", method='GET')
 def home():
     return template("templates/home.tpl")
@@ -44,6 +71,11 @@ def home():
 @route("/", method='GET')
 def default():
     return template("templates/home.tpl")
+
+
+@route("/experiment", method='GET')
+def experiment():
+    return template("templates/experiment.tpl")
 
 
 @route("/analysis", method='GET')
@@ -61,7 +93,6 @@ def analysis():
     decay = request.forms.get("decay")
     min_val = request.forms.get("min")
     max_cyc = request.forms.get("max")
-    inputlayers = request.forms.get("inputlayers")
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
@@ -71,7 +102,6 @@ def analysis():
     else:
         weights = param_file
     words = input_file.file
-    # test_words = test_file.file
 
     global m
     global max_cycles
@@ -80,7 +110,6 @@ def analysis():
                   weights,
                   rla_variable=rla_variable,
                   rla_layers=rla_layers,
-                  input_layers=inputlayers.split(),
                   output_layers=outputlayers.split(),
                   global_rla=float(rla),
                   step_size=float(step),
@@ -102,7 +131,7 @@ def post_word():
     return template("templates/analysis_2.tpl", inputs=sorted(m.inputs))
 
 
-@route("/", method='POST')
+@route("/experiment", method='POST')
 def show_plot():
     """
     Path to CSV: <input name="path" type="text" />
@@ -127,7 +156,6 @@ def show_plot():
     min_val = request.forms.get("min")
     max_cyc = request.forms.get("max")
     threshold = request.forms.get("threshold")
-    inputlayers = request.forms.get("inputlayers")
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
@@ -138,8 +166,11 @@ def show_plot():
         weights = None
     else:
         weights = param_file
-    words = input_file.file
-    test_words = test_file.file
+    if not test_file:
+        words, test_words = tee(input_file.file, 2)
+    else:
+        words = input_file.file
+        test_words = test_file.file
 
     global junk
 
@@ -150,7 +181,6 @@ def show_plot():
              threshold=float(threshold),
              rla_variable=rla_variable,
              rla_layers=rla_layers,
-             input_layers=inputlayers.split(),
              output_layers=outputlayers.split(),
              global_rla=float(rla),
              step_size=float(step),
@@ -158,7 +188,7 @@ def show_plot():
              decay_rate=float(decay),
              minimum_activation=float(min_val))
 
-    return static_file("test.csv", root='.', download=out_f)
+    return static_file("test.csv", root=junk, download=out_f)
 
 
 if __name__ == "__main__":
