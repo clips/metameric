@@ -9,8 +9,6 @@ class Layer(object):
 
     Parameters
     ----------
-    num_nodes : int
-        The number of nodes in the current network.
     resting : np.array
         The resting level activations of the nodes in the current network
     node_names : list of string
@@ -29,18 +27,23 @@ class Layer(object):
 
     Attributes
     ----------
-    connections : list of np.array
-        A list of arrays with which this layer is connected.
+    connections : list of Layer
+        A list of Layers with which this layer is connected.
     weights : np.array
-        A transfer matrix which details how the incoming connections influence
-        the activation of the current layer.
+        A tmatrix which details how the incoming connections influence the
+        activation of the current layer.
     activations : np.array
         The activation of the current layer at the current time.
+    name : string
+        The name of the current layer.
+    name2idx : dict
+        Lookup from name to neuron index.
+    idx2name : dict
+        Lookup from neuron index to item name.
 
     """
 
     def __init__(self,
-                 num_nodes,
                  resting,
                  node_names,
                  minimum,
@@ -48,7 +51,11 @@ class Layer(object):
                  decay_rate,
                  name=""):
         """Init function."""
-        self.activations = np.zeros(num_nodes, dtype=np.float64)
+        if len(resting) != len(node_names):
+            raise ValueError("Node names and resting level activations do "
+                             "not have the same length: {} and {}"
+                             "".format(len(resting), len(node_names)))
+        self.activations = np.zeros_like(resting, dtype=np.float64)
         self.node_names = node_names
         self.name2idx = {k: idx for idx, k in enumerate(node_names)}
         self.idx2name = {v: k for k, v in self.name2idx.items()}
@@ -116,17 +123,16 @@ class Layer(object):
         layers to which it is connected, and then calculates the updated state
         of the current layer based on the net input and the current activation.
 
-        The update of a IA layer is given by the following equation.
+        The update of a single neuron is given by the following equation.
 
-        delta = net_input - (decay * (activation - resting))
-
-        where decay is a scalar, activation and resting are vectors.
-        net_input is the net amount of stimulation each neuron receives.
+            net_i = sum([x_j * w_ij if x_j > 0])
+            add_i = (1.0 - net_i) if net_i > 0 else (net_i - minimum)
+            delta_i = add_i - (decay * (activation_i - resting_i))
 
         Returns
         -------
         delta : np.array
-            The change in activation of the current layer.
+            The change in activation for each neuron.
 
         """
         if not self.connections:
