@@ -31,10 +31,9 @@ class Network(object):
     layers : dict
         A dictionary of layers. Can be used to look up layers and check
         their activations by name.
-    outputs : list
-        A list of layers. This lists the output layers. Output layers are
-        the only layers which are checked for convergence when the algorithm
-        is run.
+    outputs : dict
+        Output layers are the layers which are checked for convergence when
+        the network is run.
 
     """
 
@@ -46,10 +45,17 @@ class Network(object):
         """Init function."""
         self.layers = {}
         self.minimum = np.float64(minimum)
-        assert .0 < step_size <= 1.0
-        assert -1.0 <= minimum < .0
+        if not .0 < step_size <= 1.0:
+            raise ValueError("Step size should be greater than 0 and smaller "
+                             "or equal to 1.0, is now {}".format(step_size))
+        if not -1.0 <= minimum <= .0:
+            raise ValueError("Minimum should be equal to or greater than 1.0"
+                             ", and smaller than or equal to 0, is now"
+                             "".format(minimum))
         self.step_size = step_size
-        assert decay_rate >= .0
+        if decay_rate <= .0:
+            raise ValueError("Decay rate should be a positive number, is now"
+                             "".format(decay_rate))
         self.decay_rate = np.float64(decay_rate)
         self.outputs = {}
         self.inputs = {}
@@ -76,7 +82,7 @@ class Network(object):
 
     @property
     def rla(self):
-        """Get the resting level activations."""
+        """Summarize the resting level activations."""
         rla = {}
         for k, v in self.layers.items():
             r = v.resting
@@ -107,8 +113,7 @@ class Network(object):
             Whether the layer which is added is an output layer.
 
         """
-        layer = self.layertype(len(node_names),
-                               resting_activation,
+        layer = self.layertype(resting_activation,
                                node_names,
                                self.minimum,
                                self.step_size,
@@ -181,14 +186,13 @@ class Network(object):
 
             for k, l in self.outputs.items():
 
-                act = dict(l.active())
+                act = np.copy(l.activations)
                 # If anything is active
                 activations[k].append(act)
 
-            if self.outputs:
-                if np.all([np.any(x.activations > threshold)
-                           for x in self.outputs.values()]):
-                    break
+            if np.all([np.any(activations[k][-1] > threshold)
+                       for k in self.outputs]):
+                break
         else:
             if strict:
                 max_activation = np.max([x.activations
@@ -196,33 +200,30 @@ class Network(object):
                 raise ValueError("Maximum cycles reached, maximum activation "
                                  "was {}".format(max_activation))
 
-        return dict(activations)
+        return {k: np.array(v) for k, v in activations.items()}
 
     def _single_cycle(self):
         """Perform a single pass through the network."""
         updates = {}
 
+        # The updates are synchronous, so all updates are first calculated,
+        # and then applied simultaneously.
         for k, layer in self.layers.items():
+            # Static layers don't get updated.
             if layer.static:
                 continue
-            a = layer.activate()
-            updates[k] = np.copy(a)
-        for k, layer in self.layers.items():
-            if layer.static:
-                continue
-            layer.activations[:] += updates[k]
-            layer.activations[:] = np.clip(layer.activations,
-                                           a_min=self.minimum,
-                                           a_max=1.0)
+            updates[k] = layer.activate()
+        for k, v in updates.items():
+            self.layers[k].activations[:] += v
 
     def _reset(self):
-        """Reset the activation of all nodes back to 0."""
+        """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
             layer.activations[:] = layer.resting
 
     def connect_layers(self, from_name, to_name, weights):
         """
-        Connect 2 layers to each other using a transfer matrix.
+        Connect 2 layers to each other using a weight matrix.
 
         Parameters
         ----------
@@ -231,7 +232,7 @@ class Network(object):
         to_name : str
             The name of the terminating layer.
         weights : np.array
-            The transfer matrix used to connect both layers.
+            The weight matrix used to connect both layers.
 
         """
         to_layer = self.layers[to_name]
