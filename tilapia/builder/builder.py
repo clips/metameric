@@ -64,20 +64,16 @@ def build_model(items,
 
     unique_items = defaultdict(set)
 
-    sequence_layers = set()
+    for item in items:
+        for key, value in item.items():
+            if key.split("_")[0] in layer_names:
+                if isinstance(value, (list, tuple, set)):
+                    unique_items[key].update(value)
+                else:
+                    unique_items[key].add(value)
 
-    for key in layer_names:
-        for item in items:
-            try:
-                try:
-                    unique_items[key].add(item[key])
-                except TypeError:
-                    unique_items[key].update(item[key])
-                    sequence_layers.add(key)
-            except KeyError:
-                pass
-        unique_items[key] = {k: idx for idx, k in
-                             enumerate(unique_items[key])}
+    unique_items = {k: {x: idx for idx, x in enumerate(v)}
+                    for k, v in unique_items.items()}
 
     # Initialize the Skeleton.
     s = Network(minimum=minimum,
@@ -90,6 +86,8 @@ def build_model(items,
         # Determine resting level activation.
         # If the resting is denoted as "global", every
         # node has the same rla.
+        orig_key = key
+        key = key.split("_")[0]
         if rla[key] == 'global':
             resting = np.ones(len(local_items)) * global_rla
         else:
@@ -105,21 +103,27 @@ def build_model(items,
             resting = np.log10(resting)
             resting /= max(resting)
             resting = global_rla * (1.0 - resting)
-
         node_names, _ = zip(*sorted(local_items.items(), key=lambda x: x[1]))
 
-        s.create_layer(key,
+        s.create_layer(orig_key,
                        resting,
                        node_names,
                        key in outputs)
 
+    layer_keys = set(unique_items.keys())
     # Transfer matrix is a N * N * 2 matrix.
-    for a, b in product(layer_names, layer_names):
-        pos, neg = weight_matrix[layer_names.index(a),
-                                 layer_names.index(b)]
+    for a, b in product(layer_keys, layer_keys):
+        pos, neg = weight_matrix[layer_names.index(a.split("_")[0]),
+                                 layer_names.index(b.split("_")[0])]
 
         if not pos and not neg:
             continue
+
+        split_a = a.split("_")
+        split_b = b.split("_")
+        if len(split_a) == 2 and len(split_b) == 2:
+            if split_a[1] != split_b[1]:
+                continue
 
         lookup_1 = unique_items[a]
         lookup_2 = unique_items[b]
@@ -129,26 +133,17 @@ def build_model(items,
         for i in items:
             indices_a = []
             indices_b = []
-            if a in sequence_layers:
-                for x in i[a]:
-                    indices_a.append(lookup_1[x])
+            if isinstance(i[a], (tuple, list, set)):
+                indices_a.extend([lookup_1[x] for x in i[a]])
             else:
                 indices_a.append(lookup_1[i[a]])
-            if b in sequence_layers:
-                for x in i[b]:
-                    indices_b.append(lookup_2[x])
+            if isinstance(i[b], (tuple, list, set)):
+                indices_b.extend([lookup_2[x] for x in i[b]])
             else:
                 indices_b.append(lookup_2[i[b]])
 
             x, y = zip(*tuple(product(indices_a, indices_b)))
             mtr[x, y] = pos
-
-        if a in sequence_layers and b in sequence_layers:
-            for name, idx in s.layers[a].name2idx.items():
-                n = name.split("-")[-1]
-                for name_2, idx_2 in s.layers[b].name2idx.items():
-                    if n != name_2.split("-")[-1]:
-                        mtr[idx, idx_2] = 0
 
         s.connect_layers(a, b, mtr)
 
@@ -159,7 +154,8 @@ def build_model(items,
 
 def _check(items, layer_names):
     """Check whether the items are valid."""
-    all_keys = set(chain.from_iterable([i.keys() for i in items]))
+    all_keys = set(chain.from_iterable([[x.split("_")[0] for x in i.keys()]
+                                        for i in items]))
     if set(layer_names) - all_keys:
         raise ValueError("Not all layer names were present in the items: "
                          "{}".format(set(layer_names) - all_keys))

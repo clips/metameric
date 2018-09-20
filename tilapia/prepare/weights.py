@@ -8,7 +8,7 @@ from itertools import chain
 IA_WEIGHTS = {("letters", "orthography"): [.28, -.01],
               ("orthography", "letters"): [1.2, .0],
               ("orthography", "orthography"): [.0, -.21],
-              ("letters-features", "letters"): [.005, -.15]}
+              ("orthography-features", "letters"): [.005, -.15]}
 
 
 def weight_adaptation(word_length, weights=IA_WEIGHTS):

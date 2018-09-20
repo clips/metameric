@@ -93,12 +93,11 @@ def decompose(items, field, name, length_adaptation=True):
     lengths = [len(item[field]) for item in items]
     max_length = max(lengths)
     for item, length in zip(items, lengths):
-
-        item[name] = ["{}-{}".format(l.lower(), idx)
-                      for idx, l in enumerate(item[field])]
+        for idx, l in enumerate(item[field]):
+            item["{}_{}".format(name, idx)] = l.lower()
         if length_adaptation:
-            item[name].extend([" -{}".format(idx)
-                               for idx in range(length, max_length)])
+            for idx in range(length, max_length):
+                item["{}_{}".format(name, idx)] = " "
 
     return items
 
@@ -106,13 +105,12 @@ def decompose(items, field, name, length_adaptation=True):
 def add_features(items,
                  feature_set,
                  feature_name='features',
-                 field='letters',
+                 field='orthography',
                  strict=True):
     """Adds features to words."""
     items = deepcopy(items)
     new_items = []
     for item in items:
-        item[feature_name] = []
         for idx, letter in enumerate(item[field]):
             try:
                 feats = feature_set[letter.split("-")[0]]
@@ -120,8 +118,7 @@ def add_features(items,
                 if not strict:
                     break
                 raise e
-            item[feature_name].extend(["{}-{}".format(f, idx)
-                                       for f in feats])
+            item["{}_{}".format(feature_name, idx)] = feats
         else:
             new_items.append(item)
 
@@ -137,16 +134,17 @@ def process_data(items,
                  length_adaptation=True,
                  strict=True):
     """Process data, add fields, and add them to the item."""
-    if decomposable_names:
-        d = zip(decomposable, decomposable_names)
-    else:
-        d = zip(decomposable, ["{}-decomposed" for x in decomposable])
+    if decomposable:
+        if decomposable_names:
+            d = zip(decomposable, decomposable_names)
+        else:
+            d = zip(decomposable, ["{}-decomposed" for x in decomposable])
 
-    for field, new_name in d:
-        items = decompose(items,
-                          field,
-                          new_name,
-                          length_adaptation)
+        for field, new_name in d:
+            items = decompose(items,
+                              field,
+                              new_name,
+                              length_adaptation)
 
     for layer_name, name in zip(feature_layers, feature_sets):
         feats = FEATURES[name] if negative_features else POS_FEATURES[name]

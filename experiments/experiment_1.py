@@ -55,12 +55,10 @@ if __name__ == "__main__":
         w = deepcopy(sampler.sample(1000))
         rt = np.array([x['rt'] for x in w])
 
-        inputs = ('letters-features',)
-
         w = process_data(w,
                          decomposable=('orthography',),
                          decomposable_names=('letters',),
-                         feature_layers=('letters',),
+                         feature_layers=('orthography',),
                          feature_sets=('fourteen',),
                          negative_features=False,
                          length_adaptation=False)
