@@ -178,16 +178,12 @@ class Network(object):
         for idx in range(max_cycles):
 
             self._single_cycle()
-
             for k, l in self.outputs.items():
-
-                act = dict(l.active())
-                # If anything is active
-                activations[k].append(act)
+                activations[k].append(np.copy(l.activations))
 
             if self.outputs:
-                if np.all([np.any(x.activations > threshold)
-                           for x in self.outputs.values()]):
+                if np.all([np.any(activations[k][-1] > threshold)
+                          for k in self.outputs]):
                     break
         else:
             if strict:
@@ -196,7 +192,7 @@ class Network(object):
                 raise ValueError("Maximum cycles reached, maximum activation "
                                  "was {}".format(max_activation))
 
-        return dict(activations)
+        return activations
 
     def _single_cycle(self):
         """Perform a single pass through the network."""
@@ -205,15 +201,11 @@ class Network(object):
         for k, layer in self.layers.items():
             if layer.static:
                 continue
-            a = layer.activate()
-            updates[k] = np.copy(a)
+            updates[k] = layer.activate()
         for k, layer in self.layers.items():
             if layer.static:
                 continue
             layer.activations[:] += updates[k]
-            layer.activations[:] = np.clip(layer.activations,
-                                           a_min=self.minimum,
-                                           a_max=1.0)
 
     def _reset(self):
         """Reset the activation of all nodes back to 0."""

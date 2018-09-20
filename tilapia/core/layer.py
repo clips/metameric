@@ -53,12 +53,12 @@ class Layer(object):
         self.name2idx = {k: idx for idx, k in enumerate(node_names)}
         self.idx2name = {v: k for k, v in self.name2idx.items()}
         self.connections = []
-        self.weights = None
         self.resting = np.copy(resting).astype(np.float64)
         self.minimum = minimum
         self.decay_rate = decay_rate
         self.name = name
         self.step_size = step_size
+        self.weights = []
 
     def active(self):
         """Get all currently active nodes and their names."""
@@ -85,28 +85,12 @@ class Layer(object):
             raise ValueError("Transfer matrix is not correct shape.")
 
         self.connections.append(layer)
-        if self.weights is None:
-            self.weights = weights
-        else:
-            self.weights = np.concatenate([self.weights,
-                                           weights])
-
-    @property
-    def weight_matrices(self):
-        """Return each weights matrix individually."""
-        prev = 0
-        mtrs = []
-        for x in self.connections:
-            num_act = len(x.activations)
-            mtrs.append(self.weights[prev:prev+num_act])
-            prev += num_act
-
-        return mtrs
+        self.weights.append(weights)
 
     @property
     def static(self):
         """Whether the activations should be updated."""
-        return self.weights is None
+        return not self.weights
 
     def activate(self):
         """
@@ -131,11 +115,10 @@ class Layer(object):
         """
         if not self.connections:
             return np.zeros_like(self.activations)
-        p = np.concatenate([x.activations for x in self.connections])
 
         return strength_new(self.activations,
                             self.resting,
-                            p,
+                            [x.activations for x in self.connections],
                             self.weights,
                             self.minimum,
                             self.decay_rate,
