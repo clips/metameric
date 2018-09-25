@@ -219,7 +219,9 @@ class Network(object):
     def _reset(self):
         """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
-            layer.activations[:] = layer.resting
+            if layer.static:
+                continue
+            layer.activations = np.copy(layer.resting)
 
     def connect_layers(self, from_name, to_name, weights):
         """
