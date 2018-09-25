@@ -49,7 +49,7 @@ if __name__ == "__main__":
     sampler = BinnedSampler(words, freqs)
     np.random.seed(44)
 
-    n_cyc = 350
+    n_cyc = 1000
 
     for idx in tqdm(range(100)):
         w = deepcopy(sampler.sample(1000))
