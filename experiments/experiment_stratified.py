@@ -36,7 +36,7 @@ def accuracy(words, results, threshold=.7):
 
 if __name__ == "__main__":
 
-    header = []
+    header = ['word', 'iteration', 'rt', 'freq', 'cycles', 'le', 'ne', 'spa']
     results = []
     random.seed(44)
 
