@@ -12,6 +12,7 @@ def build_model(items,
                 rla,
                 global_rla,
                 outputs=(),
+                monitors=(),
                 minimum=-.2,
                 step_size=1.0,
                 decay_rate=.07):
@@ -32,7 +33,9 @@ def build_model(items,
     global_rla : float
         The global RLA, used to scale the variable RLA.
     outputs : tuple
-        The layer names that are used as output.
+        The names of the layers which are used as output.
+    monitors : tuple
+        The names of the layers which are monitored for convergence.
     minimum : float
         The minimum activation.
     step_size : float
@@ -111,7 +114,8 @@ def build_model(items,
         s.create_layer(key,
                        resting,
                        node_names,
-                       key in outputs)
+                       key in outputs,
+                       key in monitors)
 
     # Transfer matrix is a N * N * 2 matrix.
     for a, b in product(layer_names, layer_names):

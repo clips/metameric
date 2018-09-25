@@ -58,6 +58,7 @@ class Network(object):
                              "".format(decay_rate))
         self.decay_rate = np.float64(decay_rate)
         self.outputs = {}
+        self.monitors = {}
         self.inputs = {}
         self.layertype = layertype
         self.compiled = False
@@ -70,6 +71,8 @@ class Network(object):
         """Compile the network by checking whether all settings are valid."""
         if not self.outputs:
             raise ValueError("You did not specify any outputs.")
+        if not self.monitors:
+            raise ValueError("You did not specify any layers to monitor.")
 
         for k, v in self.layers.items():
             if v.static:
@@ -97,7 +100,8 @@ class Network(object):
                      layer_name,
                      resting_activation,
                      node_names,
-                     is_output=False):
+                     is_output=False,
+                     is_monitor=False):
         """
         Add a layer to the network.
 
@@ -123,6 +127,8 @@ class Network(object):
         self.layers[layer_name] = layer
         if is_output:
             self.outputs[layer_name] = layer
+        if is_monitor:
+            self.monitors[layer_name] = layer
 
     def activate_bunch(self,
                        x,
@@ -187,16 +193,15 @@ class Network(object):
             for k, l in self.outputs.items():
 
                 act = np.copy(l.activations)
-                # If anything is active
                 activations[k].append(act)
 
-            if np.all([np.any(activations[k][-1] > threshold)
-                       for k in self.outputs]):
+            if np.all([np.any(l.activations > threshold)
+                       for l in self.monitors.values()]):
                 break
         else:
             if strict:
                 max_activation = np.max([x.activations
-                                         for x in self.outputs.values()], 1)
+                                         for x in self.monitors.values()], 1)
                 raise ValueError("Maximum cycles reached, maximum activation "
                                  "was {}".format(max_activation))
 
