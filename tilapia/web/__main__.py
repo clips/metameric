@@ -13,19 +13,19 @@ global max_cycles
 global junk_folder
 
 
-@route('/content/<filename:re:.*\.css>')
+@route('/static/content/<filename:re:.*\.css>')
 def stylesheets(filename):
-    return static_file(filename, root='content/')
+    return static_file(filename, root='static/content')
 
 
-@route('/content/<filename:re:.*>')
+@route('/static/content/<filename:re:.*>')
 def pictures(filename):
-    return static_file(filename, root='content/')
+    return static_file(filename, root='static/content')
 
 
-@route('/js/<filename:re:.*\.js>')
+@route('/static/scripts/<filename:re:.*\.js>')
 def javascript(filename):
-    return static_file(filename, root='js/')
+    return static_file(filename, root='static/scripts/')
 
 
 @route("/contact", method='GET')
@@ -86,6 +86,7 @@ def get_analysis():
 @route("/analysis", method='POST')
 def analysis():
     """Analyze an IA model."""
+    print(request.body.read())
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
     rla = request.forms.get("rla")
@@ -96,6 +97,10 @@ def analysis():
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
+
+    print(input_file)
+    print(step)
+    print(outputlayers)
 
     if not param_file:
         weights = None
@@ -135,6 +140,7 @@ def post_word():
 def main_experiment():
     """
     """
+    print(request.body.read())
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
     test_file = request.files.get("path_test")

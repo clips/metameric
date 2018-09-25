@@ -10,42 +10,42 @@
     <link rel="icon" href="../../favicon.ico">
 
     <title>Tilapia: a fast Interactive Activation Simulator.</title>
-
+    <script src="/static/scripts/popper.min.js"></script>
+    <script src="/static/scripts/bootstrap.min.js"></script>
+    <script src="/static/scripts/jquery-3.3.1.min.js"></script>
+    <script src="/static/scripts/validation.js"></script>
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
 
     <!-- Custom styles for this template -->
-    <link href="content/template.css" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
   </head>
   <!-- Fixed navbar -->
   <div class="container" id="topContent" bg-primary>
-      <img src="content/ChromisNiloticus.jpg" alt="Fish" class="center" id="fish">
+      <img src="static/content/ChromisNiloticus.jpg" alt="Fish" class="center" id="fish">
   </div>
 
 <div class="container">
   <div class="header clearfix">
-    <nav>
-      <ul class="nav nav-pills pull-right">
-         <li><a href="home">Home</a></li>
-         <li><a href="experiment">Experiment</a></li>
-         <li><a href="prepare">Prepare Data</a></li>
-         <li><a href="analysis">Analysis</a></li>
-         <li><a href="about">About</a></li>
-         <li><a href="contact">Contact</a></li>
-      </ul>
-      <h3>TilapIA</h3>
-    </nav>
+      <div class="d-flex flex-column flex-md-row align-items-center p-1 mb-1 bg-white">
+      <h4 class="my-0 mr-md-auto font-weight-bold">TilapIA</h5>
+      <nav class="">
+        <a href="home" class="mr-md-2">Home</a>
+        <a href="experiment" class="mr-md-2">Experiment</a></li>
+        <a href="prepare" class="mr-md-2">Prepare Data</a>
+        <a href="analysis" class="mr-md-2">Analysis</a>
+        <a href="about" class="mr-md-2">About</a>
+      </nav>
+    </div>
   </div>
 
     <div class="container theme-showcase" role="main">
         {{!base}}
     </div>
 </body>
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
 </html>
