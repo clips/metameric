@@ -138,7 +138,6 @@ class Layer(object):
         if not self.connections:
             return np.zeros_like(self.activations)
         p = np.concatenate([x.activations for x in self.connections])
-
         return strength_new(self.activations,
                             self.resting,
                             p,
