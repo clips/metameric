@@ -86,7 +86,6 @@ def get_analysis():
 @route("/analysis", method='POST')
 def analysis():
     """Analyze an IA model."""
-    print(request.body.read())
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
     rla = request.forms.get("rla")
@@ -97,10 +96,6 @@ def analysis():
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
-
-    print(input_file)
-    print(step)
-    print(outputlayers)
 
     if not param_file:
         weights = None
