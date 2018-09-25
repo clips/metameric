@@ -53,6 +53,10 @@ if __name__ == "__main__":
                         nargs='+',
                         default=('orthography',),
                         help="The layers to use as output.")
+    parser.add_argument("--monitor_layers",
+                        nargs='+',
+                        default=('orthography',),
+                        help="The layers to monitor for convergence.")
     parser.add_argument("--rla_layers",
                         nargs='+',
                         default=('orthography'),
@@ -77,6 +81,7 @@ if __name__ == "__main__":
              args.rla_variable,
              args.rla_layers,
              args.output_layers,
+             args.monitor_layers,
              args.rla,
              args.step,
              args.max_cycles,
