@@ -29,12 +29,12 @@ def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,
 @cython.wraparound(False)
 @cython.boundscheck(False)
 def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,
-             np.ndarray[DTYPE_F_t, ndim=1] resting,
-             np.ndarray[DTYPE_F_t, ndim=1] conn,
-             np.ndarray[DTYPE_F_t, ndim=2] mtr,
-             DTYPE_F_t minimum,
-             DTYPE_F_t decay,
-             DTYPE_F_t step_size):
+                 np.ndarray[DTYPE_F_t, ndim=1] resting,
+                 np.ndarray[DTYPE_F_t, ndim=1] conn,
+                 np.ndarray[DTYPE_F_t, ndim=2] mtr,
+                 DTYPE_F_t minimum,
+                 DTYPE_F_t decay,
+                 DTYPE_F_t step_size):
     """Fast function for calculating association strength."""
     cdef int i, j
     cdef int n_conns = conn.shape[0]
