@@ -38,7 +38,7 @@ def parse_parameter_file(f):
     if f.mode == 'rb':
         f = (x.decode('utf-8') for x in f)
     for line in f:
-        orig, dest, pos, neg = line.lower().strip().split("\t")
+        orig, dest, pos, neg = line.lower().strip().split(",")
         weights[(orig, dest)] = [float(pos), float(neg)]
 
     return weights
@@ -53,7 +53,8 @@ def get_model(words_file,
               global_rla,
               step_size,
               decay_rate,
-              minimum_activation):
+              minimum_activation,
+              adapt_weights):
     if parameters is None:
         print("Defaulting to standard IA parameters.")
         weights = IA_WEIGHTS
@@ -61,7 +62,8 @@ def get_model(words_file,
     words = read_input_file(words_file)
     max_length = max([len(w['orthography']) for w in words])
 
-    weights = weight_adaptation(max_length, weights)
+    if adapt_weights:
+        weights = weight_adaptation(max_length, weights)
     matrix, names = weights_to_matrix(weights)
 
     for w in words:
@@ -99,7 +101,8 @@ def make_run(words_file,
              step_size,
              max_cycles,
              decay_rate,
-             minimum_activation):
+             minimum_activation,
+             adapt_weights):
     """Method for running."""
     test_words = read_input_file(test_words_file)
     m = get_model(words_file,
@@ -111,7 +114,8 @@ def make_run(words_file,
                   global_rla,
                   step_size,
                   decay_rate,
-                  minimum_activation)
+                  minimum_activation,
+                  adapt_weights)
 
     keys_words = Counter(chain.from_iterable(test_words))
     keys_in_all = [k for k, v in keys_words.items() if v == len(test_words)]
