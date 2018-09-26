@@ -180,7 +180,7 @@ class Network(object):
 
         for name, layer in self.inputs.items():
             data = x[name]
-            if not isinstance(data, Iterable):
+            if not isinstance(data, (tuple, set, list)):
                 data = [data]
             layer.activations[[layer.name2idx[p] for p in data]] = 1
 
@@ -225,7 +225,7 @@ class Network(object):
         """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
             if layer.static:
-                continue
+                layer.activations *= 0
             layer.activations = np.copy(layer.resting)
 
     def connect_layers(self, from_name, to_name, weights):
@@ -244,7 +244,8 @@ class Network(object):
         """
         to_layer = self.layers[to_name]
         from_layer = self.layers[from_name]
-        to_layer.add_connection(from_layer, weights)
+        to_layer.add_from_connection(from_layer, weights)
+        from_layer.add_to_connection(to_layer)
 
     def __repr__(self):
         """Print the TilapIA."""
@@ -253,3 +254,23 @@ class Network(object):
                              for a, b in sorted(self.layers.items())])
 
         return string
+
+    def prepare(self, item):
+        """Prepare an item to feature layers."""
+        for k, v in self.inputs.items():
+            if k in item:
+                continue
+            for c in v.to_connections:
+                k2 = c.name
+                if k2 not in item:
+                    continue
+                if isinstance(item[k2], (tuple, list, set)):
+                    i = [c.name2idx[x] for x in item[k2]]
+                else:
+                    i = [c.name2idx[item[k2]]]
+                mtr = c.weight_matrices[k]
+                idxes = np.nonzero(mtr[:, i] > 0)[0]
+                item[k] = sorted({v.idx2name[x] for x in idxes},
+                                 key=lambda x: x[-1])
+
+        return item
