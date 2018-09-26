@@ -67,7 +67,7 @@ def build_model(items,
 
     unique_items = defaultdict(set)
 
-    sequence_layers = set()
+    slot_layers = set()
 
     for key in layer_names:
         for item in items:
@@ -76,9 +76,10 @@ def build_model(items,
                     unique_items[key].add(item[key])
                 except TypeError:
                     unique_items[key].update(item[key])
-                    sequence_layers.add(key)
+                    slot_layers.add(key)
             except KeyError:
                 pass
+
         unique_items[key] = {k: idx for idx, k in
                              enumerate(unique_items[key])}
 
@@ -133,12 +134,12 @@ def build_model(items,
         for i in items:
             indices_a = []
             indices_b = []
-            if a in sequence_layers:
+            if a in slot_layers:
                 for x in i[a]:
                     indices_a.append(lookup_1[x])
             else:
                 indices_a.append(lookup_1[i[a]])
-            if b in sequence_layers:
+            if b in slot_layers:
                 for x in i[b]:
                     indices_b.append(lookup_2[x])
             else:
@@ -147,7 +148,7 @@ def build_model(items,
             x, y = zip(*tuple(product(indices_a, indices_b)))
             mtr[x, y] = pos
 
-        if a in sequence_layers and b in sequence_layers:
+        if a in slot_layers and b in slot_layers:
             for name, idx in s.layers[a].name2idx.items():
                 n = name.split("-")[-1]
                 for name_2, idx_2 in s.layers[b].name2idx.items():
