@@ -1,7 +1,7 @@
 """Base class for IA models."""
 import numpy as np
 
-from collections import defaultdict, Iterable
+from collections import defaultdict
 from .layer import Layer
 from tqdm import tqdm
 
