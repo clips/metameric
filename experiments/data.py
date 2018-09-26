@@ -20,6 +20,6 @@ def read_elp_format(filename, lengths=()):
         if lengths and len(line['Word']) not in lengths:
             continue
         temp.add(line['Word'])
-        yield {"orthography": line["Word"],
+        yield {"orthography": (line["Word"],),
                "rt": line["I_Mean_RT"],
                "frequency": line["SUBTLWF"]}

@@ -12,7 +12,7 @@ def convert_feature_set(feature_set, negative=True):
     if isinstance(feature_set, tuple):
         for idx, sub_item in enumerate(feature_set):
             interm = convert_feature_set(sub_item, negative)
-            interm = {k: ["{}-{}".format(x, idx) for x in v]
+            interm = {k: [(x, idx) for x in v]
                       for k, v in interm.items()}
             result.update(interm)
     else:
@@ -90,15 +90,16 @@ def write_file(items, path):
 def decompose(items, field, name, length_adaptation=True):
     """Adds letter features to words."""
     items = deepcopy(items)
-    lengths = [len(item[field]) for item in items]
-    max_length = max(lengths)
-    for item, length in zip(items, lengths):
-
-        item[name] = ["{}-{}".format(l.lower(), idx)
-                      for idx, l in enumerate(item[field])]
-        if length_adaptation:
-            item[name].extend([" -{}".format(idx)
-                               for idx in range(length, max_length)])
+    max_length = max([max([len(x) for x in item[field]]) for item in items])
+    for item in items:
+        item[name] = []
+        for sub_item in item[field]:
+            length = len(sub_item)
+            item[name].extend([(l.lower(), idx)
+                               for idx, l in enumerate(sub_item)])
+            if length_adaptation:
+                item[name].extend([(" ", idx)
+                                   for idx in range(length, max_length)])
 
     return items
 
@@ -113,15 +114,14 @@ def add_features(items,
     new_items = []
     for item in items:
         item[feature_name] = []
-        for idx, letter in enumerate(item[field]):
+        for idx, sub_item in enumerate(item[field]):
             try:
-                feats = feature_set[letter.split("-")[0]]
+                feats = feature_set[sub_item[0]]
             except KeyError as e:
                 if not strict:
                     break
                 raise e
-            item[feature_name].extend(["{}-{}".format(f, idx)
-                                       for f in feats])
+            item[feature_name].extend([(f, idx) for f in feats])
         else:
             new_items.append(item)
 
@@ -168,6 +168,7 @@ def process_and_write(input_file,
                       strict):
     """Process data and write it to a file."""
     items = read_input_file(input_file)
+
     items = process_data(items,
                          decomposable,
                          decomposable_names,

@@ -1,4 +1,4 @@
 """Easily construct skeleton models."""
-from .builder import build_model
+from .builder import Builder
 
-__all__ = ["build_model"]
+__all__ = ["Builder"]

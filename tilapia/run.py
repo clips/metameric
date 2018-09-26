@@ -26,9 +26,10 @@ def read_input_file(f):
         items.append(item)
 
     for k in header:
-        if all([len(i[k]) == 1 for i in items]):
+        i = [i[k].split("-") for i in items]
+        if all([len(x) == 2 for x in i]):
             for i in items:
-                i[k] = i[k][0]
+                i[k] = [x.split("-") for x in i[k]]
     return items
 
 
