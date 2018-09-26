@@ -23,7 +23,7 @@ def convert_feature_set(feature_set, negative=True):
             result[k] = pos
             if negative:
                 neg = np.flatnonzero(v - 1)
-                neg = ["{}-neg".format(x) for x in neg]
+                neg = ["{}_neg".format(x) for x in neg]
                 result[k].extend(neg)
 
     return result
