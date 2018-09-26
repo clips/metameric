@@ -1,5 +1,5 @@
 %rebase('templates/base.tpl', title='Index')
-<img src="content/plot.png" alt="No graph yet." class="center"/>
+<img src="static/content/plot.png" alt="No graph yet." class="center"/>
 <form action="/analysis_2" method="post" enctype="multipart/form-data">
     <div class="grid">
         % for layer in inputs:
