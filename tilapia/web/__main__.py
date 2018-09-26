@@ -4,7 +4,7 @@ from bottle import run, route, request, template, static_file
 from tilapia.run import make_run, get_model
 from tilapia.plot import result_plot
 from tilapia.prepare.data import process_and_write
-from itertools import tee
+from itertools import tee, chain
 from argparse import ArgumentParser
 
 
@@ -23,7 +23,7 @@ def pictures(filename):
     return static_file(filename, root='static/content')
 
 
-@route('/static/scripts/<filename:re:.*\.js>')
+@route('/static/scripts/<filename:re:.*>')
 def javascript(filename):
     return static_file(filename, root='static/scripts/')
 
@@ -96,6 +96,8 @@ def analysis():
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
+    w = request.forms.get("w")
+    monitorlayers = request.forms.get("monitorlayers")
 
     if not param_file:
         weights = None
@@ -111,24 +113,42 @@ def analysis():
                   rla_variable=rla_variable,
                   rla_layers=rla_layers,
                   output_layers=outputlayers.split(),
+                  monitor_layers=monitorlayers.split(),
                   global_rla=float(rla),
                   step_size=float(step),
                   decay_rate=float(decay),
-                  minimum_activation=float(min_val))
+                  minimum_activation=float(min_val),
+                  adapt_weights=bool(w))
 
-    return template("templates/analysis_2.tpl", inputs=sorted(m.inputs))
+    inputs = [[l.name for l in x.to_connections] for x in m.inputs.values()]
+    inputs = sorted(set(chain.from_iterable(inputs)))
+
+    return template("templates/analysis_2.tpl", inputs=inputs)
 
 
 @route("/analysis_2", method="POST")
 def post_word():
-
+    """Post a word and show the graph."""
     global m
     global max_cycles
-    word = {x: request.forms.get(x).split() for x in m.inputs}
-    res = m.activate(word, max_cycles=max_cycles)
-    f = result_plot(res)
-    f.savefig(os.path.join("content", "plot.png"))
-    return template("templates/analysis_2.tpl", inputs=sorted(m.inputs))
+
+    inputs = [[l.name for l in x.to_connections] for x in m.inputs.values()]
+    inputs = sorted(set(chain.from_iterable(inputs)))
+
+    word = {}
+    for x in inputs:
+        max_length = max([int(x.split("-")[1]) for x in m[x].name2idx.keys()])
+        max_length += 1
+        data = request.forms.get(x).ljust(max_length)
+        word[x] = ["{}-{}".format(data[idx], idx)
+                   for idx in range(max_length)]
+
+    word = m.prepare(word)
+    res = m.activate(word, max_cycles=max_cycles, strict=False)
+    f = result_plot(res, {k: m[k].node_names for k in res.keys()})
+    f.savefig(os.path.join("static/content", "plot.png"))
+
+    return template("templates/analysis_2.tpl", inputs=inputs)
 
 
 @route("/experiment", method='POST')
@@ -148,6 +168,8 @@ def main_experiment():
     outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
+    w = request.forms.get("w")
+    monitorlayers = request.forms.get("monitorlayers")
 
     out_f = "run_{}.csv".format(os.path.splitext(input_file.filename)[0])
 
@@ -171,11 +193,13 @@ def main_experiment():
              rla_variable=rla_variable,
              rla_layers=rla_layers,
              output_layers=outputlayers.split(),
+             monitor_layers=monitorlayers.split(),
              global_rla=float(rla),
              step_size=float(step),
              max_cycles=int(max_cyc),
              decay_rate=float(decay),
-             minimum_activation=float(min_val))
+             minimum_activation=float(min_val),
+             adapt_weights=bool(w))
 
     return static_file("test.csv", root=junk, download=out_f)
 
@@ -196,5 +220,9 @@ if __name__ == "__main__":
         junk = args.junk
     else:
         junk = os.getcwd()
+    try:
+        os.remove(os.path.join(junk, "static/content/plot.png"))
+    except FileNotFoundError:
+        pass
 
     run(host='localhost', port=8080)
