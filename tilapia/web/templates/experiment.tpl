@@ -11,11 +11,11 @@
     </div>
     <div class="form-group row mb-0">
         <label for="path_test" class="col-sm-5 col-form-label">Path to test file</label>
-        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="A CSV containing your test data. Make sure to prepare it first using te prepare tab, above. This can be left empty, which will lead to the training data also being used to test the model.">
+        <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="A CSV containing your test data. Make sure to prepare it first using te prepare tab, above.">
             ?
         </button>
         <div class="col-sm-5">
-            <input type="file" class="form-control form-control-sm" id="path_test" name="path_test">
+            <input type="file" class="form-control form-control-sm" id="path_test" name="path_test" required>
         </div>
     </div>
     <div class="form-group row mb-0">
