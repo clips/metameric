@@ -66,7 +66,7 @@ if __name__ == "__main__":
                         default="frequency",
                         help="The variable on which to base the variable RLA")
     parser.add_argument("-W",
-                        store=False,
+                        const=False,
                         default=True,
                         action="store_const",
                         help="If this switch is passed, weight adaptation"
@@ -79,8 +79,8 @@ if __name__ == "__main__":
     else:
         test = args.input
 
-    make_run(open(args.input),
-             open(test),
+    make_run(args.input,
+             test,
              args.output,
              args.parameters,
              args.threshold,
