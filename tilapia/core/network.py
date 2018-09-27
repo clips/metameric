@@ -40,8 +40,7 @@ class Network(object):
     def __init__(self,
                  minimum=-.2,
                  step_size=1.0,
-                 decay_rate=.07,
-                 layertype=Layer):
+                 decay_rate=.07):
         """Init function."""
         self.layers = {}
         self.minimum = np.float64(minimum)
@@ -60,7 +59,6 @@ class Network(object):
         self.outputs = {}
         self.monitors = {}
         self.inputs = {}
-        self.layertype = layertype
         self.compiled = False
 
     def __getitem__(self, k):
@@ -117,12 +115,12 @@ class Network(object):
             Whether the layer which is added is an output layer.
 
         """
-        layer = self.layertype(resting_activation,
-                               node_names,
-                               self.minimum,
-                               self.step_size,
-                               self.decay_rate,
-                               name=layer_name)
+        layer = Layer(resting_activation,
+                      node_names,
+                      self.minimum,
+                      self.step_size,
+                      self.decay_rate,
+                      name=layer_name)
 
         self.layers[layer_name] = layer
         if is_output:
@@ -224,9 +222,7 @@ class Network(object):
     def _reset(self):
         """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
-            if layer.static:
-                layer.activations *= 0
-            layer.activations = np.copy(layer.resting)
+            layer.reset()
 
     def connect_layers(self, from_name, to_name, weights):
         """
