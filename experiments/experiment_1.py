@@ -2,8 +2,8 @@ import numpy as np
 import random
 import pandas as pd
 
-from tilapia.builder import build_model
-from tilapia.prepare.weights import weight_adaptation, weights_to_matrix
+from tilapia.builder import Builder
+from tilapia.prepare.weights import IA_WEIGHTS, weights_to_matrix
 from tilapia.prepare.data import process_data
 from experiments.data import read_elp_format
 from copy import deepcopy
@@ -64,20 +64,22 @@ if __name__ == "__main__":
                          feature_sets=('fourteen',),
                          negative_features=False,
                          length_adaptation=False)
-        matrix, names = weights_to_matrix(weight_adaptation(4))
+        matrix, names = weights_to_matrix(IA_WEIGHTS)
 
         rla = {k: 'global' for k in names}
         rla['orthography'] = 'frequency'
 
-        s = build_model(w,
-                        names,
-                        matrix,
-                        rla,
-                        -.05,
-                        outputs=('orthography',),
-                        step_size=.5)
+        s = Builder(names,
+                    matrix,
+                    rla,
+                    -.05,
+                    outputs=('orthography',),
+                    monitors=('orthography',),
+                    step_size=.5,
+                    weight_adaptation=False)
 
-        result = s.activate_bunch(w,
+        m = s.build_model(w)
+        result = m.activate_bunch(w,
                                   max_cycles=n_cyc,
                                   threshold=.7,
                                   strict=False)
