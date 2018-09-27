@@ -35,8 +35,8 @@ plunkett_phonemes[0][" "] = [0] * 6
 plunkett_phonemes[1][" "] = [0] * 6
 
 # TODO: We need some hack to correctly deal with this.
-patpho_bin[0][" "] = [0] * 5
-patpho_bin[1][" "] = [0] * 7
+patpho_bin[0]["C"] = [0] * 5
+patpho_bin[1]["V"] = [0] * 7
 
 FEATURES = {"fourteen": convert_feature_set(fourteen),
             "sixteen": convert_feature_set(sixteen),
@@ -82,8 +82,17 @@ def write_file(items, path):
     w.writerow(header)
 
     for item in items:
-        row = [" ".join(item[h]) if isinstance(item[h], (list, tuple, set))
-               else item[h] for h in header]
+        row = []
+        for h in header:
+            i = item[h]
+            if isinstance(i[0], tuple):
+                row.append(" ".join(["-".join([str(z) for z in x])
+                                     for x in i]))
+            elif isinstance(i, tuple):
+                row.append(" ".join(i))
+            else:
+                row.append(i)
+
         w.writerow(row)
 
 
@@ -141,6 +150,11 @@ def process_data(items,
         d = zip(decomposable, decomposable_names)
     else:
         d = zip(decomposable, ["{}-decomposed" for x in decomposable])
+
+    for key in decomposable:
+        for i in items:
+            if isinstance(i[key], str):
+                i[key] = (i[key],)
 
     for field, new_name in d:
         items = decompose(items,
