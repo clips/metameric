@@ -76,7 +76,7 @@ class Layer(object):
     def node_names(self):
         """Return all node names."""
         _, names = zip(*sorted(self.idx2name.items()))
-        return names
+        return np.array(names)
 
     def add_from_connection(self, layer, weights):
         """
@@ -135,6 +135,10 @@ class Layer(object):
     def static(self):
         """Whether the activations should be updated."""
         return self.weights is None
+
+    def reset(self):
+        """Reset the activations to resting level."""
+        self.activations = np.copy(self.resting)
 
     def activate(self):
         """
