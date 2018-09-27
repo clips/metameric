@@ -2,8 +2,8 @@ import numpy as np
 import random
 import pandas as pd
 
-from tilapia.builder import build_model
-from tilapia.prepare.weights import weight_adaptation, weights_to_matrix
+from tilapia.builder import Builder
+from tilapia.prepare.weights import IA_WEIGHTS, weights_to_matrix
 from tilapia.prepare.data import process_data
 from experiments.data import read_elp_format
 from itertools import product
@@ -74,11 +74,6 @@ if __name__ == "__main__":
             lengths = [len(x['orthography']) for x in w]
             rt = np.array([x['rt'] for x in w])
 
-            if length_adaptation:
-                max_len = max([len(x['orthography']) for x in w])
-            else:
-                max_len = 4
-
             w = process_data(w,
                              decomposable=('orthography',),
                              decomposable_names=('letters',),
@@ -96,24 +91,32 @@ if __name__ == "__main__":
             if negative_evidence:
                 inputs.append('features_neg')
 
-            matrix, names = weights_to_matrix(weight_adaptation(max_len))
+            matrix, names = weights_to_matrix(IA_WEIGHTS)
+            if not length_adaptation:
+                lidx = names.index("letters")
+                oidx = names.index("orthography")
+                matrix[lidx, oidx, 0] /= 4
+                matrix[lidx, oidx, 1] *= 4
+                matrix[oidx, lidx, 0] /= 4
+                matrix[oidx, lidx, 1] *= 4
 
             rla = {k: 'global' for k in names}
             rla['orthography'] = 'frequency'
 
-            s = build_model(w,
-                            names,
-                            matrix,
-                            rla,
-                            -.05,
-                            step_size=.5,
-                            outputs=('orthography',))
+            s = Builder(names,
+                        matrix,
+                        rla,
+                        -.05,
+                        outputs=('orthography',),
+                        monitors=('orthography',),
+                        step_size=.5,
+                        weight_adaptation=length_adaptation)
 
-            result = s.activate_bunch(w,
+            m = s.build_model(w)
+            result = m.activate_bunch(w,
                                       max_cycles=n_cyc,
-                                      threshold=threshold,
+                                      threshold=.7,
                                       strict=False)
-
             cycles = np.array([len(x['orthography']) for x in result])
             right = cycles == n_cyc
             cycles[right] = -1
