@@ -4,7 +4,7 @@ from bottle import run, route, request, template, static_file
 from tilapia.run import make_run, get_model
 from tilapia.plot import result_plot
 from tilapia.prepare.data import process_and_write
-from itertools import tee, chain
+from itertools import chain
 from argparse import ArgumentParser
 
 
@@ -155,7 +155,6 @@ def post_word():
 def main_experiment():
     """
     """
-    print(request.body.read())
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
     test_file = request.files.get("path_test")
@@ -165,7 +164,6 @@ def main_experiment():
     min_val = request.forms.get("min")
     max_cyc = request.forms.get("max")
     threshold = request.forms.get("threshold")
-    outputlayers = request.forms.get("outputlayers")
     rla_layers = request.forms.get("rlalayers")
     rla_variable = request.forms.get("rlavars")
     w = request.forms.get("w")
@@ -175,24 +173,20 @@ def main_experiment():
 
     if not param_file:
         weights = None
-    else:
-        weights = param_file
-    if not test_file:
-        words, test_words = tee(input_file.file, 2)
-    else:
-        words = input_file.file
-        test_words = test_file.file
+
+    input_file = input_file.file
+    test_file = test_file.file
 
     global junk
 
-    make_run(words,
-             test_words,
+    make_run(input_file,
+             test_file,
              os.path.join(junk, "test.csv"),
              weights,
              threshold=float(threshold),
              rla_variable=rla_variable,
              rla_layers=rla_layers,
-             output_layers=outputlayers.split(),
+             output_layers=monitorlayers.split(),
              monitor_layers=monitorlayers.split(),
              global_rla=float(rla),
              step_size=float(step),
