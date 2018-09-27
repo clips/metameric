@@ -1,6 +1,5 @@
 """Utilities specifically for IA models."""
 import numpy as np
-from copy import deepcopy
 from itertools import chain
 
 
@@ -9,18 +8,6 @@ IA_WEIGHTS = {("letters", "orthography"): [.28, -.01],
               ("orthography", "letters"): [1.2, .0],
               ("orthography", "orthography"): [.0, -.21],
               ("letters-features", "letters"): [.005, -.15]}
-
-
-def weight_adaptation(word_length, weights=IA_WEIGHTS):
-    """Rescale weights for the IA dependent on length."""
-    weights = deepcopy(weights)
-    weights[('letters', 'orthography')][0] /= word_length
-    weights[('letters', 'orthography')][1] *= word_length
-    weights[('orthography', 'letters')][0] /= word_length
-    # Is 0 in standard, but could be different.
-    weights[('orthography', 'letters')][1] *= word_length
-
-    return weights
 
 
 def weights_to_matrix(weights):
