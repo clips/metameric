@@ -71,7 +71,7 @@ class Network(object):
         self.outputs = {}
         self.monitors = {}
         self.inputs = {}
-        self.feature = set()
+        self.feature = {}
         self.compiled = False
 
     def __getitem__(self, k):
@@ -131,9 +131,9 @@ class Network(object):
                       self.decay_rate,
                       name=layer_name)
 
-        if is_feature:
-            self.feature.add(layer_name)
         self.layers[layer_name] = layer
+        if is_feature:
+            self.feature[layer_name] = layer
         if is_output:
             self.outputs[layer_name] = layer
         if is_monitor:
