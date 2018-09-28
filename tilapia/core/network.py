@@ -32,8 +32,20 @@ class Network(object):
         A dictionary of layers. Can be used to look up layers and check
         their activations by name.
     outputs : dict
-        Output layers are the layers which are checked for convergence when
-        the network is run.
+        Output layers are the layers which are output when a run ends.
+    monitors : dict
+        Monitor layers are layers which are monitored for convergence.
+    inputs : dict
+        Input layers are the layers which are clamped when an input is
+        presented. The input layers are automatically determined: if a layer
+        has no incoming connections, we automatically assume it is an input
+        layer.
+    feature : set
+        The names of the layers which are feature set layers. Feature set
+        layers are layers which have a many-to-one mapping onto a slot-based
+        layer.
+    compiled : bool
+        Whether the model has been successfully compiled.
 
     """
 
@@ -59,6 +71,7 @@ class Network(object):
         self.outputs = {}
         self.monitors = {}
         self.inputs = {}
+        self.feature = set()
         self.compiled = False
 
     def __getitem__(self, k):
@@ -69,15 +82,10 @@ class Network(object):
         """Compile the network by checking whether all settings are valid."""
         if not self.outputs:
             raise ValueError("You did not specify any outputs.")
-        if not self.monitors:
-            raise ValueError("You did not specify any layers to monitor.")
 
         for k, v in self.layers.items():
             if v.static:
                 self.inputs[k] = v
-
-        if not self.inputs:
-            raise ValueError("You did not specify any inputs.")
 
         self.compiled = True
 
@@ -99,7 +107,8 @@ class Network(object):
                      resting_activation,
                      node_names,
                      is_output=False,
-                     is_monitor=False):
+                     is_monitor=False,
+                     is_feature=False):
         """
         Add a layer to the network.
 
@@ -122,29 +131,57 @@ class Network(object):
                       self.decay_rate,
                       name=layer_name)
 
+        if is_feature:
+            self.feature.add(layer_name)
         self.layers[layer_name] = layer
         if is_output:
             self.outputs[layer_name] = layer
         if is_monitor:
             self.monitors[layer_name] = layer
 
+    def _create_mask(self, x):
+        """Create a valid mask given a prime."""
+        mask = defaultdict(list)
+        for k, v in x.items():
+            if k in self.feature:
+                continue
+            try:
+                _, idxes = zip(*v)
+                max_idx = max(idxes) + 1
+                for idx in range(max_idx):
+                    mask[k].append(("#", idx))
+            except (ValueError, TypeError):
+                pass
+
+        return self.prepare(dict(mask))
+
     def prime(self,
               X,
               primes,
               max_cycles=30,
               prime_cycles=5,
+              mask_cycles=5,
               threshold=.7,
               strict=True):
         """Priming experiment."""
         outputs = []
+        if prime_cycles <= 0:
+            raise ValueError("Your number of prime cycles is 0, please "
+                             "raise it or use the regular activate() function")
         for x, prime in tqdm(zip(X, primes)):
 
+            # Use "#" as mask.
+            mask = self._create_mask(prime)
             out = self.activate([prime],
                                 prime_cycles,
                                 True,
                                 threshold=1.0,
                                 strict=False)[0]
-
+            interm = self.activate([mask],
+                                   mask_cycles,
+                                   False,
+                                   threshold=threshold,
+                                   strict=False)[0]
             result = self.activate([x],
                                    max_cycles,
                                    False,
@@ -152,7 +189,10 @@ class Network(object):
                                    strict=strict)[0]
 
             for x in out:
-                out[x] = np.concatenate([out[x], result[x]])
+                if interm:
+                    out[x] = np.concatenate([out[x], interm[x], result[x]])
+                else:
+                    out[x] = np.concatenate([out[x], result[x]])
 
             outputs.append(out)
 
@@ -163,7 +203,8 @@ class Network(object):
                  max_cycles=30,
                  reset=True,
                  threshold=.7,
-                 strict=True):
+                 strict=True,
+                 inputs=None):
         """
         Activate the model by clamping an input and letting it oscillate.
 
@@ -184,40 +225,68 @@ class Network(object):
         strict : bool
             Whether to halt execution if the threshold is not reached when
             max_cycles have passed.
+        inputs : tuple of strings
+            Use this field to override the behavior of the network and to
+            specify your own inputs.
 
         """
         if not self.compiled:
             raise ValueError("Your model is not compiled.")
+        if max_cycles <= 0:
+            raise ValueError("max_cycles must be > 0, is now "
+                             "{}".format(max_cycles))
+        if threshold > 1.0 or threshold <= .0:
+            raise ValueError("Threshold should be 0 < x <= 1.0, is now "
+                             "{}".format(threshold))
 
         outputs = []
+        if inputs:
+            input_layers = {k: self.layers[k] for k in inputs}
+        else:
+            input_layers = self.inputs
 
         for x in tqdm(X):
 
+            # Reset all layers to their resting levels.
             if reset:
                 self._reset()
 
-            for name, layer in self.inputs.items():
+            # Clamp the inputs
+            # TODO: investigate whether clamping something for a specific
+            # number of cycles is a good idea.
+            for name, layer in input_layers.items():
                 data = x[name]
+                # Can be necessary if someone wants to clamp orthography
                 if not isinstance(data, (tuple, set, list)):
                     data = [data]
+                # Reset only the input layer to 0
                 layer.reset()
                 layer.activations[[layer.name2idx[p] for p in data]] = 1
 
+            # Prepare the activations
             activations = defaultdict(list)
 
             for idx in range(max_cycles):
 
+                # Let the network oscillate once.
                 self._single_cycle()
 
+                # Copy to the output buffer.
                 for k, l in self.outputs.items():
 
                     act = np.copy(l.activations)
                     activations[k].append(act)
 
-                if np.all([np.any(l.activations > threshold)
-                           for l in self.monitors.values()]):
-                    break
+                # Check the monitor layers for convergence
+                if self.monitors:
+                    if np.all([np.any(l.activations > threshold)
+                               for l in self.monitors.values()]):
+                        break
             else:
+
+                # If the maximum number of cycles has been reached, we
+                # might throw an error, depending on the value of the strict
+                # flag.
                 if strict:
                     max_activation = np.max([x.activations
                                              for x in self.monitors.values()],
@@ -276,25 +345,25 @@ class Network(object):
 
         return string
 
-    def prepare(self, item):
+    def prepare(self, item, overwrite=False):
         """Prepare an item to feature layers."""
-        # TODO: add exception for mask character
         for k, v in self.inputs.items():
-            # checks whether # is a mask.
+            # tracks whether # is a mask.
             mask = None
-            if k in item:
+            if k in item and not overwrite:
                 continue
             for c in v.to_connections:
                 k2 = c.name
                 if k2 not in item:
                     continue
-                if isinstance(item[k2], (tuple, list, set)):
+                if c.name in self.features:
                     i = []
                     for x in item[k2]:
                         try:
                             i.append(c.name2idx[x])
                         except KeyError as e:
                             if x[0] == "#":
+                                # assign current index to mask
                                 mask = x[1]
                                 continue
                             else:
@@ -305,8 +374,12 @@ class Network(object):
                 idxes = np.nonzero(mtr[:, i] > 0)[0]
                 item[k] = {v.idx2name[x] for x in idxes}
                 if mask is not None:
-                    item[k].update([(x, y) for x, y in v.node_names
-                                    if y == mask and x.endswith("neg")])
+                    feats = [(x, y) for x, y in v.node_names
+                             if y == mask and x.endswith("neg")]
+                    if not feats:
+                        raise ValueError("No data for {} at layer {}"
+                                         "".format(mask, k))
+                    item[k].update(feats)
 
                 item[k] = sorted(item[k], key=lambda x: x[-1])
 
