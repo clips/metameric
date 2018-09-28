@@ -8,7 +8,7 @@ def plot_result(result, node_names, max_cycles=None, minimum=-.2):
     result_plot(result, max_cycles=max_cycles).show()
 
 
-def result_plot(result, node_names, max_cycles=None, minimum=-.2):
+def result_plot(word, result, node_names, max_cycles=None, minimum=-.2):
     """
     Plot the activations of a single word.
 
@@ -52,7 +52,7 @@ def result_plot(result, node_names, max_cycles=None, minimum=-.2):
         for k, v in zip(names, data.T):
             plot.plot(v)
             plot.annotate(k, (max_cycles * np.random.uniform(.5, .9), v[-1]))
-        plot.set_title(key)
+        plot.set_title("{}: {}".format(key, word[key]))
         plot.set_ylim(minimum, 1.0)
         if idx == 0:
             plot.set_ylabel("Activation")
