@@ -2,13 +2,37 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+from collections import defaultdict
+
+
+def get_cmap(n, name='hsv'):
+    """
+    from stack overflow:
+    https://stackoverflow.com/
+    questions/14720331/how-to-generate-random-colors-in-matplotlib
+    """
+    return plt.cm.get_cmap(name, n)
+
+
+def _convert_to_str(x):
+    """Helper function to convert an item to a string."""
+    if isinstance(x[0], tuple):
+        return " ".join(["{}-{}".format(x[0], x[1]) for x in x])
+    else:
+        return " ".join([str(x) for x in x])
+
 
 def plot_result(result, node_names, max_cycles=None, minimum=-.2):
     """Plot the activations of a single word, and show the plot."""
     result_plot(result, max_cycles=max_cycles).show()
 
 
-def result_plot(word, result, node_names, max_cycles=None, minimum=-.2):
+def result_plot(word,
+                result,
+                node_names,
+                max_cycles=None,
+                minimum=-.2,
+                threshold=.7):
     """
     Plot the activations of a single word.
 
@@ -49,11 +73,25 @@ def result_plot(word, result, node_names, max_cycles=None, minimum=-.2):
         data = data[:, idxes]
         names = [names[idx] for idx in np.flatnonzero(idxes)]
 
-        for k, v in zip(names, data.T):
-            plot.plot(v)
-            plot.annotate(k, (max_cycles * np.random.uniform(.5, .9), v[-1]))
-        plot.set_title("{}: {}".format(key, word[key]))
+        intervals = defaultdict(int)
+        bands = np.floor(data.T[:, -1] * 10)
+        for k, b in zip(names, bands):
+            intervals[b] += 1
+        intervals = {k: list(.9 - np.arange(0, .9, .9 / v))
+                     for k, v in intervals.items()}
+
+        cmap = get_cmap(len(names)+1, name='viridis')
+
+        plot.plot(np.ones(data.shape[0]) * threshold, color=(.82, .1, .12))
+        for idx, (k, v, b) in enumerate(zip(names, data.T, bands)):
+            plot.plot(v, color=cmap(idx))
+            interval = intervals[b].pop()
+            plot.annotate(k,
+                          (max_cycles * interval, v[-1]+.01),
+                          color=cmap(idx))
+        plot.set_title("{}: {}".format(key, _convert_to_str(word[key])))
         plot.set_ylim(minimum, 1.0)
+        plot.set_xlim(0, max_cycles if max_cycles else len(v))
         if idx == 0:
             plot.set_ylabel("Activation")
         plot.set_xlabel("Cycles")
