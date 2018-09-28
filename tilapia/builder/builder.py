@@ -183,7 +183,8 @@ class Builder(object):
                            resting,
                            node_names,
                            k in self.outputs,
-                           k in self.monitors)
+                           k in self.monitors,
+                           k in self.feature_layers)
 
         # Transfer matrix is a N * N * 2 matrix.
         for a, b in product(self.layer_names, self.layer_names):
