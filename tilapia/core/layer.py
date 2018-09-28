@@ -76,7 +76,7 @@ class Layer(object):
     def node_names(self):
         """Return all node names."""
         _, names = zip(*sorted(self.idx2name.items()))
-        return np.array(names)
+        return names
 
     def add_from_connection(self, layer, weights):
         """
