@@ -1,3 +1,4 @@
-include tilapia/web/content/*
-include tilapia/web/js/*
 include tilapia/web/templates/*
+include tilapia/web/static/content/*
+include tilapia/web/static/fonts/*
+include tilapia/web/static/scripts/*
