@@ -206,6 +206,15 @@ if __name__ == "__main__":
                         "--junk",
                         type=str,
                         help="Path to an optional junk folder.")
+    parser.add_argument("-p",
+                        "--port",
+                        default=8080,
+                        type=int,
+                        help="The port on which to run.")
+    parser.add_argument("--host",
+                        default="localhost",
+                        type=str,
+                        help="The host to use.")
     args = parser.parse_args()
 
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
@@ -220,6 +229,6 @@ if __name__ == "__main__":
     except FileNotFoundError:
         pass
 
-    print(os.getcwd())
+    print("Running with {} as local directory.".format(os.getcwd()))
 
-    run(host='localhost', port=8080)
+    run(host=args.host, port=args.port)
