@@ -15,13 +15,16 @@
     <script src="/static/scripts/validation.js"></script>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
-
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
   </head>
   <!-- Fixed navbar -->
   <div class="container" id="topContent" bg-primary>
-      <img src="static/content/ChromisNiloticus.jpg" alt="Fish" class="center" id="fish">
+      <a href="https://www.uantwerpen.be/en/research-groups/clips/">
+          <img src="static/content/clips_logo.png" alt="logo" class="pull-left" id="logo">
+      </a>
+      <img src="static/content/ChromisNiloticus.jpg" alt="Fish" class="center" name="fish" id="fish">
+
   </div>
 
 <div class="container">
@@ -42,9 +45,4 @@
         {{!base}}
     </div>
 </body>
-<script>
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
-</script>
 </html>
