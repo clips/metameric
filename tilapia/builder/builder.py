@@ -263,7 +263,7 @@ class Builder(object):
 
             m.connect_layers(a, b, mtr)
 
-        m.compile()
+        m.check()
         return m
 
     def _check(self, items, layer_names):

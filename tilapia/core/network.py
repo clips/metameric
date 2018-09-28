@@ -44,8 +44,8 @@ class Network(object):
         The names of the layers which are feature set layers. Feature set
         layers are layers which have a many-to-one mapping onto a slot-based
         layer.
-    compiled : bool
-        Whether the model has been successfully compiled.
+    checked : bool
+        Whether the model has been successfully checked.
 
     """
 
@@ -72,14 +72,14 @@ class Network(object):
         self.monitors = {}
         self.inputs = {}
         self.feature = {}
-        self.compiled = False
+        self.checked = False
 
     def __getitem__(self, k):
         """Get a single layer by name."""
         return self.layers[k]
 
-    def compile(self):
-        """Compile the network by checking whether all settings are valid."""
+    def check(self):
+        """Check the network by checking whether all settings are valid."""
         if not self.outputs:
             raise ValueError("You did not specify any outputs.")
 
@@ -87,7 +87,7 @@ class Network(object):
             if v.static:
                 self.inputs[k] = v
 
-        self.compiled = True
+        self.checked = True
 
     @property
     def rla(self):
@@ -230,8 +230,8 @@ class Network(object):
             specify your own inputs.
 
         """
-        if not self.compiled:
-            raise ValueError("Your model is not compiled.")
+        if not self.checked:
+            raise ValueError("Your model is not checked.")
         if max_cycles <= 0:
             raise ValueError("max_cycles must be > 0, is now "
                              "{}".format(max_cycles))
