@@ -4,7 +4,9 @@
     <div class="grid">
         % for layer in inputs:
             <label for="{{layer}}">{{layer}}</label>
-            <input id=itrain type=button value="?" class="btn btn-default btn-sm"/>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="The data to input to the model.">
+                ?
+            </button>
             <input type="text" id="{{layer}}" name="{{layer}}"/>
         % end
     </div>
