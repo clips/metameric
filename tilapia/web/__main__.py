@@ -141,11 +141,12 @@ def post_word():
         max_length = max([y for x, y in m[x].name2idx.keys()])
         max_length += 1
         data = request.forms.get(x).ljust(max_length)
+        data = data[:max_length]
         word[x] = [(data[idx], idx)
                    for idx in range(max_length)]
 
-    word = m.prepare(word)
-    res = m.activate(word, max_cycles=max_cycles, strict=False)
+    word = m.expand(word)
+    res = m.activate([word], max_cycles=max_cycles, strict=False)[0]
     f = result_plot(word, res, {k: m[k].node_names for k in res.keys()})
     f.savefig(os.path.join("static/content", "plot.png"))
 
@@ -218,5 +219,7 @@ if __name__ == "__main__":
         os.remove(os.path.join(junk, "static/content/plot.png"))
     except FileNotFoundError:
         pass
+
+    print(os.getcwd())
 
     run(host='localhost', port=8080)
