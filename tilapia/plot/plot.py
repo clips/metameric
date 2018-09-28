@@ -19,6 +19,8 @@ def get_cmap(n, name='hsv'):
 
 def _convert_to_str(x):
     """Helper function to convert an item to a string."""
+    if not x:
+        return " "
     if isinstance(x[0], tuple):
         return " ".join(["{}-{}".format(x[0], x[1]) for x in x])
     else:
@@ -96,7 +98,7 @@ def result_plot(word,
             ypos = max(v[max(0, position-div):position+div])
             plot.annotate(k,
                           (position, ypos),
-                          color=cmap(idx))
+                          color=np.array(cmap(idx)[:3]) / 4)
         plot.set_title("{}: {}".format(key, _convert_to_str(word[key])))
         plot.set_ylim(minimum, 1.0)
         plot.set_xlim(0, max_cycles-1)
