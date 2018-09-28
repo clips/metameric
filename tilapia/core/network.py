@@ -153,7 +153,7 @@ class Network(object):
             except (ValueError, TypeError):
                 pass
 
-        return self.prepare(dict(mask))
+        return self.expand(dict(mask))
 
     def prime(self,
               X,
@@ -345,9 +345,9 @@ class Network(object):
 
         return string
 
-    def prepare(self, item, overwrite=False):
-        """Prepare an item to feature layers."""
-        for k, v in self.inputs.items():
+    def expand(self, item, overwrite=False):
+        """Expands an item for which we only have partial data."""
+        for k, v in self.layers.items():
             # tracks whether # is a mask.
             mask = None
             if k in item and not overwrite:
@@ -356,24 +356,32 @@ class Network(object):
                 k2 = c.name
                 if k2 not in item:
                     continue
-                if c.name in self.features:
-                    i = []
-                    for x in item[k2]:
-                        try:
-                            i.append(c.name2idx[x])
-                        except KeyError as e:
-                            if x[0] == "#":
-                                # assign current index to mask
-                                mask = x[1]
-                                continue
-                            else:
-                                raise e
-                else:
-                    i = [c.name2idx[item[k2]]]
+                i = []
+                for x in item[k2]:
+                    try:
+                        i.append(c.name2idx[x])
+                    except KeyError as e:
+                        if x[0] == "#":
+                            # assign current index to mask
+                            mask = x[1]
+                            continue
+                        else:
+                            raise e
                 mtr = c.weight_matrices[k]
-                idxes = np.nonzero(mtr[:, i] > 0)[0]
+                if k not in self.feature and k2 not in self.feature:
+                    idxes = defaultdict(set)
+                    a, b = np.nonzero(mtr[:, i] > 0)
+                    for x, y in zip(a, b):
+                        idxes[y].add(x)
+                    i = list(idxes.values())
+                    if not i:
+                        idxes = i
+                    else:
+                        idxes = set.intersection(*list(idxes.values()))
+                else:
+                    idxes = np.nonzero(mtr[:, i] > 0)[0]
                 item[k] = {v.idx2name[x] for x in idxes}
-                if mask is not None:
+                if mask is not None and k in self.feature:
                     feats = [(x, y) for x, y in v.node_names
                              if y == mask and x.endswith("neg")]
                     if not feats:
