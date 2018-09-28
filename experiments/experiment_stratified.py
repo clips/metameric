@@ -92,6 +92,7 @@ if __name__ == "__main__":
                 inputs.append('features_neg')
 
             matrix, names = weights_to_matrix(IA_WEIGHTS)
+            # Manually adapt weights to length 4
             if not length_adaptation:
                 lidx = names.index("letters")
                 oidx = names.index("orthography")
@@ -113,10 +114,10 @@ if __name__ == "__main__":
                         weight_adaptation=length_adaptation)
 
             m = s.build_model(w)
-            result = m.activate_bunch(w,
-                                      max_cycles=n_cyc,
-                                      threshold=.7,
-                                      strict=False)
+            result = m.activate(w,
+                                max_cycles=n_cyc,
+                                threshold=.7,
+                                strict=False)
             cycles = np.array([len(x['orthography']) for x in result])
             right = cycles == n_cyc
             cycles[right] = -1

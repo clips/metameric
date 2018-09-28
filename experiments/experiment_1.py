@@ -79,10 +79,10 @@ if __name__ == "__main__":
                     weight_adaptation=False)
 
         m = s.build_model(w)
-        result = m.activate_bunch(w,
-                                  max_cycles=n_cyc,
-                                  threshold=.7,
-                                  strict=False)
+        result = m.activate(w,
+                            max_cycles=n_cyc,
+                            threshold=.7,
+                            strict=False)
 
         cycles = np.array([len(x['orthography']) for x in result])
         right = cycles == n_cyc
