@@ -146,10 +146,10 @@ def make_run(items_file,
     columns = [k for k, v in keys_items.items() if v == len(test_items)]
     columns.append("cycles")
 
-    results = m.activate_bunch(test_items,
-                               max_cycles=max_cycles,
-                               threshold=threshold,
-                               strict=False)
+    results = m.activate(test_items,
+                         max_cycles=max_cycles,
+                         threshold=threshold,
+                         strict=False)
 
     cycles = [len(x[output_layers[0]]) for x in results]
     cycles = np.array(cycles)
