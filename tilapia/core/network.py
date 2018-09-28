@@ -128,24 +128,38 @@ class Network(object):
         if is_monitor:
             self.monitors[layer_name] = layer
 
-    def activate_bunch(self,
-                       x,
-                       max_cycles=30,
-                       threshold=.7,
-                       strict=True):
-        """Activate a list of items."""
-        a = []
-        for item in tqdm(x):
-            a.append(self.activate(item,
-                                   max_cycles,
-                                   True,
-                                   threshold,
-                                   strict))
+    def prime(self,
+              X,
+              primes,
+              max_cycles=30,
+              prime_cycles=5,
+              threshold=.7,
+              strict=True):
+        """Priming experiment."""
+        outputs = []
+        for x, prime in tqdm(zip(X, primes)):
 
-        return a
+            out = self.activate([prime],
+                                prime_cycles,
+                                True,
+                                threshold=1.0,
+                                strict=False)[0]
+
+            result = self.activate([x],
+                                   max_cycles,
+                                   False,
+                                   threshold=threshold,
+                                   strict=strict)[0]
+
+            for x in out:
+                out[x] = np.concatenate([out[x], result[x]])
+
+            outputs.append(out)
+
+        return outputs
 
     def activate(self,
-                 x,
+                 X,
                  max_cycles=30,
                  reset=True,
                  threshold=.7,
@@ -155,10 +169,9 @@ class Network(object):
 
         Parameters
         ----------
-        x : list of np.arrays, optional, default ()
-            The inputs which are clamped in the first timestep.
-        input_layers : list of string, optional, default ()
-            The names of the layers which are clamped in the first timestep.
+        x : list dictionaries.
+            The inputs to the model. The dictionaries have layer names as their
+            keys, and tuples of symbols as their values.
         max_cycles : int, optional, default 30
             The maximum number of cycles to run the activation for.
         reset : bool
@@ -168,42 +181,54 @@ class Network(object):
             The activation threshold. Once one of the output layers reaches
             this activation level, the network stops running and returns the
             current activation levels as output.
+        strict : bool
+            Whether to halt execution if the threshold is not reached when
+            max_cycles have passed.
 
         """
         if not self.compiled:
             raise ValueError("Your model is not compiled.")
 
-        if reset:
-            self._reset()
+        outputs = []
 
-        for name, layer in self.inputs.items():
-            data = x[name]
-            if not isinstance(data, (tuple, set, list)):
-                data = [data]
-            layer.activations[[layer.name2idx[p] for p in data]] = 1
+        for x in tqdm(X):
 
-        activations = defaultdict(list)
+            if reset:
+                self._reset()
 
-        for idx in range(max_cycles):
+            for name, layer in self.inputs.items():
+                data = x[name]
+                if not isinstance(data, (tuple, set, list)):
+                    data = [data]
+                layer.reset()
+                layer.activations[[layer.name2idx[p] for p in data]] = 1
 
-            self._single_cycle()
+            activations = defaultdict(list)
 
-            for k, l in self.outputs.items():
+            for idx in range(max_cycles):
 
-                act = np.copy(l.activations)
-                activations[k].append(act)
+                self._single_cycle()
 
-            if np.all([np.any(l.activations > threshold)
-                       for l in self.monitors.values()]):
-                break
-        else:
-            if strict:
-                max_activation = np.max([x.activations
-                                         for x in self.monitors.values()], 1)
-                raise ValueError("Maximum cycles reached, maximum activation "
-                                 "was {}".format(max_activation))
+                for k, l in self.outputs.items():
 
-        return {k: np.array(v) for k, v in activations.items()}
+                    act = np.copy(l.activations)
+                    activations[k].append(act)
+
+                if np.all([np.any(l.activations > threshold)
+                           for l in self.monitors.values()]):
+                    break
+            else:
+                if strict:
+                    max_activation = np.max([x.activations
+                                             for x in self.monitors.values()],
+                                            1)
+                    raise ValueError("Maximum cycles reached, maximum "
+                                     "activation was {}, input was {}"
+                                     "".format(max_activation, x))
+
+            outputs.append({k: np.array(v) for k, v in activations.items()})
+
+        return outputs
 
     def _single_cycle(self):
         """Perform a single pass through the network."""
@@ -253,7 +278,10 @@ class Network(object):
 
     def prepare(self, item):
         """Prepare an item to feature layers."""
+        # TODO: add exception for mask character
         for k, v in self.inputs.items():
+            # checks whether # is a mask.
+            mask = None
             if k in item:
                 continue
             for c in v.to_connections:
@@ -261,12 +289,25 @@ class Network(object):
                 if k2 not in item:
                     continue
                 if isinstance(item[k2], (tuple, list, set)):
-                    i = [c.name2idx[x] for x in item[k2]]
+                    i = []
+                    for x in item[k2]:
+                        try:
+                            i.append(c.name2idx[x])
+                        except KeyError as e:
+                            if x[0] == "#":
+                                mask = x[1]
+                                continue
+                            else:
+                                raise e
                 else:
                     i = [c.name2idx[item[k2]]]
                 mtr = c.weight_matrices[k]
                 idxes = np.nonzero(mtr[:, i] > 0)[0]
-                item[k] = sorted({v.idx2name[x] for x in idxes},
-                                 key=lambda x: x[-1])
+                item[k] = {v.idx2name[x] for x in idxes}
+                if mask is not None:
+                    item[k].update([(x, y) for x, y in v.node_names
+                                    if y == mask and x.endswith("neg")])
+
+                item[k] = sorted(item[k], key=lambda x: x[-1])
 
         return item
