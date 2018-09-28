@@ -58,7 +58,8 @@ def prepare_post():
                       d_layer.split(),
                       d_name.split(),
                       f_layers.split(),
-                      f_set.split())
+                      f_set.split(),
+                      strict=False)
 
     return static_file("data.csv", root=junk, download=out_f)
 
@@ -137,15 +138,15 @@ def post_word():
 
     word = {}
     for x in inputs:
-        max_length = max([int(x.split("-")[1]) for x in m[x].name2idx.keys()])
+        max_length = max([y for x, y in m[x].name2idx.keys()])
         max_length += 1
         data = request.forms.get(x).ljust(max_length)
-        word[x] = ["{}-{}".format(data[idx], idx)
+        word[x] = [(data[idx], idx)
                    for idx in range(max_length)]
 
     word = m.prepare(word)
     res = m.activate(word, max_cycles=max_cycles, strict=False)
-    f = result_plot(res, {k: m[k].node_names for k in res.keys()})
+    f = result_plot(word, res, {k: m[k].node_names for k in res.keys()})
     f.savefig(os.path.join("static/content", "plot.png"))
 
     return template("templates/analysis_2.tpl", inputs=inputs)
@@ -153,8 +154,7 @@ def post_word():
 
 @route("/experiment", method='POST')
 def main_experiment():
-    """
-    """
+    """The main experiment page."""
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
     test_file = request.files.get("path_test")
