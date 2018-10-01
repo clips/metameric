@@ -1,6 +1,9 @@
 """The page where params are made."""
 import os
-from bottle import run, route, request, template, static_file
+import io
+import base64
+
+from flask import Flask, render_template as template, request, Response
 from tilapia.run import make_run, get_model
 from tilapia.plot import result_plot
 from tilapia.prepare.data import process_and_write
@@ -10,101 +13,90 @@ from argparse import ArgumentParser
 
 global m
 global max_cycles
-global junk_folder
+global files
+global plot
+
+app = Flask(__name__,
+            template_folder='templates',
+            static_folder='static')
 
 
-@route('/static/content/<filename:re:.*\.css>')
-def stylesheets(filename):
-    return static_file(filename, root='static/content')
-
-
-@route('/static/content/<filename:re:.*>')
-def pictures(filename):
-    return static_file(filename, root='static/content')
-
-
-@route('/static/scripts/<filename:re:.*>')
-def javascript(filename):
-    return static_file(filename, root='static/scripts/')
-
-
-@route("/contact", method='GET')
-def contact():
-    return template("templates/contact.tpl")
-
-
-@route("/about", method='GET')
+@app.route("/about", methods=['GET'])
 def about():
-    return template("templates/about.tpl")
+    return template("about.tpl")
 
 
-@route("/prepare", method='GET')
+@app.route("/prepare", methods=['GET'])
 def prepare():
-    return template("templates/prepare.tpl")
+    return template("prepare.tpl")
 
 
-@route("/prepare", method='POST')
+@app.route("/prepare", methods=['POST'])
 def prepare_post():
     input_file = request.files.get("path_train")
-    d_layer = request.forms.get("decomp_layer")
-    d_name = request.forms.get("decomp_name")
-    f_layers = request.forms.get("feature_layer")
-    f_set = request.forms.get("feature_set")
+    d_layer = request.form.get("decomp_layer")
+    d_name = request.form.get("decomp_name")
+    f_layers = request.form.get("feature_layer")
+    f_set = request.form.get("feature_set")
 
-    out_f = "prepared-{}".format(input_file.filename)
-
-    process_and_write(input_file.file,
-                      os.path.join(junk, "data.csv"),
+    out_f = "result_{}".format(os.path.splitext(input_file.filename)[0])
+    junk_file = io.StringIO()
+    process_and_write(input_file,
+                      junk_file,
                       d_layer.split(),
                       d_name.split(),
                       f_layers.split(),
                       f_set.split(),
                       strict=False)
 
-    return static_file("data.csv", root=junk, download=out_f)
+    junk_file = junk_file.getvalue()
+    return Response(response=junk_file,
+                    mimetype="text/csv",
+                    headers={"Content-disposition":
+                             "attachment; filename={}".format(out_f)})
 
 
-@route("/home", method='GET')
+@app.route("/home", methods=['GET'])
 def home():
-    return template("templates/home.tpl")
+    return template("home.tpl")
 
 
-@route("/", method='GET')
+@app.route("/", methods=['GET'])
 def default():
-    return template("templates/home.tpl")
+    return template("home.tpl")
 
 
-@route("/experiment", method='GET')
+@app.route("/experiment", methods=['GET'])
 def experiment():
-    return template("templates/experiment.tpl")
+    return template("experiment.tpl")
 
 
-@route("/analysis", method='GET')
+@app.route("/analysis", methods=['GET'])
 def get_analysis():
-    return template("templates/analysis.tpl")
+    return template("analysis.tpl")
 
 
-@route("/analysis", method='POST')
+@app.route("/analysis", methods=['POST'])
 def analysis():
     """Analyze an IA model."""
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
-    rla = request.forms.get("rla")
-    step = request.forms.get("step")
-    decay = request.forms.get("decay")
-    min_val = request.forms.get("min")
-    max_cyc = request.forms.get("max")
-    outputlayers = request.forms.get("outputlayers")
-    rla_layers = request.forms.get("rlalayers")
-    rla_variable = request.forms.get("rlavars")
-    w = request.forms.get("w")
-    monitorlayers = request.forms.get("monitorlayers")
+    rla = request.form.get("rla")
+    step = request.form.get("step")
+    decay = request.form.get("decay")
+    min_val = request.form.get("min")
+    max_cyc = request.form.get("max")
+    outputlayers = request.form.get("outputlayers")
+    rla_layers = request.form.get("rlalayers")
+    rla_variable = request.form.get("rlavars")
+    w = request.form.get("w")
+    monitorlayers = request.form.get("monitorlayers")
 
     if not param_file:
         weights = None
     else:
         weights = param_file
-    words = input_file.file
+    words = input_file
 
     global m
     global max_cycles
@@ -124,65 +116,67 @@ def analysis():
     inputs = [[l.name for l in x.to_connections] for x in m.inputs.values()]
     inputs = sorted(set(chain.from_iterable(inputs)))
 
-    return template("templates/analysis_2.tpl", inputs=inputs)
+    return template("analysis_2.tpl", inputs=inputs, data="")
 
 
-@route("/analysis_2", method="POST")
-def post_word():
-    """Post a word and show the graph."""
+@app.route("/analysis_2", methods=["POST"])
+def post_item():
+    """Post an item and show the graph."""
     global m
     global max_cycles
 
     inputs = [[l.name for l in x.to_connections] for x in m.inputs.values()]
     inputs = sorted(set(chain.from_iterable(inputs)))
 
-    word = {}
+    item = {}
     for x in inputs:
         max_length = max([y for x, y in m[x].name2idx.keys()])
         max_length += 1
-        data = request.forms.get(x).ljust(max_length)
+        data = request.form.get(x).ljust(max_length)
         data = data[:max_length]
-        word[x] = [(data[idx], idx)
+        item[x] = [(data[idx], idx)
                    for idx in range(max_length)]
 
-    word = m.expand(word)
-    res = m.activate([word], max_cycles=max_cycles, strict=False)[0]
-    f = result_plot(word, res, {k: m[k].node_names for k in res.keys()})
-    f.savefig(os.path.join("static/content", "plot.png"))
+    item = m.expand(item)
+    res = m.activate([item], max_cycles=max_cycles, strict=False)[0]
+    f = result_plot(item, res, {k: m[k].node_names for k in res.keys()})
+    image = io.BytesIO()
+    f.canvas.print_png(image)
+    img = base64.b64encode(image.getvalue())
+    img = str(img)[2:-1]
+    return template("analysis_2.tpl", inputs=inputs, data=img)
 
-    return template("templates/analysis_2.tpl", inputs=inputs)
 
-
-@route("/experiment", method='POST')
+@app.route("/experiment", methods=['POST'])
 def main_experiment():
     """The main experiment page."""
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
     test_file = request.files.get("path_test")
-    rla = request.forms.get("rla")
-    step = request.forms.get("step")
-    decay = request.forms.get("decay")
-    min_val = request.forms.get("min")
-    max_cyc = request.forms.get("max")
-    threshold = request.forms.get("threshold")
-    rla_layers = request.forms.get("rlalayers")
-    rla_variable = request.forms.get("rlavars")
-    w = request.forms.get("w")
-    monitorlayers = request.forms.get("monitorlayers")
+    rla = request.form.get("rla")
+    step = request.form.get("step")
+    decay = request.form.get("decay")
+    min_val = request.form.get("min")
+    max_cyc = request.form.get("max")
+    threshold = request.form.get("threshold")
+    rla_layers = request.form.get("rlalayers")
+    rla_variable = request.form.get("rlavars")
+    w = request.form.get("w")
+    monitorlayers = request.form.get("monitorlayers")
 
     out_f = "run_{}.csv".format(os.path.splitext(input_file.filename)[0])
 
     if not param_file:
         weights = None
 
-    input_file = input_file.file
-    test_file = test_file.file
+    input_file = input_file
+    test_file = test_file
 
-    global junk
+    junk_file = io.StringIO()
 
     make_run(input_file,
              test_file,
-             os.path.join(junk, "test.csv"),
+             junk_file,
              weights,
              threshold=float(threshold),
              rla_variable=rla_variable,
@@ -196,16 +190,16 @@ def main_experiment():
              minimum_activation=float(min_val),
              adapt_weights=bool(w))
 
-    return static_file("test.csv", root=junk, download=out_f)
+    junk_file = junk_file.getvalue()
+    return Response(response=junk_file,
+                    mimetype="text/csv",
+                    headers={"Content-disposition":
+                             "attachment; filename={}".format(out_f)})
 
 
 if __name__ == "__main__":
 
     parser = ArgumentParser()
-    parser.add_argument("-j",
-                        "--junk",
-                        type=str,
-                        help="Path to an optional junk folder.")
     parser.add_argument("-p",
                         "--port",
                         default=8080,
@@ -219,16 +213,5 @@ if __name__ == "__main__":
 
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-    global junk
-    if args.junk:
-        junk = args.junk
-    else:
-        junk = os.getcwd()
-    try:
-        os.remove(os.path.join(junk, "static/content/plot.png"))
-    except FileNotFoundError:
-        pass
-
     print("Running with {} as local directory.".format(os.getcwd()))
-
-    run(host=args.host, port=args.port)
+    app.run(host=args.host, port=args.port)
