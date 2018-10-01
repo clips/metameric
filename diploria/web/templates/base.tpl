@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Diploria: a fast Interactive Activation Simulator.</title>
+    <title>Diploria: an Interactive Activation Simulator.</title>
     <script src="/static/scripts/jquery-3.3.1.min.js"></script>
     <script src="/static/scripts/bootstrap.bundle.min.js"></script>
     <script src="/static/scripts/validation.js"></script>
