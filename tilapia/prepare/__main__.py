@@ -68,7 +68,7 @@ if __name__ == "__main__":
                              "names does not match.")
 
     process_and_write(open(args.input),
-                      args.output,
+                      open(args.output, 'w'),
                       args.decomposable,
                       args.decomposable_names,
                       args.add_features,
