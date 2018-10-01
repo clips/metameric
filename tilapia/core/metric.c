@@ -1826,8 +1826,8 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_strength(CYTHON_UNUSED PyObject
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
 
 /* Python wrapper */
@@ -2257,8 +2257,8 @@ static PyObject *__pyx_pf_7tilapia_4core_6metric_2strength_new(CYTHON_UNUSED PyO
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
 
   /* function exit code */
@@ -5552,8 +5552,8 @@ static int __Pyx_InitCachedConstants(void) {
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
   __pyx_tuple__12 = PyTuple_Pack(12, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
@@ -5748,8 +5748,8 @@ PyMODINIT_FUNC PyInit_metric(void)
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
+ *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7tilapia_4core_6metric_3strength_new, NULL, __pyx_n_s_tilapia_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
