@@ -42,7 +42,7 @@
   </div>
 
     <div class="container theme-showcase" role="main">
-        {{!base}}
+        {% block content %}{% endblock %}
     </div>
 </body>
 </html>

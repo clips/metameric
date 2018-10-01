@@ -1,4 +1,5 @@
-%rebase('templates/base.tpl', title='Index')
+{% extends "base.tpl" %}
+{% block content %}
 <form action="/analysis" method="post" enctype="multipart/form-data">
     <div class="form-group row mb-0">
         <label for="path_train" class="col-sm-5 col-form-label">Path to training file</label>
@@ -119,3 +120,4 @@
     </div>
     <button type="submit" class="btn btn-default btn-sm">Submit</button>
 </form>
+{% endblock %}

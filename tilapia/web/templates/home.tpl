@@ -1,2 +1,4 @@
-%rebase('templates/base.tpl', title='Index')
-This is the home page.
+{% extends "base.tpl" %}
+{% block content %}
+    This is the home page.
+{% endblock %}
