@@ -15,18 +15,18 @@ if "--cython" in sys.argv:
 
 if cython:
     from Cython.Build import cythonize
-    extensions = cythonize([Extension("tilapia.core.metric",
-                                      ["tilapia/core/metric.pyx"])])
+    extensions = cythonize([Extension("diploria.core.metric",
+                                      ["diploria/core/metric.pyx"])])
 else:
-    extensions = [Extension("tilapia.core.metric",
-                            ["tilapia/core/metric.c"])]
+    extensions = [Extension("diploria.core.metric",
+                            ["diploria/core/metric.c"])]
 
-setup(name='tilapia',
+setup(name='diploria',
       version='1.0.3',
       description='Interactive activation',
       author='Stéphan Tulkens',
       author_email='stephan.tulkens@uantwerpen.be',
-      url='https://github.com/stephantul/tilapia',
+      url='https://github.com/stephantul/diploria',
       license='MIT',
       packages=find_packages(),
       install_requires=['numpy>=1.11.0'],

@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from tilapia.prepare.data import process_and_write, FEATURES
+from diploria.prepare.data import process_and_write, FEATURES
 
 
 if __name__ == "__main__":

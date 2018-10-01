@@ -2,9 +2,9 @@
 import numpy as np
 import pandas as pd
 
-from tilapia.prepare.weights import weights_to_matrix
-from tilapia.prepare.weights import IA_WEIGHTS
-from tilapia.builder import Builder
+from diploria.prepare.weights import weights_to_matrix
+from diploria.prepare.weights import IA_WEIGHTS
+from diploria.builder import Builder
 from itertools import chain
 from collections import Counter
 

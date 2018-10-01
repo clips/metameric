@@ -4,9 +4,9 @@ import io
 import base64
 
 from flask import Flask, render_template as template, request, Response
-from tilapia.run import make_run, get_model
-from tilapia.plot import result_plot
-from tilapia.prepare.data import process_and_write
+from diploria.run import make_run, get_model
+from diploria.plot import result_plot
+from diploria.prepare.data import process_and_write
 from itertools import chain
 from argparse import ArgumentParser
 

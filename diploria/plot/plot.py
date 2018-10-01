@@ -45,7 +45,7 @@ def result_plot(word,
     Parameters
     ----------
     result : dict of np.arrays
-        The result of a single call to activate of a tilapia model.
+        The result of a single call to activate of a network.
         The keys of the dictionary are layer names, and the arrays are
         activations over time for each node in that layer.
     node_names : dict

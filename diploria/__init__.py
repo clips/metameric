@@ -1,4 +1,4 @@
-"""Tilapia."""
+"""Diploria."""
 from .core import Network
 from .core.layer import Layer
 

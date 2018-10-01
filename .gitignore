@@ -105,7 +105,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 test.py
-test.py
-tilapia/web/test.csv
 test.csv
 example_2.csv

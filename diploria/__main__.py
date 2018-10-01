@@ -1,5 +1,5 @@
 import argparse
-from tilapia.run import make_run
+from diploria.run import make_run
 
 
 if __name__ == "__main__":

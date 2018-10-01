@@ -2,9 +2,9 @@ import numpy as np
 import random
 import pandas as pd
 
-from tilapia.builder import Builder
-from tilapia.prepare.weights import weights_to_matrix, IA_WEIGHTS
-from tilapia.prepare.data import process_data
+from diploria.builder import Builder
+from diploria.prepare.weights import weights_to_matrix, IA_WEIGHTS
+from diploria.prepare.data import process_data
 from experiments.data import read_elp_format
 from copy import deepcopy
 from tqdm import tqdm
@@ -95,4 +95,4 @@ if __name__ == "__main__":
                             c])
 
     df = pd.DataFrame(results, columns=header)
-    df.to_csv("tilapia_experiment_1b.csv", sep=",")
+    df.to_csv("diploria_experiment_1b.csv", sep=",")

@@ -1,4 +1,4 @@
-include tilapia/web/templates/*
-include tilapia/web/static/content/*
-include tilapia/web/static/fonts/*
-include tilapia/web/static/scripts/*
+include diploria/web/templates/*
+include diploria/web/static/content/*
+include diploria/web/static/fonts/*
+include diploria/web/static/scripts/*

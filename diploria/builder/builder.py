@@ -123,7 +123,7 @@ class Builder(object):
             raise ValueError("Not all outputs were in your layer names."
                              "".format(out_layers))
 
-        # Initialize the TilapIA.
+        # Initialize the Diploria.
         m = Network(minimum=self.minimum,
                     step_size=self.step_size,
                     decay_rate=self.decay_rate)

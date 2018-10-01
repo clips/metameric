@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Tilapia: a fast Interactive Activation Simulator.</title>
+    <title>Diploria: a fast Interactive Activation Simulator.</title>
     <script src="/static/scripts/jquery-3.3.1.min.js"></script>
     <script src="/static/scripts/bootstrap.bundle.min.js"></script>
     <script src="/static/scripts/validation.js"></script>
@@ -30,7 +30,7 @@
 <div class="container">
   <div class="header clearfix">
       <div class="d-flex flex-column flex-md-row align-items-center p-1 mb-1 bg-white">
-      <h4 class="my-0 mr-md-auto font-weight-bold">TilapIA</h5>
+      <h4 class="my-0 mr-md-auto font-weight-bold">Diploria</h5>
       <nav class="">
         <a href="home" class="mr-md-2">Home</a>
         <a href="experiment" class="mr-md-2">Experiment</a></li>
