@@ -53,7 +53,7 @@ POS_FEATURES = {"fourteen": convert_feature_set(fourteen, False),
 def read_input_file(f):
     """Read an input file."""
     items = []
-    if f.mode.startswith('rb'):
+    if 'b' in f.mode:
         f = reader((x.decode('utf-8') for x in f))
     else:
         f = reader(f)
@@ -74,10 +74,9 @@ def read_input_file(f):
     return items
 
 
-def write_file(items, path):
+def write_file(items, file):
     """Writes an output file."""
     header = list(items[0].keys())
-    file = open(path, 'w')
     w = writer(file)
     w.writerow(header)
 
