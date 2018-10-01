@@ -64,7 +64,7 @@ def result_plot(word,
     if max_cycles is None:
         max_cycles = max([len(v) for v in result.values()])
 
-    f, plots = plt.subplots(1, len(keys))
+    f, plots = plt.subplots(1, len(keys), dpi=500)
     div = max_cycles // 4
 
     # Necessary because subplots has a weird contract.
