@@ -2,8 +2,14 @@
 
 First make sure all requirements in requirements.txt are installed.
 
+### pip
 ```
 pip install -r requirements.txt
+```
+
+### conda
+```
+conda install --yes --file requirements.txt
 ```
 
 Then install using
