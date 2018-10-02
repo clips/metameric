@@ -66,6 +66,7 @@ class Layer(object):
         self.decay_rate = decay_rate
         self.name = name
         self.step_size = step_size
+        self.clamped = False
 
     def active(self):
         """Get all currently active nodes and their names."""

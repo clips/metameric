@@ -201,6 +201,7 @@ class Network(object):
     def activate(self,
                  X,
                  max_cycles=30,
+                 clamp_cycles=None,
                  reset=True,
                  threshold=.7,
                  strict=True,
@@ -215,6 +216,12 @@ class Network(object):
             keys, and tuples of symbols as their values.
         max_cycles : int, optional, default 30
             The maximum number of cycles to run the activation for.
+        clamp_cycles : int or float, optional, default None
+            The number of cycles to clamp the input for. After the number of
+            clamp cycles has been exceeded, the layers are unclamped, and free
+            to oscillate.
+            If clamp_cycles is between 0 and 1, it will be interpreted as a
+            proportion of max_cycles, rounded down.
         reset : bool
             Whether to reset the activations of the network to 0 before
             clamping and activation.
@@ -238,6 +245,12 @@ class Network(object):
         if threshold > 1.0 or threshold <= .0:
             raise ValueError("Threshold should be 0 < x <= 1.0, is now "
                              "{}".format(threshold))
+        if clamp_cycles <= 0:
+            raise ValueError("Clamp cycles should be > 0, is now "
+                             "{}".format(clamp_cycles))
+
+        if 0 < clamp_cycles < 1.0:
+            clamp_cycles = max_cycles // clamp_cycles
 
         outputs = []
         if inputs:
@@ -252,8 +265,6 @@ class Network(object):
                 self._reset()
 
             # Clamp the inputs
-            # TODO: investigate whether clamping something for a specific
-            # number of cycles is a good idea.
             for name, layer in input_layers.items():
                 data = x[name]
                 # Can be necessary if someone wants to clamp orthography
@@ -262,11 +273,16 @@ class Network(object):
                 # Reset only the input layer to 0
                 layer.reset()
                 layer.activations[[layer.name2idx[p] for p in data]] = 1
+                layer.clamped = True
 
             # Prepare the activations
             activations = defaultdict(list)
 
             for idx in range(max_cycles):
+
+                if clamp_cycles is not None and idx == clamp_cycles:
+                    for name, layer in self.layers.items():
+                        layer.clamped = False
 
                 # Let the network oscillate once.
                 self._single_cycle()
@@ -307,7 +323,7 @@ class Network(object):
         # and then applied simultaneously.
         for k, layer in self.layers.items():
             # Static layers don't get updated.
-            if layer.static:
+            if layer.static or layer.clamped:
                 continue
             updates[k] = layer.activate()
         for k, v in updates.items():
@@ -316,6 +332,7 @@ class Network(object):
     def _reset(self):
         """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
+            self.clamped = False
             layer.reset()
 
     def connect_layers(self, from_name, to_name, weights):
