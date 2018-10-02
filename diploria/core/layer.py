@@ -58,8 +58,8 @@ class Layer(object):
         self.activations = np.zeros_like(resting, dtype=np.float64)
         self.name2idx = {k: idx for idx, k in enumerate(node_names)}
         self.idx2name = {v: k for k, v in self.name2idx.items()}
-        self.from_connections = []
-        self.to_connections = []
+        self._from_connections = []
+        self._to_connections = []
         self.weights = None
         self.resting = np.copy(resting).astype(np.float64)
         self.minimum = minimum
@@ -67,6 +67,15 @@ class Layer(object):
         self.name = name
         self.step_size = step_size
         self.clamped = False
+        self.recurrent_connection = 0
+
+    @property
+    def connections(self):
+        """Get all connections and their names."""
+        conn = {l.name: l for l in self._from_connections}
+        if self.recurrent_connection != 0:
+            conn[self.name] = self
+        return conn
 
     def active(self):
         """Get all currently active nodes and their names."""
@@ -98,7 +107,7 @@ class Layer(object):
         if weights.shape[1] != self.activations.shape[0]:
             raise ValueError("Transfer matrix is not correct shape.")
 
-        self.from_connections.append(layer)
+        self._from_connections.append(layer)
         if self.weights is None:
             self.weights = weights
         else:
@@ -109,7 +118,7 @@ class Layer(object):
         """
         Add a connection to the layer.
 
-        to_connections do not have a functional purpose, and serve
+        _to_connections do not have a functional purpose, and serve
         as a way of tracking which layer is connected to which.
 
         Parameters
@@ -118,14 +127,14 @@ class Layer(object):
             The layer to be connected to the current layer.
 
         """
-        self.to_connections.append(layer)
+        self._to_connections.append(layer)
 
     @property
     def weight_matrices(self):
         """Return each weights matrix individually."""
         prev = 0
         mtrs = {}
-        for x in self.from_connections:
+        for x in self._from_connections:
             num_act = len(x.activations)
             mtrs[x.name] = self.weights[prev:prev+num_act]
             prev += num_act
@@ -161,19 +170,20 @@ class Layer(object):
             The change in activation for each neuron.
 
         """
-        if not self.from_connections:
+        if not self._from_connections:
             return np.zeros_like(self.activations)
-        p = np.concatenate([x.activations for x in self.from_connections])
+        p = np.concatenate([x.activations for x in self._from_connections])
         return strength_new(self.activations,
                             self.resting,
                             p,
                             self.weights,
                             self.minimum,
                             self.decay_rate,
-                            self.step_size)
+                            self.step_size,
+                            self.recurrent_connection)
 
     def __repr__(self):
         """Return a description of the layer."""
         return "Layer object with {} nodes, {} "\
                "connections.".format(len(self.activations),
-                                     len(self.from_connections))
+                                     len(self.connections))

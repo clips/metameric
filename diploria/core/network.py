@@ -351,10 +351,15 @@ class Network(object):
             The weight matrix used to connect both layers.
 
         """
+        unique = np.unique(weights)
+        unique = set(unique) - {0}
         to_layer = self.layers[to_name]
         from_layer = self.layers[from_name]
-        to_layer.add_from_connection(from_layer, weights)
-        from_layer.add_to_connection(to_layer)
+        if from_layer is to_layer and len(unique) == 1:
+            to_layer.recurrent_connection = list(unique)[0]
+        else:
+            to_layer.add_from_connection(from_layer, weights)
+            from_layer.add_to_connection(to_layer)
 
     def __repr__(self):
         """Print the Diploria."""

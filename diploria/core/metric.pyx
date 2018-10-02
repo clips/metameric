@@ -34,12 +34,16 @@ def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,
                  np.ndarray[DTYPE_F_t, ndim=2] mtr,
                  DTYPE_F_t minimum,
                  DTYPE_F_t decay,
-                 DTYPE_F_t step_size):
+                 DTYPE_F_t step_size,
+                 DTYPE_F_t recurrence):
     """Fast function for calculating association strength."""
     cdef int i, j
     cdef int n_conns = conn.shape[0]
     cdef int n_neurons = mtr.shape[1]
+    cdef float total_recurrence = 0
     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
+                                                      dtype=DTYPE_F)
+    cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],
                                                       dtype=DTYPE_F)
 
     for i in range(n_conns):
@@ -48,6 +52,13 @@ def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,
                 net[j] += conn[i] * mtr[i, j]
 
     for i in range(n_neurons):
+        if activations[i] > 0:
+            rec[i] = activations[i] * recurrence
+            total_recurrence += rec[i]
+
+    for i in range(n_neurons):
+        if total_recurrence != 0:
+            net[i] += total_recurrence - rec[i]
         if net[i] > 0:
             net[i] *= 1.0 - activations[i]
         else:
