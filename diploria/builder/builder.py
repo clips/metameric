@@ -8,6 +8,14 @@ from collections import Counter, defaultdict
 
 class Builder(object):
     """
+    A factory class that builds networks.
+
+    A Builder takes as input a bunch of basic parameters in the constructor,
+    and then creates a network based on the data which is put into the model.
+
+    In machine learning terms, the builder can be thought of as a trainer,
+    which returns a fully trained model based on the input data.
+
     Parameters
     ----------
     store : Store
@@ -92,10 +100,6 @@ class Builder(object):
             self.num_slots[key] = max(max(idx)+1, self.num_slots[key])
             return sorted(d)
 
-    def get_node_names(self, key):
-        """Get the node names of a layer."""
-        return self.unique_items[key]
-
     def sum_over(self, items, key, field_to_sum):
         """Sum over a field for a given key."""
         k_1 = {k: idx for idx, k in enumerate(self.unique_items[key])}
@@ -107,8 +111,16 @@ class Builder(object):
 
         return sums
 
+    def _check(self, items, layer_names):
+        """Check whether the items are valid."""
+        all_keys = set(chain.from_iterable([i.keys() for i in items]))
+        if set(layer_names) - all_keys:
+            raise ValueError("Not all layer names were present in the items: "
+                             "{}".format(set(layer_names) - all_keys))
+
     def build_model(self, items):
         """
+        Builds a network by iterating over all items and building layers.
 
         Returns
         -------
@@ -186,31 +198,37 @@ class Builder(object):
                            k in self.monitors,
                            k in self.feature_layers)
 
-        # Transfer matrix is a N * N * 2 matrix.
+        # a and b are keys.
         for a, b in product(self.layer_names, self.layer_names):
             pos, neg = self.weight_matrix[self.layer_names.index(a),
                                           self.layer_names.index(b)]
 
+            # If there are no weights between the layers, do not connect them.
             if not pos and not neg:
                 continue
 
+            # Check whether the layers are slot-based layers.
             a_slot = a in self.slot_layers
             b_slot = b in self.slot_layers
 
-            d = a_slot or b_slot
             f = a in self.feature_layers or b in self.feature_layers
 
-            if d and not f:
+            # If one or both are slots, and none are feature layers, adapt
+            # the weights to the length of the longest input.
+            # Gets overridden by the weight adaptation switch.
+            if self.weight_adaptation and a_slot or b_slot and not f:
                 true_num_slots = max(self.num_slots.get(a, 0),
                                      self.num_slots.get(b, 0))
                 pos = pos / true_num_slots
                 neg = neg * true_num_slots
 
+            # Note all unique items and their number.
             u_a = self.unique_items[a]
             u_b = self.unique_items[b]
             num_u_a = len(u_a)
             num_u_b = len(u_b)
 
+            # Form the matrices.
             if a_slot and not b_slot:
                 dim_a = num_u_a * self.num_slots.get(a, 1)
             else:
@@ -219,18 +237,27 @@ class Builder(object):
                 dim_b = num_u_b * self.num_slots.get(b, 1)
             else:
                 dim_b = num_u_b
+
+            # Create the matrix.
             mtr = np.zeros((dim_a,
                             dim_b))
+
+            # By default, connections are negative.
             mtr = mtr + neg
+            # Iterate over items to set the weights
             for i in items:
                 a_values = i[a]
                 b_values = i[b]
                 if a_slot and b_slot:
+                    # If both layers are slot layers, we can only link
+                    # items with the same slot index together.
                     for ((x, i1), (y, i2)) in product(a_values, b_values):
                         if i1 != i2:
                             continue
                         mtr[(u_a[x], u_b[y])] = pos
 
+                    # Explicitly add the space character.
+                    # and set the weights
                     if a not in self.feature_layers:
                         for x, y in b_values:
                             if x.endswith("neg"):
@@ -251,6 +278,8 @@ class Builder(object):
                         idx_b = [u_b[x] for x in b_values]
                     mtr[np.ix_(idx_a, idx_b)] = pos
 
+            # If both layers are slot-based, only items with the same slot
+            # number can be connected.
             if a_slot and b_slot:
                 x, y = mtr.shape
                 new_mtr = np.zeros((x * self.num_slots[a],
@@ -263,12 +292,6 @@ class Builder(object):
 
             m.connect_layers(a, b, mtr)
 
+        # Check whether the model is valid
         m.check()
         return m
-
-    def _check(self, items, layer_names):
-        """Check whether the items are valid."""
-        all_keys = set(chain.from_iterable([i.keys() for i in items]))
-        if set(layer_names) - all_keys:
-            raise ValueError("Not all layer names were present in the items: "
-                             "{}".format(set(layer_names) - all_keys))
