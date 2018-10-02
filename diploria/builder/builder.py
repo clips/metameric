@@ -216,7 +216,7 @@ class Builder(object):
             # If one or both are slots, and none are feature layers, adapt
             # the weights to the length of the longest input.
             # Gets overridden by the weight adaptation switch.
-            if self.weight_adaptation and a_slot or b_slot and not f:
+            if self.weight_adaptation and (a_slot or b_slot) and not f:
                 true_num_slots = max(self.num_slots.get(a, 0),
                                      self.num_slots.get(b, 0))
                 pos = pos / true_num_slots

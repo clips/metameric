@@ -245,6 +245,8 @@ class Network(object):
         if threshold > 1.0 or threshold <= .0:
             raise ValueError("Threshold should be 0 < x <= 1.0, is now "
                              "{}".format(threshold))
+        if clamp_cycles is None:
+            clamp_cycles = max_cycles
         if clamp_cycles <= 0:
             raise ValueError("Clamp cycles should be > 0, is now "
                              "{}".format(clamp_cycles))
