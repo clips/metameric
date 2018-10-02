@@ -38,7 +38,8 @@ def result_plot(word,
                 max_cycles=None,
                 minimum=-.2,
                 threshold=.7,
-                monitors=()):
+                monitors=(),
+                **fig_kwargs):
     """
     Plot the activations of a single word.
 
@@ -64,7 +65,7 @@ def result_plot(word,
     if max_cycles is None:
         max_cycles = max([len(v) for v in result.values()])
 
-    f, plots = plt.subplots(1, len(keys), dpi=500)
+    f, plots = plt.subplots(1, len(keys), **fig_kwargs)
     div = max_cycles // 4
 
     # Necessary because subplots has a weird contract.
