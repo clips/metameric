@@ -13,8 +13,7 @@ from argparse import ArgumentParser
 
 global m
 global max_cycles
-global files
-global plot
+
 
 app = Flask(__name__,
             template_folder='templates',
@@ -139,7 +138,11 @@ def post_item():
 
     item = m.expand(item)
     res = m.activate([item], max_cycles=max_cycles, strict=False)[0]
-    f = result_plot(item, res, {k: m[k].node_names for k in res.keys()})
+    f = result_plot(item,
+                    res,
+                    {k: m[k].node_names for k in res.keys()},
+                    dpi=500)
+
     image = io.BytesIO()
     f.canvas.print_png(image)
     img = base64.b64encode(image.getvalue())
