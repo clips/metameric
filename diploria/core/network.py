@@ -376,7 +376,7 @@ class Network(object):
             mask = None
             if k in item and not overwrite:
                 continue
-            for c in v.to_connections:
+            for c in v._to_connections:
                 k2 = c.name
                 if k2 not in item:
                     continue

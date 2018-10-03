@@ -2,6 +2,7 @@
 import os
 import io
 import base64
+import matplotlib.pyplot as plt
 
 from flask import Flask, render_template as template, request, Response
 from diploria.run import make_run, get_model
@@ -9,6 +10,8 @@ from diploria.plot import result_plot
 from diploria.prepare.data import process_and_write
 from itertools import chain
 from argparse import ArgumentParser
+
+plt.switch_backend("Agg")
 
 
 global m
@@ -95,12 +98,12 @@ def analysis():
         weights = None
     else:
         weights = param_file
-    words = input_file
+    items = input_file
 
     global m
     global max_cycles
     max_cycles = int(max_cyc)
-    m = get_model(words,
+    m = get_model(items,
                   weights,
                   rla_variable=rla_variable,
                   rla_layers=rla_layers,
@@ -112,7 +115,7 @@ def analysis():
                   minimum_activation=float(min_val),
                   adapt_weights=bool(w))
 
-    inputs = [[l.name for l in x.to_connections] for x in m.inputs.values()]
+    inputs = [[l.name for l in x._to_connections] for x in m.inputs.values()]
     inputs = sorted(set(chain.from_iterable(inputs)))
 
     return template("analysis_2.tpl", inputs=inputs, data="")
@@ -124,7 +127,7 @@ def post_item():
     global m
     global max_cycles
 
-    inputs = [[l.name for l in x.to_connections] for x in m.inputs.values()]
+    inputs = [[l.name for l in x._to_connections] for x in m.inputs.values()]
     inputs = sorted(set(chain.from_iterable(inputs)))
 
     item = {}
@@ -145,6 +148,7 @@ def post_item():
 
     image = io.BytesIO()
     f.canvas.print_png(image)
+    plt.close()
     img = base64.b64encode(image.getvalue())
     img = str(img)[2:-1]
     return template("analysis_2.tpl", inputs=inputs, data=img)
