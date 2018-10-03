@@ -85,7 +85,7 @@ if __name__ == "__main__":
             m = max([len(x['orthography']) for x in w])
             if space_character:
                 for w_ in w:
-                    w_['orthography'] = w_['orthography'].ljust(m)
+                    w_['orthography'] = [x.ljust(m) for x in w_['orthography']]
 
             inputs = ['features']
             if negative_evidence:
