@@ -76,7 +76,7 @@ if __name__ == "__main__":
                     outputs=('orthography',),
                     monitors=('orthography',),
                     step_size=.5,
-                    weight_adaptation=False)
+                    weight_adaptation=True)
 
         m = s.build_model(w)
         result = m.activate(w,
