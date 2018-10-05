@@ -3,16 +3,15 @@ import os
 import io
 import base64
 import matplotlib.pyplot as plt
-
-from flask import Flask, render_template as template, request, Response
-from diploria.run import make_run, get_model
-from diploria.plot import result_plot
+from flask import Flask, render_template, request, Response
 from diploria.prepare.data import process_and_write
 from itertools import chain
 from argparse import ArgumentParser
+from diploria.run import make_run, get_model
 
+# Switch backend because of tk errors.
 plt.switch_backend("Agg")
-
+from diploria.plot import result_plot # noqa
 
 global m
 global max_cycles
@@ -25,12 +24,16 @@ app = Flask(__name__,
 
 @app.route("/about", methods=['GET'])
 def about():
-    return template("about.tpl")
+    return render_template("about.tpl")
 
 
 @app.route("/prepare", methods=['GET'])
 def prepare():
-    return template("prepare.tpl")
+    return render_template("prepare.tpl",
+                           decomp_layer="orthography",
+                           decomp_name="letters",
+                           feature_layer="letters",
+                           feature_set="fourteen")
 
 
 @app.route("/prepare", methods=['POST'])
@@ -42,14 +45,23 @@ def prepare_post():
     f_set = request.form.get("feature_set")
 
     out_f = "result_{}".format(os.path.splitext(input_file.filename)[0])
-    junk_file = io.StringIO()
-    process_and_write(input_file,
-                      junk_file,
-                      d_layer.split(),
-                      d_name.split(),
-                      f_layers.split(),
-                      f_set.split(),
-                      strict=False)
+    try:
+        junk_file = io.StringIO()
+        process_and_write(input_file,
+                          junk_file,
+                          d_layer.split(),
+                          d_name.split(),
+                          f_layers.split(),
+                          f_set.split(),
+                          strict=False)
+    except Exception as e:
+        print(e)
+        return render_template("prepare.tpl",
+                               validation="{}".format(e),
+                               decomp_layer=d_layer,
+                               decomp_name=d_name,
+                               feature_layer=f_layers,
+                               feature_set=f_set)
 
     junk_file = junk_file.getvalue()
     return Response(response=junk_file,
@@ -60,22 +72,22 @@ def prepare_post():
 
 @app.route("/home", methods=['GET'])
 def home():
-    return template("home.tpl")
+    return render_template("home.tpl")
 
 
 @app.route("/", methods=['GET'])
 def default():
-    return template("home.tpl")
+    return render_template("home.tpl")
 
 
 @app.route("/experiment", methods=['GET'])
 def experiment():
-    return template("experiment.tpl")
+    return render_template("experiment.tpl")
 
 
 @app.route("/analysis", methods=['GET'])
 def get_analysis():
-    return template("analysis.tpl")
+    return render_template("analysis.tpl")
 
 
 @app.route("/analysis", methods=['POST'])
@@ -118,7 +130,7 @@ def analysis():
     inputs = [[l.name for l in x._to_connections] for x in m.inputs.values()]
     inputs = sorted(set(chain.from_iterable(inputs)))
 
-    return template("analysis_2.tpl", inputs=inputs, data="")
+    return render_template("analysis_2.tpl", inputs=inputs, data="")
 
 
 @app.route("/analysis_2", methods=["POST"])
@@ -151,7 +163,7 @@ def post_item():
     plt.close()
     img = base64.b64encode(image.getvalue())
     img = str(img)[2:-1]
-    return template("analysis_2.tpl", inputs=inputs, data=img)
+    return render_template("analysis_2.tpl", inputs=inputs, data=img)
 
 
 @app.route("/experiment", methods=['POST'])

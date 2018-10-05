@@ -30,10 +30,10 @@
 <div class="container">
   <div class="header clearfix">
       <div class="d-flex flex-column flex-md-row align-items-center p-1 mb-1 bg-white">
-      <h4 class="my-0 mr-md-auto font-weight-bold">Diploria</h5>
+      <h4 class="my-0 mr-md-auto font-weight-bold">Diploria</h4>
       <nav class="">
         <a href="home" class="mr-md-2">Home</a>
-        <a href="experiment" class="mr-md-2">Experiment</a></li>
+        <a href="experiment" class="mr-md-2">Experiment</a>
         <a href="prepare" class="mr-md-2">Prepare Data</a>
         <a href="analysis" class="mr-md-2">Analysis</a>
         <a href="about" class="mr-md-2">About</a>

@@ -132,8 +132,9 @@ class Builder(object):
         self._check(items, self.layer_names)
         out_layers = set(self.outputs) - set(self.layer_names)
         if out_layers:
-            raise ValueError("Not all outputs were in your layer names."
-                             "".format(out_layers))
+            raise ValueError("{} were selected as output layers, but were not "
+                             "in the layer names: {}"
+                             "".format(self.outputs, self.layer_names))
 
         # Initialize the Diploria.
         m = Network(minimum=self.minimum,

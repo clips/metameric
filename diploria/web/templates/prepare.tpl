@@ -16,7 +16,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" value="orthography" class="form-control form-control-sm" id="decomp_layer" name="decomp_layer" required>
+                <input type="text" value="{{ decomp_layer }}" class="form-control form-control-sm" id="decomp_layer" name="decomp_layer" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -25,7 +25,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" value="letters" class="form-control form-control-sm" id="decomp_layer" name="decomp_name" required>
+                <input type="text" value="{{ decomp_name }}" class="form-control form-control-sm" id="decomp_layer" name="decomp_name" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -34,7 +34,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" value="letters" class="form-control form-control-sm" id="feature_layer" name="feature_layer" required>
+                <input type="text" value="{{ feature_layer }}" class="form-control form-control-sm" id="feature_layer" name="feature_layer" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -43,9 +43,20 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" value="fourteen" class="form-control form-control-sm" id="feature_set" name="feature_set" required>
+                <input type="text" value="{{ feature_set }}" class="form-control form-control-sm" id="feature_set" name="feature_set" required>
             </div>
         </div>
+        {% if validation %}
+        <div class="form-group row mb-0">
+            <label for="feature_set" class="col-sm-5 col-form-label">Errors</label>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top"  data-html="true" data-original-title="These are the error messages thrown by the app on your input.">
+                ?
+            </button>
+            <div class="col-sm-5">
+                <label class="col-xs-5 col-form-label error">{{ validation }}</label>
+            </div>
+        </div>
+        {% endif %}
         <button type="submit" class="btn btn-default btn-sm">Submit</button>
     </form>
 {% endblock %}

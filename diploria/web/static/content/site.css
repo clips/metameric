@@ -111,3 +111,7 @@ img {
     width:33%; /* you can use % */
     height: auto;
 }
+
+.error {
+    max-width: 100%;
+}

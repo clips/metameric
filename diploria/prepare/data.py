@@ -2,6 +2,7 @@
 import numpy as np
 from copy import deepcopy
 from csv import reader, writer
+from itertools import chain
 from wordkit.orthography.features import fourteen, sixteen
 from wordkit.phonology.features import plunkett_phonemes, patpho_bin
 
@@ -145,6 +146,20 @@ def process_data(items,
                  length_adaptation=True,
                  strict=True):
     """Process data, add fields, and add them to the item."""
+    item_keys = set(chain.from_iterable([x.keys() for x in items]))
+    for x in decomposable:
+        if x not in item_keys:
+            raise ValueError("Could not decompose '{}', as it was not in the "
+                             "set of keys of your items.".format(x))
+    print(feature_sets, set(FEATURES.keys()))
+    if feature_sets and set(feature_sets) - set(FEATURES.keys()):
+        raise ValueError("Your feature sets were not one of: {}"
+                         "".format(", ".join(FEATURES.keys())))
+    for x in feature_layers:
+        if x not in item_keys and x not in decomposable_names:
+            raise ValueError("Feature layer '{}' was not in your items, but "
+                             "also was not a decomposable layer.".format(x))
+
     if decomposable_names:
         d = zip(decomposable, decomposable_names)
     else:
