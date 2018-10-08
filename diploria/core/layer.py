@@ -60,22 +60,18 @@ class Layer(object):
         self.idx2name = {v: k for k, v in self.name2idx.items()}
         self._from_connections = []
         self._to_connections = []
-        self.weights = None
+        self.weights = []
         self.resting = np.copy(resting).astype(np.float64)
         self.minimum = minimum
         self.decay_rate = decay_rate
         self.name = name
         self.step_size = step_size
         self.clamped = False
-        self.recurrent_connection = 0
 
     @property
     def connections(self):
         """Get all connections and their names."""
-        conn = {l.name: l for l in self._from_connections}
-        if self.recurrent_connection != 0:
-            conn[self.name] = self
-        return conn
+        return {l.name: l for l in self._from_connections}
 
     def active(self):
         """Get all currently active nodes and their names."""
@@ -108,11 +104,7 @@ class Layer(object):
             raise ValueError("Transfer matrix is not correct shape.")
 
         self._from_connections.append(layer)
-        if self.weights is None:
-            self.weights = weights
-        else:
-            self.weights = np.concatenate([self.weights,
-                                           weights])
+        self.weights.append(weights)
 
     def add_to_connection(self, layer):
         """
@@ -132,19 +124,16 @@ class Layer(object):
     @property
     def weight_matrices(self):
         """Return each weights matrix individually."""
-        prev = 0
         mtrs = {}
-        for x in self._from_connections:
-            num_act = len(x.activations)
-            mtrs[x.name] = self.weights[prev:prev+num_act]
-            prev += num_act
+        for x, w in zip(self._from_connections, self.weights):
+            mtrs[x.name] = w
 
         return mtrs
 
     @property
     def static(self):
         """Whether the activations should be updated."""
-        return self.weights is None
+        return not self.weights
 
     def reset(self):
         """Reset the activations to resting level."""
@@ -172,15 +161,13 @@ class Layer(object):
         """
         if not self._from_connections:
             return np.zeros_like(self.activations)
-        p = np.concatenate([x.activations for x in self._from_connections])
         return strength_new(self.activations,
                             self.resting,
-                            p,
+                            [x.activations for x in self._from_connections],
                             self.weights,
                             self.minimum,
                             self.decay_rate,
-                            self.step_size,
-                            self.recurrent_connection)
+                            self.step_size)
 
     def __repr__(self):
         """Return a description of the layer."""

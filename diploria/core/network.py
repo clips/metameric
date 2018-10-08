@@ -205,7 +205,8 @@ class Network(object):
                  reset=True,
                  threshold=.7,
                  strict=True,
-                 inputs=None):
+                 inputs=None,
+                 shallow_run=False):
         """
         Activate the model by clamping an input and letting it oscillate.
 
@@ -254,7 +255,6 @@ class Network(object):
         if 0 < clamp_cycles < 1.0:
             clamp_cycles = max_cycles // clamp_cycles
 
-        outputs = []
         if inputs:
             input_layers = {k: self.layers[k] for k in inputs}
         else:
@@ -291,9 +291,11 @@ class Network(object):
 
                 # Copy to the output buffer.
                 for k, l in self.outputs.items():
-
-                    act = np.copy(l.activations)
-                    activations[k].append(act)
+                    if shallow_run:
+                        activations[k].append(list(l.active()))
+                    else:
+                        act = np.copy(l.activations)
+                        activations[k].append(act)
 
                 # Check the monitor layers for convergence
                 if self.monitors:
@@ -313,9 +315,10 @@ class Network(object):
                                      "activation was {}, input was {}"
                                      "".format(max_activation, x))
 
-            outputs.append({k: np.array(v) for k, v in activations.items()})
-
-        return outputs
+            if shallow_run:
+                yield activations
+            else:
+                yield {k: np.array(v) for k, v in activations.items()}
 
     def _single_cycle(self):
         """Perform a single pass through the network."""
@@ -330,6 +333,9 @@ class Network(object):
             updates[k] = layer.activate()
         for k, v in updates.items():
             self.layers[k].activations[:] += v
+            self.layers[k].activations = np.clip(self.layers[k].activations,
+                                                 a_min=self.minimum,
+                                                 a_max=1.0)
 
     def _reset(self):
         """Reset the activation of all nodes back to their resting levels."""
@@ -351,15 +357,10 @@ class Network(object):
             The weight matrix used to connect both layers.
 
         """
-        unique = np.unique(weights)
-        unique = set(unique) - {0}
         to_layer = self.layers[to_name]
         from_layer = self.layers[from_name]
-        if from_layer is to_layer and len(unique) == 1:
-            to_layer.recurrent_connection = list(unique)[0]
-        else:
-            to_layer.add_from_connection(from_layer, weights)
-            from_layer.add_to_connection(to_layer)
+        to_layer.add_from_connection(from_layer, weights)
+        from_layer.add_to_connection(to_layer)
 
     def __repr__(self):
         """Print the Diploria."""

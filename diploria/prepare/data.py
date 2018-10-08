@@ -151,7 +151,6 @@ def process_data(items,
         if x not in item_keys:
             raise ValueError("Could not decompose '{}', as it was not in the "
                              "set of keys of your items.".format(x))
-    print(feature_sets, set(FEATURES.keys()))
     if feature_sets and set(feature_sets) - set(FEATURES.keys()):
         raise ValueError("Your feature sets were not one of: {}"
                          "".format(", ".join(FEATURES.keys())))
