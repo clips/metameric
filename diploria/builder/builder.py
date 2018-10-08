@@ -165,7 +165,8 @@ class Builder(object):
                 pass
             self.unique_items[k] = sorted(u)
 
-        self.unique_items = {k: {x: idx for idx, x in enumerate(v)}
+        # Take care of sorting
+        self.unique_items = {k: {x: idx for idx, x in enumerate(sorted(v))}
                              for k, v in self.unique_items.items()}
 
         # Iterate over all unique items.
@@ -184,7 +185,8 @@ class Builder(object):
                 resting /= max(resting)
                 resting = self.global_rla * (1.0 - resting)
 
-            node_names = self.unique_items[k]
+            node_names, _ = zip(*sorted(self.unique_items[k].items(),
+                                        key=lambda x: x[1]))
             if k in self.slot_layers:
                 resting = np.concatenate([resting] * self.num_slots[k])
                 n = []
