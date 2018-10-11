@@ -118,6 +118,17 @@
                 <input type="checkbox" class="form-control form-control-sm" id="w" value="w" checked name="w">
             </div>
         </div>
+        {% if validation %}
+        <div class="form-group row mb-0">
+            <label for="feature_set" class="col-sm-5 col-form-label">Errors</label>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top"  data-html="true" data-original-title="These are the error messages thrown by the app on your input.">
+                ?
+            </button>
+            <div class="col-sm-5">
+                <label class="col-xs-5 col-form-label error">{{ validation }}</label>
+            </div>
+        </div>
+        {% endif %}
         <button type="submit" class="btn btn-default btn-sm">Submit</button>
     </form>
 {% endblock %}

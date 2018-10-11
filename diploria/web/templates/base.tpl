@@ -17,8 +17,9 @@
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <!-- Custom styles for this template -->
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
-  </head>
+</head>
   <!-- Fixed navbar -->
+<body>
   <div class="container" id="topContent" bg-primary>
       <a href="https://www.uantwerpen.be/en/research-groups/clips/">
           <img src="static/content/clips_logo.png" alt="logo" class="pull-left" id="logo">
@@ -41,7 +42,8 @@
     </div>
   </div>
 
-    <div class="container theme-showcase" role="main">
+
+    <div class="container fluid" role="main">
         {% block content %}{% endblock %}
     </div>
 </body>
