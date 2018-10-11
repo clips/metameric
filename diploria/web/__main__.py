@@ -27,6 +27,38 @@ def about():
     return render_template("about.tpl")
 
 
+@app.route("/analysis", methods=['GET'])
+def analysis():
+    return render_template("analysis.tpl",
+                           rla=-.05,
+                           step=1.0,
+                           decay=.07,
+                           min=-.02,
+                           max=350,
+                           threshold=.07,
+                           rlalayers="orthography",
+                           rlavars="frequency",
+                           outputlayers="orthography",
+                           w=True,
+                           monitorlayers="orthography")
+
+
+@app.route("/experiment", methods=['GET'])
+def experiment():
+    return render_template("experiment.tpl",
+                           rla=-.05,
+                           step=1.0,
+                           decay=.07,
+                           min=-.02,
+                           max=350,
+                           threshold=.07,
+                           rlalayers="orthography",
+                           rlavars="frequency",
+                           outputlayers="orthography",
+                           w=True,
+                           monitorlayers="orthography")
+
+
 @app.route("/prepare", methods=['GET'])
 def prepare():
     return render_template("prepare.tpl",
@@ -80,18 +112,13 @@ def default():
     return render_template("home.tpl")
 
 
-@app.route("/experiment", methods=['GET'])
-def experiment():
-    return render_template("experiment.tpl")
-
-
 @app.route("/analysis", methods=['GET'])
 def get_analysis():
     return render_template("analysis.tpl")
 
 
 @app.route("/analysis", methods=['POST'])
-def analysis():
+def analysis_post():
     """Analyze an IA model."""
     input_file = request.files.get("path_train")
     param_file = request.files.get("path_param")
@@ -114,21 +141,38 @@ def analysis():
 
     global m
     global max_cycles
-    max_cycles = int(max_cyc)
-    m = get_model(items,
-                  weights,
-                  rla_variable=rla_variable,
-                  rla_layers=rla_layers,
-                  output_layers=outputlayers.split(),
-                  monitor_layers=monitorlayers.split(),
-                  global_rla=float(rla),
-                  step_size=float(step),
-                  decay_rate=float(decay),
-                  minimum_activation=float(min_val),
-                  adapt_weights=bool(w))
+    try:
+        max_cycles = int(max_cyc)
+        m = get_model(items,
+                      weights,
+                      rla_variable=rla_variable,
+                      rla_layers=rla_layers,
+                      output_layers=outputlayers.split(),
+                      monitor_layers=monitorlayers.split(),
+                      global_rla=float(rla),
+                      step_size=float(step),
+                      decay_rate=float(decay),
+                      minimum_activation=float(min_val),
+                      adapt_weights=bool(w))
 
-    inputs = [[l.name for l in x._to_connections] for x in m.inputs.values()]
-    inputs = sorted(set(chain.from_iterable(inputs)))
+        inputs = [[l.name for l in x._to_connections]
+                  for x in m.inputs.values()]
+        inputs = sorted(set(chain.from_iterable(inputs)))
+    except Exception as e:
+        print(e)
+        return render_template("analysis.tpl",
+                               rla=-.05,
+                               step=1.0,
+                               decay=.07,
+                               min=-.02,
+                               max=350,
+                               threshold=.07,
+                               rlalayers="orthography",
+                               rlavars="frequency",
+                               outputlayers="orthography",
+                               w=True,
+                               monitorlayers="orthography",
+                               validation=str(e))
 
     return render_template("analysis_2.tpl", inputs=inputs, data="")
 
@@ -192,22 +236,37 @@ def main_experiment():
     test_file = test_file
 
     junk_file = io.StringIO()
-
-    make_run(input_file,
-             test_file,
-             junk_file,
-             weights,
-             threshold=float(threshold),
-             rla_variable=rla_variable,
-             rla_layers=rla_layers,
-             output_layers=monitorlayers.split(),
-             monitor_layers=monitorlayers.split(),
-             global_rla=float(rla),
-             step_size=float(step),
-             max_cycles=int(max_cyc),
-             decay_rate=float(decay),
-             minimum_activation=float(min_val),
-             adapt_weights=bool(w))
+    try:
+        make_run(input_file,
+                 test_file,
+                 junk_file,
+                 weights,
+                 threshold=float(threshold),
+                 rla_variable=rla_variable,
+                 rla_layers=rla_layers,
+                 output_layers=monitorlayers.split(),
+                 monitor_layers=monitorlayers.split(),
+                 global_rla=float(rla),
+                 step_size=float(step),
+                 max_cycles=int(max_cyc),
+                 decay_rate=float(decay),
+                 minimum_activation=float(min_val),
+                 adapt_weights=bool(w))
+    except Exception as e:
+        print(e)
+        return render_template("experiment.tpl",
+                               rla=-.05,
+                               step=1.0,
+                               decay=.07,
+                               min=-.02,
+                               max=350,
+                               threshold=.07,
+                               rlalayers="orthography",
+                               rlavars="frequency",
+                               outputlayers="orthography",
+                               w=True,
+                               monitorlayers="orthography",
+                               validation=str(e))
 
     junk_file = junk_file.getvalue()
     return Response(response=junk_file,
