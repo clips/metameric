@@ -3,10 +3,10 @@ import random
 import pandas as pd
 
 from diploria.builder import Builder
-from diploria.prepare.weights import IA_WEIGHTS, weights_to_matrix
+from diploria.prepare.weights import IA_WEIGHTS
 from diploria.prepare.data import process_data
 from experiments.data import read_elp_format
-from itertools import product
+from itertools import product, chain
 from tqdm import tqdm
 from copy import deepcopy
 from binningsampler import BinnedSampler
@@ -91,21 +91,19 @@ if __name__ == "__main__":
             if negative_evidence:
                 inputs.append('features_neg')
 
-            matrix, names = weights_to_matrix(IA_WEIGHTS)
+            weights = deepcopy(IA_WEIGHTS)
             # Manually adapt weights to length 4
             if not length_adaptation:
-                lidx = names.index("letters")
-                oidx = names.index("orthography")
-                matrix[lidx, oidx, 0] /= 4
-                matrix[lidx, oidx, 1] *= 4
-                matrix[oidx, lidx, 0] /= 4
-                matrix[oidx, lidx, 1] *= 4
+                weights[("letters", "orthography")][0] /= 4
+                weights[("letters", "orthography")][1] *= 4
+                weights[("orthography", "letters")][0] /= 4
+                weights[("orthography", "letters")][1] *= 4
 
+            names = set(chain.from_iterable(weights))
             rla = {k: 'global' for k in names}
             rla['orthography'] = 'frequency'
 
-            s = Builder(names,
-                        matrix,
+            s = Builder(weights,
                         rla,
                         -.05,
                         outputs=('orthography',),
@@ -132,4 +130,4 @@ if __name__ == "__main__":
                                 spa])
 
     df = pd.DataFrame(results, columns=header)
-    df.to_csv("diploria_experiment_stratified.csv", sep=",")
+    df.to_csv("diploria_experiment_stratified.csv", sep=",", index=False)
