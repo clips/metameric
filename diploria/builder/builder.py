@@ -44,8 +44,7 @@ class Builder(object):
     """
 
     def __init__(self,
-                 layer_names,
-                 weight_matrix,
+                 weights,
                  rla,
                  global_rla,
                  outputs=(),
@@ -55,18 +54,8 @@ class Builder(object):
                  decay_rate=.07,
                  weight_adaptation=True):
         """Build a model out of a set of items."""
-        if weight_matrix.shape[0] != weight_matrix.shape[1]:
-            raise ValueError("Weight matrix must be square, is {}"
-                             "".format(weight_matrix.shape))
-        if weight_matrix.shape[0] != len(layer_names):
-            raise ValueError("Weight matrix shape must be the same as the "
-                             "number of names passed into the builder. The "
-                             "matrix has {} rows, and you passed {} names"
-                             "".format(weight_matrix.shape[0],
-                                       len(layer_names)))
-
-        self.layer_names = layer_names
-        self.weight_matrix = weight_matrix
+        self.layer_names = sorted(set(chain.from_iterable(weights.keys())))
+        self.weights = weights
         self.rla = rla
         self.global_rla = global_rla
         self.outputs = outputs
@@ -102,7 +91,7 @@ class Builder(object):
 
     def sum_over(self, items, key, field_to_sum):
         """Sum over a field for a given key."""
-        k_1 = {k: idx for idx, k in enumerate(self.unique_items[key])}
+        k_1 = self.unique_items[key]
         sums = np.zeros(len(k_1))
         for i in items:
             f = i[field_to_sum]
@@ -114,9 +103,10 @@ class Builder(object):
     def _check(self, items, layer_names):
         """Check whether the items are valid."""
         all_keys = set(chain.from_iterable([i.keys() for i in items]))
-        if set(layer_names) - all_keys:
-            raise ValueError("Not all layer names were present in the items: "
-                             "{}".format(set(layer_names) - all_keys))
+        diff = set(layer_names) - all_keys
+        if diff:
+            raise ValueError("{} were selected as layer names, but not present"
+                             " in your items".format(",".join(diff)))
 
     def build_model(self, items):
         """
@@ -170,7 +160,7 @@ class Builder(object):
                              for k, v in self.unique_items.items()}
 
         # Iterate over all unique items.
-        for k in sorted(self.layer_names):
+        for k in self.layer_names:
 
             # Determine resting level activation.
             # If the resting is denoted as "global", every
@@ -203,10 +193,12 @@ class Builder(object):
 
         # a and b are keys.
         for a, b in product(self.layer_names, self.layer_names):
-            pos, neg = self.weight_matrix[self.layer_names.index(a),
-                                          self.layer_names.index(b)]
+            try:
+                pos, neg = self.weights[(a, b)]
+            except KeyError:
+                continue
 
-            # If there are no weights between the layers, do not connect them.
+            # This prevents the creation of layers with all zero weights.
             if not pos and not neg:
                 continue
 
