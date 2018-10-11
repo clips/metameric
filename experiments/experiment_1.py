@@ -88,11 +88,11 @@ if __name__ == "__main__":
         right = cycles == n_cyc
         cycles[right] = -1
         for x, word, c in zip(result, w, cycles):
-            results.append([word['orthography'],
+            results.append([word['orthography'][0],
                             idx,
                             word['rt'],
                             word['frequency'],
                             c])
 
     df = pd.DataFrame(results, columns=header)
-    df.to_csv("diploria_experiment_1.csv", sep=",")
+    df.to_csv("diploria_experiment_1.csv", sep=",", index=False)

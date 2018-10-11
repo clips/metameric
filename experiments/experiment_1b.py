@@ -76,7 +76,7 @@ if __name__ == "__main__":
                     outputs=('orthography',),
                     monitors=('orthography',),
                     step_size=.5,
-                    weight_adaptation=False)
+                    weight_adaptation=True)
 
         m = s.build_model(w)
         result = m.activate(w,
@@ -87,12 +87,12 @@ if __name__ == "__main__":
         cycles = np.array([len(x['orthography']) for x in result])
         right = cycles == n_cyc
         cycles[right] = -1
-        for x, word, c in zip(result, w, cycles):
-            results.append([word['orthography'],
+        for word, c in zip(w, cycles):
+            results.append([word['orthography'][0],
                             idx,
                             word['rt'],
                             word['frequency'],
                             c])
 
     df = pd.DataFrame(results, columns=header)
-    df.to_csv("diploria_experiment_1b.csv", sep=",")
+    df.to_csv("diploria_experiment_1b.csv", sep=",", index=False)
