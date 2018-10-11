@@ -75,6 +75,14 @@ def result_plot(word,
     for idx, (key, plot) in enumerate(zip(keys, plots)):
         data = result[key]
         names = node_names[key]
+        if isinstance(data, list):
+            mtr = np.zeros((len(data), len(names)))
+            name2idx = {k: idx for idx, k in enumerate(names)}
+            for idx, x in enumerate(data):
+                for k, v in x:
+                    mtr[idx, name2idx[k]] = v
+
+            data = mtr
 
         idxes = np.max(data, 0) > .0
 
