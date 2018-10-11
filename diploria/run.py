@@ -2,7 +2,6 @@
 import numpy as np
 import pandas as pd
 
-from diploria.prepare.weights import weights_to_matrix
 from diploria.prepare.weights import IA_WEIGHTS
 from diploria.builder import Builder
 from itertools import chain
@@ -94,13 +93,12 @@ def get_model(items_file,
         weights = IA_WEIGHTS
 
     items = read_input_file(items_file)
-    matrix, names = weights_to_matrix(weights)
 
+    names = set(chain.from_iterable(weights))
     rla = {k: 'global' if k not in rla_layers
            else rla_variable for k in names}
 
-    m = Builder(names,
-                matrix,
+    m = Builder(weights,
                 rla,
                 global_rla,
                 outputs=output_layers,
