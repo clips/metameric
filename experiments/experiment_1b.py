@@ -3,7 +3,7 @@ import random
 import pandas as pd
 
 from diploria.builder import Builder
-from diploria.prepare.weights import weights_to_matrix, IA_WEIGHTS
+from diploria.prepare.weights import IA_WEIGHTS
 from diploria.prepare.data import process_data
 from experiments.data import read_elp_format
 from copy import deepcopy
@@ -64,13 +64,11 @@ if __name__ == "__main__":
                          feature_sets=('fourteen',),
                          negative_features=True,
                          length_adaptation=False)
-        matrix, names = weights_to_matrix(IA_WEIGHTS)
 
-        rla = {k: 'global' for k in names}
+        rla = {k: 'global' for k in {'letters-features', 'letters'}}
         rla['orthography'] = 'frequency'
 
-        s = Builder(names,
-                    matrix,
+        s = Builder(IA_WEIGHTS,
                     rla,
                     -.05,
                     outputs=('orthography',),
