@@ -75,6 +75,9 @@ def result_plot(word,
     for idx, (key, plot) in enumerate(zip(keys, plots)):
         data = result[key]
         names = node_names[key]
+
+        # If the data is a list, we need to construct a new matrix.
+        # This only happens if we are dealing with reduced results.
         if isinstance(data, list):
             mtr = np.zeros((len(data), len(names)))
             name2idx = {k: idx for idx, k in enumerate(names)}
@@ -84,14 +87,19 @@ def result_plot(word,
 
             data = mtr
 
+        # Get index of all columns which have a positive element.
         idxes = np.max(data, 0) > .0
 
+        # Remove everything but the non-positive elements
         data = data[:, idxes]
+        # Get the right names for these data columns
         names = [names[idx] for idx in np.flatnonzero(idxes)]
 
         intervals = defaultdict(int)
-        bands = np.floor(data.T[:, -1] * 10)
-        for k, b in zip(names, bands):
+        # Get the activations at the last time step, and multiply them by 10.
+        bins = np.floor(data.T[:, -1] * 10)
+        # Create bins.
+        for k, b in zip(names, bins):
             intervals[b] += 1
         intervals = {k: list(.8 - np.arange(0, .85, .85 / v))
                      for k, v in intervals.items()}
@@ -100,11 +108,15 @@ def result_plot(word,
 
         if not monitors or key in monitors:
             plot.plot(np.ones(data.shape[0]) * threshold, color=REDDISH)
-        for idx, (k, v, b) in enumerate(zip(names, data.T, bands)):
+        for idx, (k, v, b) in enumerate(zip(names, data.T, bins)):
             plot.plot(v, color=cmap(idx))
             interval = intervals[b].pop()
             position = int(np.floor(max_cycles * interval))
-            ypos = max(v[max(0, position-div):position+div])
+            v = v[max(0, position-div):position+div]
+            if len(v) > 0:
+                ypos = max(v)
+            else:
+                ypos = 1.0
             plot.annotate(k,
                           (position, ypos),
                           color=np.array(cmap(idx)[:3]) / 4)
