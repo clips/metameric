@@ -889,24 +889,6 @@ typedef npy_double __pyx_t_5numpy_double_t;
  * ctypedef npy_cfloat      cfloat_t
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
-
-/* "diploria/core/metric.pyx":7
- * DTYPE = np.int64
- * DTYPE_F = np.float64
- * ctypedef np.int64_t DTYPE_t             # <<<<<<<<<<<<<<
- * ctypedef np.float64_t DTYPE_F_t
- * 
- */
-typedef __pyx_t_5numpy_int64_t __pyx_t_8diploria_4core_6metric_DTYPE_t;
-
-/* "diploria/core/metric.pyx":8
- * DTYPE_F = np.float64
- * ctypedef np.int64_t DTYPE_t
- * ctypedef np.float64_t DTYPE_F_t             # <<<<<<<<<<<<<<
- * 
- * 
- */
-typedef __pyx_t_5numpy_float64_t __pyx_t_8diploria_4core_6metric_DTYPE_F_t;
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -1117,6 +1099,34 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 #define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
 #endif
 
+/* GetItemInt.proto */
+#define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Fast(o, (Py_ssize_t)i, is_list, wraparound, boundscheck) :\
+    (is_list ? (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL) :\
+               __Pyx_GetItemInt_Generic(o, to_py_func(i))))
+#define __Pyx_GetItemInt_List(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_List_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "list index out of range"), (PyObject*)NULL))
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
+                                                              int wraparound, int boundscheck);
+#define __Pyx_GetItemInt_Tuple(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
+    (__Pyx_fits_Py_ssize_t(i, type, is_signed) ?\
+    __Pyx_GetItemInt_Tuple_Fast(o, (Py_ssize_t)i, wraparound, boundscheck) :\
+    (PyErr_SetString(PyExc_IndexError, "tuple index out of range"), (PyObject*)NULL))
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
+                                                              int wraparound, int boundscheck);
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
+                                                     int is_list, int wraparound, int boundscheck);
+
+/* BufferFallbackError.proto */
+static void __Pyx_RaiseBufferFallbackError(void);
+
+/* BufferIndexError.proto */
+static void __Pyx_RaiseBufferIndexError(int axis);
+
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
@@ -1228,6 +1238,9 @@ static Py_ssize_t __Pyx_minusones[] = {-1, -1, -1, -1, -1, -1, -1, -1};
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_Py_intptr_t(Py_intptr_t value);
 
 /* RealImag.proto */
 #if CYTHON_CCOMPLEX
@@ -1393,7 +1406,7 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
 /* Module declarations from 'diploria.core.metric' */
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t = { "DTYPE_F_t", NULL, sizeof(__pyx_t_8diploria_4core_6metric_DTYPE_F_t), { 0 }, 0, 'R', 0, 0 };
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
 #define __Pyx_MODULE_NAME "diploria.core.metric"
 int __pyx_module_is_main_diploria__core__metric = 0;
 
@@ -1402,41 +1415,36 @@ static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_RuntimeError;
 static PyObject *__pyx_builtin_ImportError;
+static const char __pyx_k_c[] = "c";
 static const char __pyx_k_i[] = "i";
 static const char __pyx_k_j[] = "j";
+static const char __pyx_k_z[] = "z";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k_exc[] = "exc";
-static const char __pyx_k_inh[] = "inh";
 static const char __pyx_k_mtr[] = "mtr";
 static const char __pyx_k_net[] = "net";
-static const char __pyx_k_rec[] = "rec";
 static const char __pyx_k_conn[] = "conn";
 static const char __pyx_k_main[] = "__main__";
+static const char __pyx_k_mtrs[] = "mtrs";
 static const char __pyx_k_test[] = "__test__";
-static const char __pyx_k_DTYPE[] = "DTYPE";
 static const char __pyx_k_decay[] = "decay";
 static const char __pyx_k_dtype[] = "dtype";
-static const char __pyx_k_int64[] = "int64";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_zeros[] = "zeros";
 static const char __pyx_k_import[] = "__import__";
-static const char __pyx_k_DTYPE_F[] = "DTYPE_F";
 static const char __pyx_k_float64[] = "float64";
 static const char __pyx_k_minimum[] = "minimum";
 static const char __pyx_k_n_conns[] = "n_conns";
 static const char __pyx_k_resting[] = "resting";
-static const char __pyx_k_strength[] = "strength";
 static const char __pyx_k_n_neurons[] = "n_neurons";
 static const char __pyx_k_step_size[] = "step_size";
 static const char __pyx_k_ValueError[] = "ValueError";
-static const char __pyx_k_recurrence[] = "recurrence";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_activations[] = "activations";
 static const char __pyx_k_RuntimeError[] = "RuntimeError";
 static const char __pyx_k_strength_new[] = "strength_new";
+static const char __pyx_k_strength_old[] = "strength_old";
 static const char __pyx_k_total_recurrence[] = "total_recurrence";
-static const char __pyx_k_strength_grossberg[] = "strength_grossberg";
 static const char __pyx_k_diploria_core_metric[] = "diploria.core.metric";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
 static const char __pyx_k_Users_stephantulkens_Documents[] = "/Users/stephantulkens/Documents/github/tilapia/diploria/core/metric.pyx";
@@ -1447,8 +1455,6 @@ static const char __pyx_k_Non_native_byte_order_not_suppor[] = "Non-native byte 
 static const char __pyx_k_ndarray_is_not_Fortran_contiguou[] = "ndarray is not Fortran contiguous";
 static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath failed to import";
 static const char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
-static PyObject *__pyx_n_s_DTYPE;
-static PyObject *__pyx_n_s_DTYPE_F;
 static PyObject *__pyx_kp_u_Format_string_allocated_too_shor;
 static PyObject *__pyx_kp_u_Format_string_allocated_too_shor_2;
 static PyObject *__pyx_n_s_ImportError;
@@ -1457,20 +1463,19 @@ static PyObject *__pyx_n_s_RuntimeError;
 static PyObject *__pyx_kp_s_Users_stephantulkens_Documents;
 static PyObject *__pyx_n_s_ValueError;
 static PyObject *__pyx_n_s_activations;
+static PyObject *__pyx_n_s_c;
 static PyObject *__pyx_n_s_conn;
 static PyObject *__pyx_n_s_decay;
 static PyObject *__pyx_n_s_diploria_core_metric;
 static PyObject *__pyx_n_s_dtype;
-static PyObject *__pyx_n_s_exc;
 static PyObject *__pyx_n_s_float64;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
-static PyObject *__pyx_n_s_inh;
-static PyObject *__pyx_n_s_int64;
 static PyObject *__pyx_n_s_j;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_minimum;
 static PyObject *__pyx_n_s_mtr;
+static PyObject *__pyx_n_s_mtrs;
 static PyObject *__pyx_n_s_n_conns;
 static PyObject *__pyx_n_s_n_neurons;
 static PyObject *__pyx_kp_u_ndarray_is_not_C_contiguous;
@@ -1481,20 +1486,17 @@ static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
 static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_range;
-static PyObject *__pyx_n_s_rec;
-static PyObject *__pyx_n_s_recurrence;
 static PyObject *__pyx_n_s_resting;
 static PyObject *__pyx_n_s_step_size;
-static PyObject *__pyx_n_s_strength;
-static PyObject *__pyx_n_s_strength_grossberg;
 static PyObject *__pyx_n_s_strength_new;
+static PyObject *__pyx_n_s_strength_old;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_total_recurrence;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
+static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_8diploria_4core_6metric_strength(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr); /* proto */
-static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_minimum, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_decay, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_step_size, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_recurrence); /* proto */
-static PyObject *__pyx_pf_8diploria_4core_6metric_4strength_grossberg(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_minimum, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_decay); /* proto */
+static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
+static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1508,358 +1510,39 @@ static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
 static PyObject *__pyx_tuple__12;
-static PyObject *__pyx_tuple__14;
 static PyObject *__pyx_codeobj__11;
 static PyObject *__pyx_codeobj__13;
-static PyObject *__pyx_codeobj__15;
 
-/* "diploria/core/metric.pyx":13
+/* "diploria/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=2] mtr):
- *     """Fast function for calculating association strength."""
+ * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  np.ndarray[np.float64_t, ndim=1] conn,
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8diploria_4core_6metric_1strength(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8diploria_4core_6metric_strength[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_8diploria_4core_6metric_1strength = {"strength", (PyCFunction)__pyx_pw_8diploria_4core_6metric_1strength, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8diploria_4core_6metric_strength};
-static PyObject *__pyx_pw_8diploria_4core_6metric_1strength(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyArrayObject *__pyx_v_conn = 0;
-  PyArrayObject *__pyx_v_mtr = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("strength (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_conn,&__pyx_n_s_mtr,0};
-    PyObject* values[2] = {0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtr)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("strength", 1, 2, 2, 1); __PYX_ERR(0, 13, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength") < 0)) __PYX_ERR(0, 13, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-    }
-    __pyx_v_conn = ((PyArrayObject *)values[0]);
-    __pyx_v_mtr = ((PyArrayObject *)values[1]);
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 13, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("diploria.core.metric.strength", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 13, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 14, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8diploria_4core_6metric_strength(__pyx_self, __pyx_v_conn, __pyx_v_mtr);
-
-  /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_8diploria_4core_6metric_strength(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr) {
-  int __pyx_v_i;
-  int __pyx_v_j;
-  int __pyx_v_n_conns;
-  int __pyx_v_n_neurons;
-  PyArrayObject *__pyx_v_net = 0;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_conn;
-  __Pyx_Buffer __pyx_pybuffer_conn;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_mtr;
-  __Pyx_Buffer __pyx_pybuffer_mtr;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_net;
-  __Pyx_Buffer __pyx_pybuffer_net;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  PyArrayObject *__pyx_t_5 = NULL;
-  int __pyx_t_6;
-  int __pyx_t_7;
-  Py_ssize_t __pyx_t_8;
-  int __pyx_t_9;
-  int __pyx_t_10;
-  int __pyx_t_11;
-  Py_ssize_t __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
-  Py_ssize_t __pyx_t_14;
-  Py_ssize_t __pyx_t_15;
-  __Pyx_RefNannySetupContext("strength", 0);
-  __pyx_pybuffer_net.pybuffer.buf = NULL;
-  __pyx_pybuffer_net.refcount = 0;
-  __pyx_pybuffernd_net.data = NULL;
-  __pyx_pybuffernd_net.rcbuffer = &__pyx_pybuffer_net;
-  __pyx_pybuffer_conn.pybuffer.buf = NULL;
-  __pyx_pybuffer_conn.refcount = 0;
-  __pyx_pybuffernd_conn.data = NULL;
-  __pyx_pybuffernd_conn.rcbuffer = &__pyx_pybuffer_conn;
-  __pyx_pybuffer_mtr.pybuffer.buf = NULL;
-  __pyx_pybuffer_mtr.refcount = 0;
-  __pyx_pybuffernd_mtr.data = NULL;
-  __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 13, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_conn.diminfo[0].strides = __pyx_pybuffernd_conn.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_conn.diminfo[0].shape = __pyx_pybuffernd_conn.rcbuffer->pybuffer.shape[0];
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 13, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
-
-  /* "diploria/core/metric.pyx":17
- *     """Fast function for calculating association strength."""
- *     cdef int i, j
- *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- */
-  __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
-
-  /* "diploria/core/metric.pyx":18
- *     cdef int i, j
- *     cdef int n_conns = conn.shape[0]
- *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- */
-  __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
-
-  /* "diploria/core/metric.pyx":19
- *     cdef int n_conns = conn.shape[0]
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- * 
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
-  __pyx_t_3 = 0;
-
-  /* "diploria/core/metric.pyx":20
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
- * 
- *     for i in range(n_conns):
- */
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "diploria/core/metric.pyx":19
- *     cdef int n_conns = conn.shape[0]
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- * 
- */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 19, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 19, __pyx_L1_error)
-  __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_net = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_net.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 19, __pyx_L1_error)
-    } else {__pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
-    }
-  }
-  __pyx_t_5 = 0;
-  __pyx_v_net = ((PyArrayObject *)__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "diploria/core/metric.pyx":22
- *                                                       dtype=DTYPE_F)
- * 
- *     for i in range(n_conns):             # <<<<<<<<<<<<<<
- *         if conn[i] > 0:
- *             for j in range(n_neurons):
- */
-  __pyx_t_6 = __pyx_v_n_conns;
-  for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-    __pyx_v_i = __pyx_t_7;
-
-    /* "diploria/core/metric.pyx":23
- * 
- *     for i in range(n_conns):
- *         if conn[i] > 0:             # <<<<<<<<<<<<<<
- *             for j in range(n_neurons):
- *                 net[j] += conn[i] * mtr[i, j]
- */
-    __pyx_t_8 = __pyx_v_i;
-    __pyx_t_9 = (((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_8, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
-    if (__pyx_t_9) {
-
-      /* "diploria/core/metric.pyx":24
- *     for i in range(n_conns):
- *         if conn[i] > 0:
- *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
- *                 net[j] += conn[i] * mtr[i, j]
- * 
- */
-      __pyx_t_10 = __pyx_v_n_neurons;
-      for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-        __pyx_v_j = __pyx_t_11;
-
-        /* "diploria/core/metric.pyx":25
- *         if conn[i] > 0:
- *             for j in range(n_neurons):
- *                 net[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
- * 
- *     return net
- */
-        __pyx_t_12 = __pyx_v_i;
-        __pyx_t_13 = __pyx_v_i;
-        __pyx_t_14 = __pyx_v_j;
-        __pyx_t_15 = __pyx_v_j;
-        *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[1].strides)));
-      }
-
-      /* "diploria/core/metric.pyx":23
- * 
- *     for i in range(n_conns):
- *         if conn[i] > 0:             # <<<<<<<<<<<<<<
- *             for j in range(n_neurons):
- *                 net[j] += conn[i] * mtr[i, j]
- */
-    }
-  }
-
-  /* "diploria/core/metric.pyx":27
- *                 net[j] += conn[i] * mtr[i, j]
- * 
- *     return net             # <<<<<<<<<<<<<<
- * 
- * @cython.wraparound(False)
- */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_net));
-  __pyx_r = ((PyObject *)__pyx_v_net);
-  goto __pyx_L0;
-
-  /* "diploria/core/metric.pyx":13
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=2] mtr):
- *     """Fast function for calculating association strength."""
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
-    __Pyx_PyThreadState_declare
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_conn.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("diploria.core.metric.strength", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  goto __pyx_L2;
-  __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_conn.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-  __pyx_L2:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_net);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "diploria/core/metric.pyx":31
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
- *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8diploria_4core_6metric_2strength_new[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_8diploria_4core_6metric_3strength_new = {"strength_new", (PyCFunction)__pyx_pw_8diploria_4core_6metric_3strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8diploria_4core_6metric_2strength_new};
-static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_8diploria_4core_6metric_strength_old[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_8diploria_4core_6metric_1strength_old = {"strength_old", (PyCFunction)__pyx_pw_8diploria_4core_6metric_1strength_old, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8diploria_4core_6metric_strength_old};
+static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
   PyArrayObject *__pyx_v_conn = 0;
   PyArrayObject *__pyx_v_mtr = 0;
-  __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_minimum;
-  __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_decay;
-  __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_step_size;
-  __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_recurrence;
+  __pyx_t_5numpy_float64_t __pyx_v_minimum;
+  __pyx_t_5numpy_float64_t __pyx_v_decay;
+  __pyx_t_5numpy_float64_t __pyx_v_step_size;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("strength_new (wrapper)", 0);
+  __Pyx_RefNannySetupContext("strength_old (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_activations,&__pyx_n_s_resting,&__pyx_n_s_conn,&__pyx_n_s_mtr,&__pyx_n_s_minimum,&__pyx_n_s_decay,&__pyx_n_s_step_size,&__pyx_n_s_recurrence,0};
-    PyObject* values[8] = {0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_activations,&__pyx_n_s_resting,&__pyx_n_s_conn,&__pyx_n_s_mtr,&__pyx_n_s_minimum,&__pyx_n_s_decay,&__pyx_n_s_step_size,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
-        case  8: values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
         case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -1878,43 +1561,38 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_resting)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 1); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, 1); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 2); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, 2); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 3); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, 3); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_minimum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 4); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, 4); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_decay)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 5); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, 5); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_step_size)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 6); __PYX_ERR(0, 31, __pyx_L3_error)
-        }
-        case  7:
-        if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_recurrence)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, 7); __PYX_ERR(0, 31, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, 6); __PYX_ERR(0, 8, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_new") < 0)) __PYX_ERR(0, 31, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_old") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 8) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -1924,30 +1602,28 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
-      values[7] = PyTuple_GET_ITEM(__pyx_args, 7);
     }
     __pyx_v_activations = ((PyArrayObject *)values[0]);
     __pyx_v_resting = ((PyArrayObject *)values[1]);
     __pyx_v_conn = ((PyArrayObject *)values[2]);
     __pyx_v_mtr = ((PyArrayObject *)values[3]);
-    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L3_error)
-    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 36, __pyx_L3_error)
-    __pyx_v_step_size = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_step_size == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 37, __pyx_L3_error)
-    __pyx_v_recurrence = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_recurrence == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 38, __pyx_L3_error)
+    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 12, __pyx_L3_error)
+    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 13, __pyx_L3_error)
+    __pyx_v_step_size = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_step_size == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength_new", 1, 8, 8, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 31, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("diploria.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("diploria.core.metric.strength_old", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 31, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 32, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 33, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 34, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8diploria_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size, __pyx_v_recurrence);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 10, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 11, __pyx_L1_error)
+  __pyx_r = __pyx_pf_8diploria_4core_6metric_strength_old(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1958,14 +1634,13 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_minimum, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_decay, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_step_size, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_recurrence) {
+static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_n_conns;
   int __pyx_v_n_neurons;
-  float __pyx_v_total_recurrence;
+  CYTHON_UNUSED float __pyx_v_total_recurrence;
   PyArrayObject *__pyx_v_net = 0;
-  PyArrayObject *__pyx_v_rec = 0;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_activations;
   __Pyx_Buffer __pyx_pybuffer_activations;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_conn;
@@ -1974,8 +1649,6 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   __Pyx_Buffer __pyx_pybuffer_mtr;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_net;
   __Pyx_Buffer __pyx_pybuffer_net;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_rec;
-  __Pyx_Buffer __pyx_pybuffer_rec;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_resting;
   __Pyx_Buffer __pyx_pybuffer_resting;
   PyObject *__pyx_r = NULL;
@@ -1984,7 +1657,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  PyArrayObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_5 = NULL;
   PyArrayObject *__pyx_t_6 = NULL;
   int __pyx_t_7;
   int __pyx_t_8;
@@ -2004,21 +1677,11 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   Py_ssize_t __pyx_t_22;
   Py_ssize_t __pyx_t_23;
   Py_ssize_t __pyx_t_24;
-  Py_ssize_t __pyx_t_25;
-  Py_ssize_t __pyx_t_26;
-  Py_ssize_t __pyx_t_27;
-  Py_ssize_t __pyx_t_28;
-  Py_ssize_t __pyx_t_29;
-  Py_ssize_t __pyx_t_30;
-  __Pyx_RefNannySetupContext("strength_new", 0);
+  __Pyx_RefNannySetupContext("strength_old", 0);
   __pyx_pybuffer_net.pybuffer.buf = NULL;
   __pyx_pybuffer_net.refcount = 0;
   __pyx_pybuffernd_net.data = NULL;
   __pyx_pybuffernd_net.rcbuffer = &__pyx_pybuffer_net;
-  __pyx_pybuffer_rec.pybuffer.buf = NULL;
-  __pyx_pybuffer_rec.refcount = 0;
-  __pyx_pybuffernd_rec.data = NULL;
-  __pyx_pybuffernd_rec.rcbuffer = &__pyx_pybuffer_rec;
   __pyx_pybuffer_activations.pybuffer.buf = NULL;
   __pyx_pybuffer_activations.refcount = 0;
   __pyx_pybuffernd_activations.data = NULL;
@@ -2037,26 +1700,26 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 8, __pyx_L1_error)
   }
   __pyx_pybuffernd_activations.diminfo[0].strides = __pyx_pybuffernd_activations.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_activations.diminfo[0].shape = __pyx_pybuffernd_activations.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 8, __pyx_L1_error)
   }
   __pyx_pybuffernd_resting.diminfo[0].strides = __pyx_pybuffernd_resting.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_resting.diminfo[0].shape = __pyx_pybuffernd_resting.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 8, __pyx_L1_error)
   }
   __pyx_pybuffernd_conn.diminfo[0].strides = __pyx_pybuffernd_conn.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_conn.diminfo[0].shape = __pyx_pybuffernd_conn.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 31, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 8, __pyx_L1_error)
   }
   __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
 
-  /* "diploria/core/metric.pyx":41
+  /* "diploria/core/metric.pyx":17
  *     """Fast function for calculating association strength."""
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
@@ -2065,156 +1728,94 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
  */
   __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
 
-  /* "diploria/core/metric.pyx":42
+  /* "diploria/core/metric.pyx":18
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
  *     cdef float total_recurrence = 0
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
  */
   __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
 
-  /* "diploria/core/metric.pyx":43
+  /* "diploria/core/metric.pyx":19
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef float total_recurrence = 0             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
+ *                                                          dtype=np.float64)
  */
   __pyx_v_total_recurrence = 0.0;
 
-  /* "diploria/core/metric.pyx":44
+  /* "diploria/core/metric.pyx":20
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef float total_recurrence = 0
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
+ *                                                          dtype=np.float64)
+ * 
  */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "diploria/core/metric.pyx":45
+  /* "diploria/core/metric.pyx":21
  *     cdef float total_recurrence = 0
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- */
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 45, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-  /* "diploria/core/metric.pyx":44
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef float total_recurrence = 0
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],
- */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 44, __pyx_L1_error)
-  __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_net = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_net.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 44, __pyx_L1_error)
-    } else {__pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
-    }
-  }
-  __pyx_t_5 = 0;
-  __pyx_v_net = ((PyArrayObject *)__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "diploria/core/metric.pyx":46
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- * 
- */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "diploria/core/metric.pyx":47
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
+ *                                                          dtype=np.float64)             # <<<<<<<<<<<<<<
  * 
  *     for i in range(n_conns):
  */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":46
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] net = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] rec = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
+  /* "diploria/core/metric.pyx":20
+ *     cdef int n_neurons = mtr.shape[1]
+ *     cdef float total_recurrence = 0
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
+ *                                                          dtype=np.float64)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 46, __pyx_L1_error)
-  __pyx_t_6 = ((PyArrayObject *)__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_6 = ((PyArrayObject *)__pyx_t_5);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_rec.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_rec = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_rec.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 46, __pyx_L1_error)
-    } else {__pyx_pybuffernd_rec.diminfo[0].strides = __pyx_pybuffernd_rec.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_rec.diminfo[0].shape = __pyx_pybuffernd_rec.rcbuffer->pybuffer.shape[0];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
+      __pyx_v_net = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_net.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 20, __pyx_L1_error)
+    } else {__pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
     }
   }
   __pyx_t_6 = 0;
-  __pyx_v_rec = ((PyArrayObject *)__pyx_t_2);
-  __pyx_t_2 = 0;
+  __pyx_v_net = ((PyArrayObject *)__pyx_t_5);
+  __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":49
- *                                                       dtype=DTYPE_F)
+  /* "diploria/core/metric.pyx":23
+ *                                                          dtype=np.float64)
  * 
  *     for i in range(n_conns):             # <<<<<<<<<<<<<<
  *         if conn[i] > 0:
@@ -2224,7 +1825,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "diploria/core/metric.pyx":50
+    /* "diploria/core/metric.pyx":24
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -2232,10 +1833,10 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
  *                 net[j] += conn[i] * mtr[i, j]
  */
     __pyx_t_9 = __pyx_v_i;
-    __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
+    __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "diploria/core/metric.pyx":51
+      /* "diploria/core/metric.pyx":25
  *     for i in range(n_conns):
  *         if conn[i] > 0:
  *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2246,7 +1847,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
       for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
         __pyx_v_j = __pyx_t_12;
 
-        /* "diploria/core/metric.pyx":52
+        /* "diploria/core/metric.pyx":26
  *         if conn[i] > 0:
  *             for j in range(n_neurons):
  *                 net[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -2257,10 +1858,10 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
         __pyx_t_14 = __pyx_v_i;
         __pyx_t_15 = __pyx_v_j;
         __pyx_t_16 = __pyx_v_j;
-        *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_15, __pyx_pybuffernd_mtr.diminfo[1].strides)));
+        *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_15, __pyx_pybuffernd_mtr.diminfo[1].strides)));
       }
 
-      /* "diploria/core/metric.pyx":50
+      /* "diploria/core/metric.pyx":24
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -2270,133 +1871,50 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     }
   }
 
-  /* "diploria/core/metric.pyx":54
+  /* "diploria/core/metric.pyx":28
  *                 net[j] += conn[i] * mtr[i, j]
  * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
- *         if activations[i] > 0:
- *             rec[i] = activations[i] * recurrence
- */
-  __pyx_t_7 = __pyx_v_n_neurons;
-  for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-    __pyx_v_i = __pyx_t_8;
-
-    /* "diploria/core/metric.pyx":55
- * 
- *     for i in range(n_neurons):
- *         if activations[i] > 0:             # <<<<<<<<<<<<<<
- *             rec[i] = activations[i] * recurrence
- *             total_recurrence += rec[i]
- */
-    __pyx_t_17 = __pyx_v_i;
-    __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_activations.diminfo[0].strides)) > 0.0) != 0);
-    if (__pyx_t_10) {
-
-      /* "diploria/core/metric.pyx":56
- *     for i in range(n_neurons):
- *         if activations[i] > 0:
- *             rec[i] = activations[i] * recurrence             # <<<<<<<<<<<<<<
- *             total_recurrence += rec[i]
- * 
- */
-      __pyx_t_18 = __pyx_v_i;
-      __pyx_t_19 = __pyx_v_i;
-      *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_rec.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_rec.diminfo[0].strides) = ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_activations.diminfo[0].strides)) * __pyx_v_recurrence);
-
-      /* "diploria/core/metric.pyx":57
- *         if activations[i] > 0:
- *             rec[i] = activations[i] * recurrence
- *             total_recurrence += rec[i]             # <<<<<<<<<<<<<<
- * 
- *     for i in range(n_neurons):
- */
-      __pyx_t_20 = __pyx_v_i;
-      __pyx_v_total_recurrence = (__pyx_v_total_recurrence + (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_rec.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_rec.diminfo[0].strides)));
-
-      /* "diploria/core/metric.pyx":55
- * 
- *     for i in range(n_neurons):
- *         if activations[i] > 0:             # <<<<<<<<<<<<<<
- *             rec[i] = activations[i] * recurrence
- *             total_recurrence += rec[i]
- */
-    }
-  }
-
-  /* "diploria/core/metric.pyx":59
- *             total_recurrence += rec[i]
- * 
- *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
- *         if total_recurrence != 0:
- *             net[i] += total_recurrence - rec[i]
- */
-  __pyx_t_7 = __pyx_v_n_neurons;
-  for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-    __pyx_v_i = __pyx_t_8;
-
-    /* "diploria/core/metric.pyx":60
- * 
- *     for i in range(n_neurons):
- *         if total_recurrence != 0:             # <<<<<<<<<<<<<<
- *             net[i] += total_recurrence - rec[i]
- *         if net[i] > 0:
- */
-    __pyx_t_10 = ((__pyx_v_total_recurrence != 0.0) != 0);
-    if (__pyx_t_10) {
-
-      /* "diploria/core/metric.pyx":61
- *     for i in range(n_neurons):
- *         if total_recurrence != 0:
- *             net[i] += total_recurrence - rec[i]             # <<<<<<<<<<<<<<
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]
  */
-      __pyx_t_21 = __pyx_v_i;
-      __pyx_t_22 = __pyx_v_i;
-      *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_net.diminfo[0].strides) += (__pyx_v_total_recurrence - (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_rec.rcbuffer->pybuffer.buf, __pyx_t_21, __pyx_pybuffernd_rec.diminfo[0].strides)));
+  __pyx_t_7 = __pyx_v_n_neurons;
+  for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+    __pyx_v_i = __pyx_t_8;
 
-      /* "diploria/core/metric.pyx":60
+    /* "diploria/core/metric.pyx":29
  * 
  *     for i in range(n_neurons):
- *         if total_recurrence != 0:             # <<<<<<<<<<<<<<
- *             net[i] += total_recurrence - rec[i]
- *         if net[i] > 0:
- */
-    }
-
-    /* "diploria/core/metric.pyx":62
- *         if total_recurrence != 0:
- *             net[i] += total_recurrence - rec[i]
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
  *             net[i] *= 1.0 - activations[i]
  *         else:
  */
-    __pyx_t_23 = __pyx_v_i;
-    __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
+    __pyx_t_17 = __pyx_v_i;
+    __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "diploria/core/metric.pyx":63
- *             net[i] += total_recurrence - rec[i]
+      /* "diploria/core/metric.pyx":30
+ *     for i in range(n_neurons):
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]             # <<<<<<<<<<<<<<
  *         else:
  *             net[i] *= activations[i] - minimum
  */
-      __pyx_t_24 = __pyx_v_i;
-      __pyx_t_25 = __pyx_v_i;
-      *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_activations.diminfo[0].strides)));
+      __pyx_t_18 = __pyx_v_i;
+      __pyx_t_19 = __pyx_v_i;
+      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_activations.diminfo[0].strides)));
 
-      /* "diploria/core/metric.pyx":62
- *         if total_recurrence != 0:
- *             net[i] += total_recurrence - rec[i]
+      /* "diploria/core/metric.pyx":29
+ * 
+ *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
  *             net[i] *= 1.0 - activations[i]
  *         else:
  */
-      goto __pyx_L14;
+      goto __pyx_L10;
     }
 
-    /* "diploria/core/metric.pyx":65
+    /* "diploria/core/metric.pyx":32
  *             net[i] *= 1.0 - activations[i]
  *         else:
  *             net[i] *= activations[i] - minimum             # <<<<<<<<<<<<<<
@@ -2404,26 +1922,26 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
  * 
  */
     /*else*/ {
-      __pyx_t_26 = __pyx_v_i;
-      __pyx_t_27 = __pyx_v_i;
-      *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_27, __pyx_pybuffernd_net.diminfo[0].strides) *= ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum);
+      __pyx_t_20 = __pyx_v_i;
+      __pyx_t_21 = __pyx_v_i;
+      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_21, __pyx_pybuffernd_net.diminfo[0].strides) *= ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum);
     }
-    __pyx_L14:;
+    __pyx_L10:;
 
-    /* "diploria/core/metric.pyx":66
+    /* "diploria/core/metric.pyx":33
  *         else:
  *             net[i] *= activations[i] - minimum
  *         net[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
  * 
  *     return net * step_size
  */
-    __pyx_t_28 = __pyx_v_i;
-    __pyx_t_29 = __pyx_v_i;
-    __pyx_t_30 = __pyx_v_i;
-    *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_29, __pyx_pybuffernd_resting.diminfo[0].strides))));
+    __pyx_t_22 = __pyx_v_i;
+    __pyx_t_23 = __pyx_v_i;
+    __pyx_t_24 = __pyx_v_i;
+    *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "diploria/core/metric.pyx":68
+  /* "diploria/core/metric.pyx":35
  *         net[i] -= decay * (activations[i] - resting[i])
  * 
  *     return net * step_size             # <<<<<<<<<<<<<<
@@ -2431,21 +1949,21 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_r = __pyx_t_1;
-  __pyx_t_1 = 0;
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "diploria/core/metric.pyx":31
+  /* "diploria/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
- *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
+ * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  np.ndarray[np.float64_t, ndim=1] conn,
  */
 
   /* function exit code */
@@ -2454,6 +1972,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
@@ -2462,10 +1981,9 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_conn.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_rec.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("diploria.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("diploria.core.metric.strength_old", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2473,44 +1991,45 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_conn.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_rec.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __pyx_L2:;
   __Pyx_XDECREF((PyObject *)__pyx_v_net);
-  __Pyx_XDECREF((PyObject *)__pyx_v_rec);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "diploria/core/metric.pyx":73
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
+/* "diploria/core/metric.pyx":38
+ * 
+ * 
+ * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  list conn,
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8diploria_4core_6metric_5strength_grossberg(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_8diploria_4core_6metric_5strength_grossberg = {"strength_grossberg", (PyCFunction)__pyx_pw_8diploria_4core_6metric_5strength_grossberg, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_8diploria_4core_6metric_5strength_grossberg(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_8diploria_4core_6metric_2strength_new[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_8diploria_4core_6metric_3strength_new = {"strength_new", (PyCFunction)__pyx_pw_8diploria_4core_6metric_3strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8diploria_4core_6metric_2strength_new};
+static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
-  PyArrayObject *__pyx_v_conn = 0;
-  PyArrayObject *__pyx_v_mtr = 0;
-  __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_minimum;
-  __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_decay;
+  PyObject *__pyx_v_conn = 0;
+  PyObject *__pyx_v_mtrs = 0;
+  __pyx_t_5numpy_float64_t __pyx_v_minimum;
+  __pyx_t_5numpy_float64_t __pyx_v_decay;
+  __pyx_t_5numpy_float64_t __pyx_v_step_size;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("strength_grossberg (wrapper)", 0);
+  __Pyx_RefNannySetupContext("strength_new (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_activations,&__pyx_n_s_resting,&__pyx_n_s_conn,&__pyx_n_s_mtr,&__pyx_n_s_minimum,&__pyx_n_s_decay,0};
-    PyObject* values[6] = {0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_activations,&__pyx_n_s_resting,&__pyx_n_s_conn,&__pyx_n_s_mtrs,&__pyx_n_s_minimum,&__pyx_n_s_decay,&__pyx_n_s_step_size,0};
+    PyObject* values[7] = {0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
@@ -2528,33 +2047,38 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_5strength_grossberg(PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_resting)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 1); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 1); __PYX_ERR(0, 38, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 2); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 2); __PYX_ERR(0, 38, __pyx_L3_error)
         }
         case  3:
-        if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtr)) != 0)) kw_args--;
+        if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtrs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 3); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 3); __PYX_ERR(0, 38, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_minimum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 4); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 4); __PYX_ERR(0, 38, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_decay)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, 5); __PYX_ERR(0, 73, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 5); __PYX_ERR(0, 38, __pyx_L3_error)
+        }
+        case  6:
+        if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_step_size)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 6); __PYX_ERR(0, 38, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_grossberg") < 0)) __PYX_ERR(0, 73, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_new") < 0)) __PYX_ERR(0, 38, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -2563,27 +2087,29 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_5strength_grossberg(PyObject *
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
+      values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
     }
     __pyx_v_activations = ((PyArrayObject *)values[0]);
     __pyx_v_resting = ((PyArrayObject *)values[1]);
-    __pyx_v_conn = ((PyArrayObject *)values[2]);
-    __pyx_v_mtr = ((PyArrayObject *)values[3]);
-    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 77, __pyx_L3_error)
-    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L3_error)
+    __pyx_v_conn = ((PyObject*)values[2]);
+    __pyx_v_mtrs = ((PyObject*)values[3]);
+    __pyx_v_minimum = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_minimum == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L3_error)
+    __pyx_v_decay = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_decay == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 43, __pyx_L3_error)
+    __pyx_v_step_size = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_step_size == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength_grossberg", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 73, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("diploria.core.metric.strength_grossberg", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("diploria.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 73, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 74, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 75, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 76, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8diploria_4core_6metric_4strength_grossberg(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 38, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 39, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), (&PyList_Type), 1, "conn", 1))) __PYX_ERR(0, 40, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtrs), (&PyList_Type), 1, "mtrs", 1))) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_r = __pyx_pf_8diploria_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2594,23 +2120,22 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_5strength_grossberg(PyObject *
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8diploria_4core_6metric_4strength_grossberg(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_minimum, __pyx_t_8diploria_4core_6metric_DTYPE_F_t __pyx_v_decay) {
+static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
   int __pyx_v_j;
-  int __pyx_v_n_conns;
+  int __pyx_v_z;
   int __pyx_v_n_neurons;
-  PyArrayObject *__pyx_v_exc = 0;
-  PyArrayObject *__pyx_v_inh = 0;
+  PyArrayObject *__pyx_v_net = 0;
+  PyArrayObject *__pyx_v_c = 0;
+  PyArrayObject *__pyx_v_mtr = 0;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_activations;
   __Pyx_Buffer __pyx_pybuffer_activations;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_conn;
-  __Pyx_Buffer __pyx_pybuffer_conn;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_exc;
-  __Pyx_Buffer __pyx_pybuffer_exc;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_inh;
-  __Pyx_Buffer __pyx_pybuffer_inh;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_c;
+  __Pyx_Buffer __pyx_pybuffer_c;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_mtr;
   __Pyx_Buffer __pyx_pybuffer_mtr;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_net;
+  __Pyx_Buffer __pyx_pybuffer_net;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_resting;
   __Pyx_Buffer __pyx_pybuffer_resting;
   PyObject *__pyx_r = NULL;
@@ -2619,23 +2144,23 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_4strength_grossberg(CYTHON_UNU
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
   PyObject *__pyx_t_4 = NULL;
-  PyArrayObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_5 = NULL;
   PyArrayObject *__pyx_t_6 = NULL;
-  int __pyx_t_7;
+  Py_ssize_t __pyx_t_7;
   int __pyx_t_8;
-  Py_ssize_t __pyx_t_9;
+  PyArrayObject *__pyx_t_9 = NULL;
   int __pyx_t_10;
-  int __pyx_t_11;
-  int __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
-  Py_ssize_t __pyx_t_14;
-  Py_ssize_t __pyx_t_15;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
+  PyArrayObject *__pyx_t_14 = NULL;
+  npy_intp __pyx_t_15;
   Py_ssize_t __pyx_t_16;
-  Py_ssize_t __pyx_t_17;
-  Py_ssize_t __pyx_t_18;
-  Py_ssize_t __pyx_t_19;
+  int __pyx_t_17;
+  int __pyx_t_18;
+  int __pyx_t_19;
   Py_ssize_t __pyx_t_20;
-  Py_ssize_t __pyx_t_21;
+  int __pyx_t_21;
   Py_ssize_t __pyx_t_22;
   Py_ssize_t __pyx_t_23;
   Py_ssize_t __pyx_t_24;
@@ -2645,15 +2170,21 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_4strength_grossberg(CYTHON_UNU
   Py_ssize_t __pyx_t_28;
   Py_ssize_t __pyx_t_29;
   Py_ssize_t __pyx_t_30;
-  __Pyx_RefNannySetupContext("strength_grossberg", 0);
-  __pyx_pybuffer_exc.pybuffer.buf = NULL;
-  __pyx_pybuffer_exc.refcount = 0;
-  __pyx_pybuffernd_exc.data = NULL;
-  __pyx_pybuffernd_exc.rcbuffer = &__pyx_pybuffer_exc;
-  __pyx_pybuffer_inh.pybuffer.buf = NULL;
-  __pyx_pybuffer_inh.refcount = 0;
-  __pyx_pybuffernd_inh.data = NULL;
-  __pyx_pybuffernd_inh.rcbuffer = &__pyx_pybuffer_inh;
+  Py_ssize_t __pyx_t_31;
+  Py_ssize_t __pyx_t_32;
+  __Pyx_RefNannySetupContext("strength_new", 0);
+  __pyx_pybuffer_net.pybuffer.buf = NULL;
+  __pyx_pybuffer_net.refcount = 0;
+  __pyx_pybuffernd_net.data = NULL;
+  __pyx_pybuffernd_net.rcbuffer = &__pyx_pybuffer_net;
+  __pyx_pybuffer_c.pybuffer.buf = NULL;
+  __pyx_pybuffer_c.refcount = 0;
+  __pyx_pybuffernd_c.data = NULL;
+  __pyx_pybuffernd_c.rcbuffer = &__pyx_pybuffer_c;
+  __pyx_pybuffer_mtr.pybuffer.buf = NULL;
+  __pyx_pybuffer_mtr.refcount = 0;
+  __pyx_pybuffernd_mtr.data = NULL;
+  __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   __pyx_pybuffer_activations.pybuffer.buf = NULL;
   __pyx_pybuffer_activations.refcount = 0;
   __pyx_pybuffernd_activations.data = NULL;
@@ -2662,341 +2193,440 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_4strength_grossberg(CYTHON_UNU
   __pyx_pybuffer_resting.refcount = 0;
   __pyx_pybuffernd_resting.data = NULL;
   __pyx_pybuffernd_resting.rcbuffer = &__pyx_pybuffer_resting;
-  __pyx_pybuffer_conn.pybuffer.buf = NULL;
-  __pyx_pybuffer_conn.refcount = 0;
-  __pyx_pybuffernd_conn.data = NULL;
-  __pyx_pybuffernd_conn.rcbuffer = &__pyx_pybuffer_conn;
-  __pyx_pybuffer_mtr.pybuffer.buf = NULL;
-  __pyx_pybuffer_mtr.refcount = 0;
-  __pyx_pybuffernd_mtr.data = NULL;
-  __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
   }
   __pyx_pybuffernd_activations.diminfo[0].strides = __pyx_pybuffernd_activations.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_activations.diminfo[0].shape = __pyx_pybuffernd_activations.rcbuffer->pybuffer.shape[0];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_resting.rcbuffer->pybuffer, (PyObject*)__pyx_v_resting, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
   }
   __pyx_pybuffernd_resting.diminfo[0].strides = __pyx_pybuffernd_resting.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_resting.diminfo[0].shape = __pyx_pybuffernd_resting.rcbuffer->pybuffer.shape[0];
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_conn.rcbuffer->pybuffer, (PyObject*)__pyx_v_conn, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_conn.diminfo[0].strides = __pyx_pybuffernd_conn.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_conn.diminfo[0].shape = __pyx_pybuffernd_conn.rcbuffer->pybuffer.shape[0];
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 73, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
 
-  /* "diploria/core/metric.pyx":81
+  /* "diploria/core/metric.pyx":47
+ *     """Fast function for calculating association strength."""
+ *     cdef int i, j, z
+ *     cdef int n_neurons = activations.shape[0]             # <<<<<<<<<<<<<<
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
+ *                                                          dtype=np.float64)
+ */
+  __pyx_v_n_neurons = (__pyx_v_activations->dimensions[0]);
+
+  /* "diploria/core/metric.pyx":48
+ *     cdef int i, j, z
+ *     cdef int n_neurons = activations.shape[0]
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
+ *                                                          dtype=np.float64)
  * 
- *     cdef int i, j
- *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
  */
-  __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
-
-  /* "diploria/core/metric.pyx":82
- *     cdef int i, j
- *     cdef int n_conns = conn.shape[0]
- *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- */
-  __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
-
-  /* "diploria/core/metric.pyx":83
- *     cdef int n_conns = conn.shape[0]
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = PyList_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_1);
   PyList_SET_ITEM(__pyx_t_3, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_3);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "diploria/core/metric.pyx":84
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
+  /* "diploria/core/metric.pyx":49
+ *     cdef int n_neurons = activations.shape[0]
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
+ *                                                          dtype=np.float64)             # <<<<<<<<<<<<<<
+ * 
+ *     cdef np.ndarray[np.float64_t, ndim=1] c
  */
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":83
- *     cdef int n_conns = conn.shape[0]
- *     cdef int n_neurons = mtr.shape[1]
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
+  /* "diploria/core/metric.pyx":48
+ *     cdef int i, j, z
+ *     cdef int n_neurons = activations.shape[0]
+ *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
+ *                                                          dtype=np.float64)
+ * 
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 83, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (!(likely(((__pyx_t_4) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_4, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 83, __pyx_L1_error)
-  __pyx_t_5 = ((PyArrayObject *)__pyx_t_4);
+  if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_6 = ((PyArrayObject *)__pyx_t_5);
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_exc.rcbuffer->pybuffer, (PyObject*)__pyx_t_5, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_exc = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 83, __pyx_L1_error)
-    } else {__pyx_pybuffernd_exc.diminfo[0].strides = __pyx_pybuffernd_exc.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_exc.diminfo[0].shape = __pyx_pybuffernd_exc.rcbuffer->pybuffer.shape[0];
-    }
-  }
-  __pyx_t_5 = 0;
-  __pyx_v_exc = ((PyArrayObject *)__pyx_t_4);
-  __pyx_t_4 = 0;
-
-  /* "diploria/core/metric.pyx":85
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- * 
- */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_n_neurons); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_4);
-  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_t_4);
-  __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1);
-  __pyx_t_1 = 0;
-
-  /* "diploria/core/metric.pyx":86
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)             # <<<<<<<<<<<<<<
- * 
- * 
- */
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_DTYPE_F); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 86, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "diploria/core/metric.pyx":85
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] exc = np.zeros([n_neurons],
- *                                                       dtype=DTYPE_F)
- *     cdef np.ndarray[DTYPE_F_t, ndim=1] inh = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
- *                                                       dtype=DTYPE_F)
- * 
- */
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 85, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (!(likely(((__pyx_t_2) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_2, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 85, __pyx_L1_error)
-  __pyx_t_6 = ((PyArrayObject *)__pyx_t_2);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_inh.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_8diploria_4core_6metric_DTYPE_F_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-      __pyx_v_inh = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_inh.rcbuffer->pybuffer.buf = NULL;
-      __PYX_ERR(0, 85, __pyx_L1_error)
-    } else {__pyx_pybuffernd_inh.diminfo[0].strides = __pyx_pybuffernd_inh.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_inh.diminfo[0].shape = __pyx_pybuffernd_inh.rcbuffer->pybuffer.shape[0];
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
+      __pyx_v_net = ((PyArrayObject *)Py_None); __Pyx_INCREF(Py_None); __pyx_pybuffernd_net.rcbuffer->pybuffer.buf = NULL;
+      __PYX_ERR(0, 48, __pyx_L1_error)
+    } else {__pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
     }
   }
   __pyx_t_6 = 0;
-  __pyx_v_inh = ((PyArrayObject *)__pyx_t_2);
-  __pyx_t_2 = 0;
+  __pyx_v_net = ((PyArrayObject *)__pyx_t_5);
+  __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":89
- * 
- * 
- *     for i in range(n_conns):             # <<<<<<<<<<<<<<
- *         if conn[i] > 0:
- *             for j in range(n_neurons):
+  /* "diploria/core/metric.pyx":54
+ *     cdef np.ndarray[np.float64_t, ndim=2] mtr
+ *     # There are as many conn as mtr.
+ *     for z in range(len(conn)):             # <<<<<<<<<<<<<<
+ *         c = conn[z]
+ *         mtr = mtrs[z]
  */
-  __pyx_t_7 = __pyx_v_n_conns;
+  if (unlikely(__pyx_v_conn == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
+    __PYX_ERR(0, 54, __pyx_L1_error)
+  }
+  __pyx_t_7 = PyList_GET_SIZE(__pyx_v_conn); if (unlikely(__pyx_t_7 == -1)) __PYX_ERR(0, 54, __pyx_L1_error)
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-    __pyx_v_i = __pyx_t_8;
+    __pyx_v_z = __pyx_t_8;
 
-    /* "diploria/core/metric.pyx":90
- * 
- *     for i in range(n_conns):
- *         if conn[i] > 0:             # <<<<<<<<<<<<<<
- *             for j in range(n_neurons):
- *                 if mtr[i, j] > 0:
+    /* "diploria/core/metric.pyx":55
+ *     # There are as many conn as mtr.
+ *     for z in range(len(conn)):
+ *         c = conn[z]             # <<<<<<<<<<<<<<
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):
  */
-    __pyx_t_9 = __pyx_v_i;
-    __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
-    if (__pyx_t_10) {
-
-      /* "diploria/core/metric.pyx":91
- *     for i in range(n_conns):
- *         if conn[i] > 0:
- *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
- *                 if mtr[i, j] > 0:
- *                     exc[j] += conn[i] * mtr[i, j]
- */
-      __pyx_t_11 = __pyx_v_n_neurons;
-      for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
-        __pyx_v_j = __pyx_t_12;
-
-        /* "diploria/core/metric.pyx":92
- *         if conn[i] > 0:
- *             for j in range(n_neurons):
- *                 if mtr[i, j] > 0:             # <<<<<<<<<<<<<<
- *                     exc[j] += conn[i] * mtr[i, j]
- *                 else:
- */
-        __pyx_t_13 = __pyx_v_i;
-        __pyx_t_14 = __pyx_v_j;
-        __pyx_t_10 = (((*__Pyx_BufPtrStrided2d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[1].strides)) > 0.0) != 0);
-        if (__pyx_t_10) {
-
-          /* "diploria/core/metric.pyx":93
- *             for j in range(n_neurons):
- *                 if mtr[i, j] > 0:
- *                     exc[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
- *                 else:
- *                     inh[j] += conn[i] * mtr[i, j]
- */
-          __pyx_t_15 = __pyx_v_i;
-          __pyx_t_16 = __pyx_v_i;
-          __pyx_t_17 = __pyx_v_j;
-          __pyx_t_18 = __pyx_v_j;
-          *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_exc.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_17, __pyx_pybuffernd_mtr.diminfo[1].strides)));
-
-          /* "diploria/core/metric.pyx":92
- *         if conn[i] > 0:
- *             for j in range(n_neurons):
- *                 if mtr[i, j] > 0:             # <<<<<<<<<<<<<<
- *                     exc[j] += conn[i] * mtr[i, j]
- *                 else:
- */
-          goto __pyx_L8;
+    if (unlikely(__pyx_v_conn == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 55, __pyx_L1_error)
+    }
+    __pyx_t_5 = __Pyx_GetItemInt_List(__pyx_v_conn, __pyx_v_z, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_9 = ((PyArrayObject *)__pyx_t_5);
+    {
+      __Pyx_BufFmt_StackElem __pyx_stack[1];
+      __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
+      __pyx_t_10 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)__pyx_t_9, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+      if (unlikely(__pyx_t_10 < 0)) {
+        PyErr_Fetch(&__pyx_t_11, &__pyx_t_12, &__pyx_t_13);
+        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)__pyx_v_c, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+          Py_XDECREF(__pyx_t_11); Py_XDECREF(__pyx_t_12); Py_XDECREF(__pyx_t_13);
+          __Pyx_RaiseBufferFallbackError();
+        } else {
+          PyErr_Restore(__pyx_t_11, __pyx_t_12, __pyx_t_13);
         }
+      }
+      __pyx_pybuffernd_c.diminfo[0].strides = __pyx_pybuffernd_c.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_c.diminfo[0].shape = __pyx_pybuffernd_c.rcbuffer->pybuffer.shape[0];
+      if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
+    }
+    __pyx_t_9 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_c, ((PyArrayObject *)__pyx_t_5));
+    __pyx_t_5 = 0;
 
-        /* "diploria/core/metric.pyx":95
- *                     exc[j] += conn[i] * mtr[i, j]
- *                 else:
- *                     inh[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
+    /* "diploria/core/metric.pyx":56
+ *     for z in range(len(conn)):
+ *         c = conn[z]
+ *         mtr = mtrs[z]             # <<<<<<<<<<<<<<
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:
+ */
+    if (unlikely(__pyx_v_mtrs == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 56, __pyx_L1_error)
+    }
+    __pyx_t_5 = __Pyx_GetItemInt_List(__pyx_v_mtrs, __pyx_v_z, int, 1, __Pyx_PyInt_From_int, 1, 1, 1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 56, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    if (!(likely(((__pyx_t_5) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_5, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 56, __pyx_L1_error)
+    __pyx_t_14 = ((PyArrayObject *)__pyx_t_5);
+    {
+      __Pyx_BufFmt_StackElem __pyx_stack[1];
+      __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
+      __pyx_t_10 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_t_14, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
+      if (unlikely(__pyx_t_10 < 0)) {
+        PyErr_Fetch(&__pyx_t_13, &__pyx_t_12, &__pyx_t_11);
+        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+          Py_XDECREF(__pyx_t_13); Py_XDECREF(__pyx_t_12); Py_XDECREF(__pyx_t_11);
+          __Pyx_RaiseBufferFallbackError();
+        } else {
+          PyErr_Restore(__pyx_t_13, __pyx_t_12, __pyx_t_11);
+        }
+      }
+      __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
+      if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 56, __pyx_L1_error)
+    }
+    __pyx_t_14 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_mtr, ((PyArrayObject *)__pyx_t_5));
+    __pyx_t_5 = 0;
+
+    /* "diploria/core/metric.pyx":57
+ *         c = conn[z]
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):             # <<<<<<<<<<<<<<
+ *             if c[i] > 0:
+ *                 for j in range(n_neurons):
+ */
+    __pyx_t_15 = (__pyx_v_c->dimensions[0]);
+    for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_15; __pyx_t_10+=1) {
+      __pyx_v_i = __pyx_t_10;
+
+      /* "diploria/core/metric.pyx":58
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:             # <<<<<<<<<<<<<<
+ *                 for j in range(n_neurons):
+ *                     net[j] += c[i] * mtr[i, j]
+ */
+      __pyx_t_16 = __pyx_v_i;
+      __pyx_t_17 = -1;
+      if (__pyx_t_16 < 0) {
+        __pyx_t_16 += __pyx_pybuffernd_c.diminfo[0].shape;
+        if (unlikely(__pyx_t_16 < 0)) __pyx_t_17 = 0;
+      } else if (unlikely(__pyx_t_16 >= __pyx_pybuffernd_c.diminfo[0].shape)) __pyx_t_17 = 0;
+      if (unlikely(__pyx_t_17 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_17);
+        __PYX_ERR(0, 58, __pyx_L1_error)
+      }
+      __pyx_t_18 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_c.diminfo[0].strides)) > 0.0) != 0);
+      if (__pyx_t_18) {
+
+        /* "diploria/core/metric.pyx":59
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:
+ *                 for j in range(n_neurons):             # <<<<<<<<<<<<<<
+ *                     net[j] += c[i] * mtr[i, j]
+ * 
+ */
+        __pyx_t_17 = __pyx_v_n_neurons;
+        for (__pyx_t_19 = 0; __pyx_t_19 < __pyx_t_17; __pyx_t_19+=1) {
+          __pyx_v_j = __pyx_t_19;
+
+          /* "diploria/core/metric.pyx":60
+ *             if c[i] > 0:
+ *                 for j in range(n_neurons):
+ *                     net[j] += c[i] * mtr[i, j]             # <<<<<<<<<<<<<<
  * 
  *     for i in range(n_neurons):
  */
-        /*else*/ {
-          __pyx_t_19 = __pyx_v_i;
           __pyx_t_20 = __pyx_v_i;
-          __pyx_t_21 = __pyx_v_j;
-          __pyx_t_22 = __pyx_v_j;
-          *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_inh.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_inh.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_21, __pyx_pybuffernd_mtr.diminfo[1].strides)));
+          __pyx_t_21 = -1;
+          if (__pyx_t_20 < 0) {
+            __pyx_t_20 += __pyx_pybuffernd_c.diminfo[0].shape;
+            if (unlikely(__pyx_t_20 < 0)) __pyx_t_21 = 0;
+          } else if (unlikely(__pyx_t_20 >= __pyx_pybuffernd_c.diminfo[0].shape)) __pyx_t_21 = 0;
+          if (unlikely(__pyx_t_21 != -1)) {
+            __Pyx_RaiseBufferIndexError(__pyx_t_21);
+            __PYX_ERR(0, 60, __pyx_L1_error)
+          }
+          __pyx_t_22 = __pyx_v_i;
+          __pyx_t_23 = __pyx_v_j;
+          __pyx_t_21 = -1;
+          if (__pyx_t_22 < 0) {
+            __pyx_t_22 += __pyx_pybuffernd_mtr.diminfo[0].shape;
+            if (unlikely(__pyx_t_22 < 0)) __pyx_t_21 = 0;
+          } else if (unlikely(__pyx_t_22 >= __pyx_pybuffernd_mtr.diminfo[0].shape)) __pyx_t_21 = 0;
+          if (__pyx_t_23 < 0) {
+            __pyx_t_23 += __pyx_pybuffernd_mtr.diminfo[1].shape;
+            if (unlikely(__pyx_t_23 < 0)) __pyx_t_21 = 1;
+          } else if (unlikely(__pyx_t_23 >= __pyx_pybuffernd_mtr.diminfo[1].shape)) __pyx_t_21 = 1;
+          if (unlikely(__pyx_t_21 != -1)) {
+            __Pyx_RaiseBufferIndexError(__pyx_t_21);
+            __PYX_ERR(0, 60, __pyx_L1_error)
+          }
+          __pyx_t_24 = __pyx_v_j;
+          __pyx_t_21 = -1;
+          if (__pyx_t_24 < 0) {
+            __pyx_t_24 += __pyx_pybuffernd_net.diminfo[0].shape;
+            if (unlikely(__pyx_t_24 < 0)) __pyx_t_21 = 0;
+          } else if (unlikely(__pyx_t_24 >= __pyx_pybuffernd_net.diminfo[0].shape)) __pyx_t_21 = 0;
+          if (unlikely(__pyx_t_21 != -1)) {
+            __Pyx_RaiseBufferIndexError(__pyx_t_21);
+            __PYX_ERR(0, 60, __pyx_L1_error)
+          }
+          *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_c.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_23, __pyx_pybuffernd_mtr.diminfo[1].strides)));
         }
-        __pyx_L8:;
-      }
 
-      /* "diploria/core/metric.pyx":90
- * 
- *     for i in range(n_conns):
- *         if conn[i] > 0:             # <<<<<<<<<<<<<<
- *             for j in range(n_neurons):
- *                 if mtr[i, j] > 0:
+        /* "diploria/core/metric.pyx":58
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:             # <<<<<<<<<<<<<<
+ *                 for j in range(n_neurons):
+ *                     net[j] += c[i] * mtr[i, j]
  */
+      }
     }
   }
 
-  /* "diploria/core/metric.pyx":97
- *                     inh[j] += conn[i] * mtr[i, j]
+  /* "diploria/core/metric.pyx":62
+ *                     net[j] += c[i] * mtr[i, j]
  * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
- *         exc[i] *= (1.0 - activations[i])
- *         exc[i] -= (activations[i] - minimum) * inh[i]
+ *         if net[i] > 0:
+ *             net[i] *= 1.0 - activations[i]
  */
-  __pyx_t_7 = __pyx_v_n_neurons;
-  for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-    __pyx_v_i = __pyx_t_8;
+  __pyx_t_8 = __pyx_v_n_neurons;
+  for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_8; __pyx_t_10+=1) {
+    __pyx_v_i = __pyx_t_10;
 
-    /* "diploria/core/metric.pyx":98
+    /* "diploria/core/metric.pyx":63
  * 
  *     for i in range(n_neurons):
- *         exc[i] *= (1.0 - activations[i])             # <<<<<<<<<<<<<<
- *         exc[i] -= (activations[i] - minimum) * inh[i]
- *         exc[i] -= decay * (activations[i] - resting[i])
- */
-    __pyx_t_23 = __pyx_v_i;
-    __pyx_t_24 = __pyx_v_i;
-    *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_exc.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_activations.diminfo[0].strides)));
-
-    /* "diploria/core/metric.pyx":99
- *     for i in range(n_neurons):
- *         exc[i] *= (1.0 - activations[i])
- *         exc[i] -= (activations[i] - minimum) * inh[i]             # <<<<<<<<<<<<<<
- *         exc[i] -= decay * (activations[i] - resting[i])
- * 
+ *         if net[i] > 0:             # <<<<<<<<<<<<<<
+ *             net[i] *= 1.0 - activations[i]
+ *         else:
  */
     __pyx_t_25 = __pyx_v_i;
-    __pyx_t_26 = __pyx_v_i;
-    __pyx_t_27 = __pyx_v_i;
-    *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_27, __pyx_pybuffernd_exc.diminfo[0].strides) -= (((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum) * (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_inh.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_inh.diminfo[0].strides)));
+    __pyx_t_17 = -1;
+    if (__pyx_t_25 < 0) {
+      __pyx_t_25 += __pyx_pybuffernd_net.diminfo[0].shape;
+      if (unlikely(__pyx_t_25 < 0)) __pyx_t_17 = 0;
+    } else if (unlikely(__pyx_t_25 >= __pyx_pybuffernd_net.diminfo[0].shape)) __pyx_t_17 = 0;
+    if (unlikely(__pyx_t_17 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_17);
+      __PYX_ERR(0, 63, __pyx_L1_error)
+    }
+    __pyx_t_18 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
+    if (__pyx_t_18) {
 
-    /* "diploria/core/metric.pyx":100
- *         exc[i] *= (1.0 - activations[i])
- *         exc[i] -= (activations[i] - minimum) * inh[i]
- *         exc[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
- * 
- *     return exc
+      /* "diploria/core/metric.pyx":64
+ *     for i in range(n_neurons):
+ *         if net[i] > 0:
+ *             net[i] *= 1.0 - activations[i]             # <<<<<<<<<<<<<<
+ *         else:
+ *             net[i] *= activations[i] - minimum
  */
-    __pyx_t_28 = __pyx_v_i;
-    __pyx_t_29 = __pyx_v_i;
+      __pyx_t_26 = __pyx_v_i;
+      __pyx_t_17 = -1;
+      if (__pyx_t_26 < 0) {
+        __pyx_t_26 += __pyx_pybuffernd_activations.diminfo[0].shape;
+        if (unlikely(__pyx_t_26 < 0)) __pyx_t_17 = 0;
+      } else if (unlikely(__pyx_t_26 >= __pyx_pybuffernd_activations.diminfo[0].shape)) __pyx_t_17 = 0;
+      if (unlikely(__pyx_t_17 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_17);
+        __PYX_ERR(0, 64, __pyx_L1_error)
+      }
+      __pyx_t_27 = __pyx_v_i;
+      __pyx_t_17 = -1;
+      if (__pyx_t_27 < 0) {
+        __pyx_t_27 += __pyx_pybuffernd_net.diminfo[0].shape;
+        if (unlikely(__pyx_t_27 < 0)) __pyx_t_17 = 0;
+      } else if (unlikely(__pyx_t_27 >= __pyx_pybuffernd_net.diminfo[0].shape)) __pyx_t_17 = 0;
+      if (unlikely(__pyx_t_17 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_17);
+        __PYX_ERR(0, 64, __pyx_L1_error)
+      }
+      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_27, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_activations.diminfo[0].strides)));
+
+      /* "diploria/core/metric.pyx":63
+ * 
+ *     for i in range(n_neurons):
+ *         if net[i] > 0:             # <<<<<<<<<<<<<<
+ *             net[i] *= 1.0 - activations[i]
+ *         else:
+ */
+      goto __pyx_L12;
+    }
+
+    /* "diploria/core/metric.pyx":66
+ *             net[i] *= 1.0 - activations[i]
+ *         else:
+ *             net[i] *= activations[i] - minimum             # <<<<<<<<<<<<<<
+ *         net[i] -= decay * (activations[i] - resting[i])
+ * 
+ */
+    /*else*/ {
+      __pyx_t_28 = __pyx_v_i;
+      __pyx_t_17 = -1;
+      if (__pyx_t_28 < 0) {
+        __pyx_t_28 += __pyx_pybuffernd_activations.diminfo[0].shape;
+        if (unlikely(__pyx_t_28 < 0)) __pyx_t_17 = 0;
+      } else if (unlikely(__pyx_t_28 >= __pyx_pybuffernd_activations.diminfo[0].shape)) __pyx_t_17 = 0;
+      if (unlikely(__pyx_t_17 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_17);
+        __PYX_ERR(0, 66, __pyx_L1_error)
+      }
+      __pyx_t_29 = __pyx_v_i;
+      __pyx_t_17 = -1;
+      if (__pyx_t_29 < 0) {
+        __pyx_t_29 += __pyx_pybuffernd_net.diminfo[0].shape;
+        if (unlikely(__pyx_t_29 < 0)) __pyx_t_17 = 0;
+      } else if (unlikely(__pyx_t_29 >= __pyx_pybuffernd_net.diminfo[0].shape)) __pyx_t_17 = 0;
+      if (unlikely(__pyx_t_17 != -1)) {
+        __Pyx_RaiseBufferIndexError(__pyx_t_17);
+        __PYX_ERR(0, 66, __pyx_L1_error)
+      }
+      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_29, __pyx_pybuffernd_net.diminfo[0].strides) *= ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum);
+    }
+    __pyx_L12:;
+
+    /* "diploria/core/metric.pyx":67
+ *         else:
+ *             net[i] *= activations[i] - minimum
+ *         net[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
+ * 
+ *     return net * step_size
+ */
     __pyx_t_30 = __pyx_v_i;
-    *__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_exc.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_exc.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_8diploria_4core_6metric_DTYPE_F_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_29, __pyx_pybuffernd_resting.diminfo[0].strides))));
+    __pyx_t_17 = -1;
+    if (__pyx_t_30 < 0) {
+      __pyx_t_30 += __pyx_pybuffernd_activations.diminfo[0].shape;
+      if (unlikely(__pyx_t_30 < 0)) __pyx_t_17 = 0;
+    } else if (unlikely(__pyx_t_30 >= __pyx_pybuffernd_activations.diminfo[0].shape)) __pyx_t_17 = 0;
+    if (unlikely(__pyx_t_17 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_17);
+      __PYX_ERR(0, 67, __pyx_L1_error)
+    }
+    __pyx_t_31 = __pyx_v_i;
+    __pyx_t_17 = -1;
+    if (__pyx_t_31 < 0) {
+      __pyx_t_31 += __pyx_pybuffernd_resting.diminfo[0].shape;
+      if (unlikely(__pyx_t_31 < 0)) __pyx_t_17 = 0;
+    } else if (unlikely(__pyx_t_31 >= __pyx_pybuffernd_resting.diminfo[0].shape)) __pyx_t_17 = 0;
+    if (unlikely(__pyx_t_17 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_17);
+      __PYX_ERR(0, 67, __pyx_L1_error)
+    }
+    __pyx_t_32 = __pyx_v_i;
+    __pyx_t_17 = -1;
+    if (__pyx_t_32 < 0) {
+      __pyx_t_32 += __pyx_pybuffernd_net.diminfo[0].shape;
+      if (unlikely(__pyx_t_32 < 0)) __pyx_t_17 = 0;
+    } else if (unlikely(__pyx_t_32 >= __pyx_pybuffernd_net.diminfo[0].shape)) __pyx_t_17 = 0;
+    if (unlikely(__pyx_t_17 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_17);
+      __PYX_ERR(0, 67, __pyx_L1_error)
+    }
+    *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_32, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_31, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "diploria/core/metric.pyx":102
- *         exc[i] -= decay * (activations[i] - resting[i])
+  /* "diploria/core/metric.pyx":69
+ *         net[i] -= decay * (activations[i] - resting[i])
  * 
- *     return exc             # <<<<<<<<<<<<<<
+ *     return net * step_size             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_exc));
-  __pyx_r = ((PyObject *)__pyx_v_exc);
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_3 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "diploria/core/metric.pyx":73
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
+  /* "diploria/core/metric.pyx":38
+ * 
+ * 
+ * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  list conn,
  */
 
   /* function exit code */
@@ -3005,30 +2635,30 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_4strength_grossberg(CYTHON_UNU
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
   { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
     __Pyx_PyThreadState_declare
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_activations.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_conn.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_exc.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_inh.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("diploria.core.metric.strength_grossberg", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("diploria.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_activations.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_conn.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_exc.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_inh.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __pyx_L2:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_exc);
-  __Pyx_XDECREF((PyObject *)__pyx_v_inh);
+  __Pyx_XDECREF((PyObject *)__pyx_v_net);
+  __Pyx_XDECREF((PyObject *)__pyx_v_c);
+  __Pyx_XDECREF((PyObject *)__pyx_v_mtr);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -5571,8 +5201,6 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_n_s_DTYPE, __pyx_k_DTYPE, sizeof(__pyx_k_DTYPE), 0, 0, 1, 1},
-  {&__pyx_n_s_DTYPE_F, __pyx_k_DTYPE_F, sizeof(__pyx_k_DTYPE_F), 0, 0, 1, 1},
   {&__pyx_kp_u_Format_string_allocated_too_shor, __pyx_k_Format_string_allocated_too_shor, sizeof(__pyx_k_Format_string_allocated_too_shor), 0, 1, 0, 0},
   {&__pyx_kp_u_Format_string_allocated_too_shor_2, __pyx_k_Format_string_allocated_too_shor_2, sizeof(__pyx_k_Format_string_allocated_too_shor_2), 0, 1, 0, 0},
   {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
@@ -5581,20 +5209,19 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Users_stephantulkens_Documents, __pyx_k_Users_stephantulkens_Documents, sizeof(__pyx_k_Users_stephantulkens_Documents), 0, 0, 1, 0},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
   {&__pyx_n_s_activations, __pyx_k_activations, sizeof(__pyx_k_activations), 0, 0, 1, 1},
+  {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
   {&__pyx_n_s_conn, __pyx_k_conn, sizeof(__pyx_k_conn), 0, 0, 1, 1},
   {&__pyx_n_s_decay, __pyx_k_decay, sizeof(__pyx_k_decay), 0, 0, 1, 1},
   {&__pyx_n_s_diploria_core_metric, __pyx_k_diploria_core_metric, sizeof(__pyx_k_diploria_core_metric), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
-  {&__pyx_n_s_exc, __pyx_k_exc, sizeof(__pyx_k_exc), 0, 0, 1, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
-  {&__pyx_n_s_inh, __pyx_k_inh, sizeof(__pyx_k_inh), 0, 0, 1, 1},
-  {&__pyx_n_s_int64, __pyx_k_int64, sizeof(__pyx_k_int64), 0, 0, 1, 1},
   {&__pyx_n_s_j, __pyx_k_j, sizeof(__pyx_k_j), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_minimum, __pyx_k_minimum, sizeof(__pyx_k_minimum), 0, 0, 1, 1},
   {&__pyx_n_s_mtr, __pyx_k_mtr, sizeof(__pyx_k_mtr), 0, 0, 1, 1},
+  {&__pyx_n_s_mtrs, __pyx_k_mtrs, sizeof(__pyx_k_mtrs), 0, 0, 1, 1},
   {&__pyx_n_s_n_conns, __pyx_k_n_conns, sizeof(__pyx_k_n_conns), 0, 0, 1, 1},
   {&__pyx_n_s_n_neurons, __pyx_k_n_neurons, sizeof(__pyx_k_n_neurons), 0, 0, 1, 1},
   {&__pyx_kp_u_ndarray_is_not_C_contiguous, __pyx_k_ndarray_is_not_C_contiguous, sizeof(__pyx_k_ndarray_is_not_C_contiguous), 0, 1, 0, 0},
@@ -5605,21 +5232,19 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
   {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
-  {&__pyx_n_s_rec, __pyx_k_rec, sizeof(__pyx_k_rec), 0, 0, 1, 1},
-  {&__pyx_n_s_recurrence, __pyx_k_recurrence, sizeof(__pyx_k_recurrence), 0, 0, 1, 1},
   {&__pyx_n_s_resting, __pyx_k_resting, sizeof(__pyx_k_resting), 0, 0, 1, 1},
   {&__pyx_n_s_step_size, __pyx_k_step_size, sizeof(__pyx_k_step_size), 0, 0, 1, 1},
-  {&__pyx_n_s_strength, __pyx_k_strength, sizeof(__pyx_k_strength), 0, 0, 1, 1},
-  {&__pyx_n_s_strength_grossberg, __pyx_k_strength_grossberg, sizeof(__pyx_k_strength_grossberg), 0, 0, 1, 1},
   {&__pyx_n_s_strength_new, __pyx_k_strength_new, sizeof(__pyx_k_strength_new), 0, 0, 1, 1},
+  {&__pyx_n_s_strength_old, __pyx_k_strength_old, sizeof(__pyx_k_strength_old), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_total_recurrence, __pyx_k_total_recurrence, sizeof(__pyx_k_total_recurrence), 0, 0, 1, 1},
   {&__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_k_unknown_dtype_code_in_numpy_pxd, sizeof(__pyx_k_unknown_dtype_code_in_numpy_pxd), 0, 1, 0, 0},
+  {&__pyx_n_s_z, __pyx_k_z, sizeof(__pyx_k_z), 0, 0, 1, 1},
   {&__pyx_n_s_zeros, __pyx_k_zeros, sizeof(__pyx_k_zeros), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 23, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 989, __pyx_L1_error)
@@ -5729,41 +5354,29 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "diploria/core/metric.pyx":13
+  /* "diploria/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=2] mtr):
- *     """Fast function for calculating association strength."""
+ * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  np.ndarray[np.float64_t, ndim=1] conn,
  */
-  __pyx_tuple__10 = PyTuple_Pack(7, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(13, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_total_recurrence, __pyx_n_s_net); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength, 13, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 13, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(7, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_old, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 8, __pyx_L1_error)
 
-  /* "diploria/core/metric.pyx":31
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
- *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
+  /* "diploria/core/metric.pyx":38
+ * 
+ * 
+ * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  list conn,
  */
-  __pyx_tuple__12 = PyTuple_Pack(15, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_recurrence, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_total_recurrence, __pyx_n_s_net, __pyx_n_s_rec); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(14, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtrs, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_z, __pyx_n_s_n_neurons, __pyx_n_s_net, __pyx_n_s_c, __pyx_n_s_mtr); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(8, 0, 15, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_new, 31, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 31, __pyx_L1_error)
-
-  /* "diploria/core/metric.pyx":73
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
- */
-  __pyx_tuple__14 = PyTuple_Pack(12, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtr, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_n_conns, __pyx_n_s_n_neurons, __pyx_n_s_exc, __pyx_n_s_inh); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 73, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__14);
-  __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(6, 0, 12, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_grossberg, 73, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(7, 0, 14, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_new, 38, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5787,7 +5400,6 @@ PyMODINIT_FUNC PyInit_metric(void)
 #endif
 {
   PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannyDeclarations
   #if CYTHON_REFNANNY
   __Pyx_RefNanny = __Pyx_RefNannyImportAPI("refnanny");
@@ -5888,77 +5500,35 @@ PyMODINIT_FUNC PyInit_metric(void)
  * cimport numpy as np
  * import numpy as np             # <<<<<<<<<<<<<<
  * 
- * DTYPE = np.int64
+ * 
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "diploria/core/metric.pyx":5
- * import numpy as np
+  /* "diploria/core/metric.pyx":8
+ * @cython.wraparound(False)
+ * @cython.boundscheck(False)
+ * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  np.ndarray[np.float64_t, ndim=1] conn,
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_1strength_old, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_old, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "diploria/core/metric.pyx":38
  * 
- * DTYPE = np.int64             # <<<<<<<<<<<<<<
- * DTYPE_F = np.float64
- * ctypedef np.int64_t DTYPE_t
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int64); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-  /* "diploria/core/metric.pyx":6
  * 
- * DTYPE = np.int64
- * DTYPE_F = np.float64             # <<<<<<<<<<<<<<
- * ctypedef np.int64_t DTYPE_t
- * ctypedef np.float64_t DTYPE_F_t
+ * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *                  np.ndarray[np.float64_t, ndim=1] resting,
+ *                  list conn,
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_float64); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_3strength_new, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE_F, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "diploria/core/metric.pyx":13
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength(np.ndarray[DTYPE_F_t, ndim=1] conn,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=2] mtr):
- *     """Fast function for calculating association strength."""
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_1strength, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength, __pyx_t_1) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "diploria/core/metric.pyx":31
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_new(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[DTYPE_F_t, ndim=1] resting,
- *                  np.ndarray[DTYPE_F_t, ndim=1] conn,
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_3strength_new, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "diploria/core/metric.pyx":73
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def strength_grossberg(np.ndarray[DTYPE_F_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[DTYPE_F_t, ndim=1] resting,
- *              np.ndarray[DTYPE_F_t, ndim=1] conn,
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_5strength_grossberg, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 73, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_grossberg, __pyx_t_1) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "diploria/core/metric.pyx":1
@@ -5984,7 +5554,6 @@ PyMODINIT_FUNC PyInit_metric(void)
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
       __Pyx_AddTraceback("init diploria.core.metric", __pyx_clineno, __pyx_lineno, __pyx_filename);
@@ -6828,6 +6397,99 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 }
 #endif
 
+/* GetItemInt */
+    static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j) {
+    PyObject *r;
+    if (!j) return NULL;
+    r = PyObject_GetItem(o, j);
+    Py_DECREF(j);
+    return r;
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_List_Fast(PyObject *o, Py_ssize_t i,
+                                                              CYTHON_NCP_UNUSED int wraparound,
+                                                              CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    if (wraparound & unlikely(i < 0)) i += PyList_GET_SIZE(o);
+    if ((!boundscheck) || likely((0 <= i) & (i < PyList_GET_SIZE(o)))) {
+        PyObject *r = PyList_GET_ITEM(o, i);
+        Py_INCREF(r);
+        return r;
+    }
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+#else
+    return PySequence_GetItem(o, i);
+#endif
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize_t i,
+                                                              CYTHON_NCP_UNUSED int wraparound,
+                                                              CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+    if (wraparound & unlikely(i < 0)) i += PyTuple_GET_SIZE(o);
+    if ((!boundscheck) || likely((0 <= i) & (i < PyTuple_GET_SIZE(o)))) {
+        PyObject *r = PyTuple_GET_ITEM(o, i);
+        Py_INCREF(r);
+        return r;
+    }
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+#else
+    return PySequence_GetItem(o, i);
+#endif
+}
+static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i, int is_list,
+                                                     CYTHON_NCP_UNUSED int wraparound,
+                                                     CYTHON_NCP_UNUSED int boundscheck) {
+#if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS && CYTHON_USE_TYPE_SLOTS
+    if (is_list || PyList_CheckExact(o)) {
+        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyList_GET_SIZE(o);
+        if ((!boundscheck) || (likely((n >= 0) & (n < PyList_GET_SIZE(o))))) {
+            PyObject *r = PyList_GET_ITEM(o, n);
+            Py_INCREF(r);
+            return r;
+        }
+    }
+    else if (PyTuple_CheckExact(o)) {
+        Py_ssize_t n = ((!wraparound) | likely(i >= 0)) ? i : i + PyTuple_GET_SIZE(o);
+        if ((!boundscheck) || likely((n >= 0) & (n < PyTuple_GET_SIZE(o)))) {
+            PyObject *r = PyTuple_GET_ITEM(o, n);
+            Py_INCREF(r);
+            return r;
+        }
+    } else {
+        PySequenceMethods *m = Py_TYPE(o)->tp_as_sequence;
+        if (likely(m && m->sq_item)) {
+            if (wraparound && unlikely(i < 0) && likely(m->sq_length)) {
+                Py_ssize_t l = m->sq_length(o);
+                if (likely(l >= 0)) {
+                    i += l;
+                } else {
+                    if (!PyErr_ExceptionMatches(PyExc_OverflowError))
+                        return NULL;
+                    PyErr_Clear();
+                }
+            }
+            return m->sq_item(o, i);
+        }
+    }
+#else
+    if (is_list || PySequence_Check(o)) {
+        return PySequence_GetItem(o, i);
+    }
+#endif
+    return __Pyx_GetItemInt_Generic(o, PyInt_FromSsize_t(i));
+}
+
+/* BufferFallbackError */
+    static void __Pyx_RaiseBufferFallbackError(void) {
+  PyErr_SetString(PyExc_ValueError,
+     "Buffer acquisition failed on assignment; and then reacquiring the old buffer failed too!");
+}
+
+/* BufferIndexError */
+    static void __Pyx_RaiseBufferIndexError(int axis) {
+  PyErr_Format(PyExc_IndexError,
+     "Out of bounds on buffer access (axis %d)", axis);
+}
+
 /* RaiseException */
     #if PY_MAJOR_VERSION < 3
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb,
@@ -7412,6 +7074,37 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
         }\
         return (target_type) value;\
     }
+
+/* CIntToPy */
+        static CYTHON_INLINE PyObject* __Pyx_PyInt_From_Py_intptr_t(Py_intptr_t value) {
+    const Py_intptr_t neg_one = (Py_intptr_t) -1, const_zero = (Py_intptr_t) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(Py_intptr_t) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(Py_intptr_t) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(Py_intptr_t) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(Py_intptr_t) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(Py_intptr_t) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(Py_intptr_t),
+                                     little, !is_unsigned);
+    }
+}
 
 /* Declarations */
         #if CYTHON_CCOMPLEX
