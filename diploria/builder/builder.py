@@ -252,7 +252,7 @@ class Builder(object):
                         mtr[(u_a[x], u_b[y])] = pos
 
                     # Explicitly add the space character.
-                    # and set the weights
+                    # and set its weights
                     if a not in self.feature_layers:
                         for x, y in b_values:
                             if x.endswith("neg"):
@@ -275,6 +275,9 @@ class Builder(object):
 
             # If both layers are slot-based, only items with the same slot
             # number can be connected.
+            # So cells of unconnected items have to be explicitly set to 0.
+            # if we don't do this, every item would have inhibitory connections
+            # to other items in other slots.
             if a_slot and b_slot:
                 x, y = mtr.shape
                 new_mtr = np.zeros((x * self.num_slots[a],
