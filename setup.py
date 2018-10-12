@@ -16,13 +16,14 @@ if "--cython" in sys.argv:
 if cython:
     from Cython.Build import cythonize
     extensions = cythonize([Extension("diploria.core.metric",
-                                      ["diploria/core/metric.pyx"])])
+                                      ["diploria/core/metric.pyx"])],
+                           include_dirs=[np.get_include()])
 else:
     extensions = [Extension("diploria.core.metric",
                             ["diploria/core/metric.c"])]
 
 setup(name='diploria',
-      version='1.0.3',
+      version='1.0.4',
       description='Interactive activation',
       author='Stéphan Tulkens',
       author_email='stephan.tulkens@uantwerpen.be',
