@@ -6,6 +6,11 @@ from itertools import chain, product
 from collections import Counter, defaultdict
 
 
+class TilapiaError(Exception):
+
+    pass
+
+
 class Builder(object):
     """
     A factory class that builds networks.
@@ -94,9 +99,17 @@ class Builder(object):
         k_1 = self.unique_items[key]
         sums = np.zeros(len(k_1))
         for i in items:
-            f = i[field_to_sum]
-            for x in i[key]:
-                sums[k_1[x]] += f
+            try:
+                f = i[field_to_sum]
+            except KeyError:
+                raise TilapiaError("The RLA variable {} was not in "
+                                   "all of your items".format(field_to_sum))
+            try:
+                for x in i[key]:
+                    sums[k_1[x]] += f
+            except KeyError:
+                raise TilapiaError("The RLA field {} was not in all of your "
+                                   "items.".format(key))
 
         return sums
 
@@ -105,8 +118,8 @@ class Builder(object):
         all_keys = set(chain.from_iterable([i.keys() for i in items]))
         diff = set(layer_names) - all_keys
         if diff:
-            raise ValueError("{} were selected as layer names, but not present"
-                             " in your items".format(",".join(diff)))
+            raise TilapiaError("{} were selected as layer names, but not "
+                               "present in your items".format(",".join(diff)))
 
     def build_model(self, items):
         """
@@ -122,9 +135,17 @@ class Builder(object):
         self._check(items, self.layer_names)
         out_layers = set(self.outputs) - set(self.layer_names)
         if out_layers:
-            raise ValueError("{} were selected as output layers, but were not "
-                             "in the layer names: {}"
-                             "".format(self.outputs, self.layer_names))
+            raise TilapiaError("{} were selected as output layers, but were "
+                               "not in the layer names: {}"
+                               "".format(out_layers, self.layer_names))
+
+        rla_layers = {k for k, v in self.rla.items() if v != "global"}
+        print(rla_layers, self.rla)
+        rla_layers -= set(self.layer_names)
+        if rla_layers:
+            raise TilapiaError("{} were selected as rla layers, but were "
+                               "not in the layer names: {}"
+                               "".format(rla_layers, self.layer_names))
 
         # Initialize the Diploria.
         m = Network(minimum=self.minimum,

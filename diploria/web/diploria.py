@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, Response
 from itertools import chain
 from diploria.prepare.data import process_and_write
 from diploria.run import make_run, get_model
+from diploria.builder.builder import TilapiaError
 
 # Switch backend because of tk errors.
 plt.switch_backend("Agg")
@@ -85,7 +86,7 @@ def prepare_post():
                           f_layers.split(),
                           f_set.split(),
                           strict=False)
-    except Exception as e:
+    except TilapiaError as e:
         print(e)
         return render_template("prepare.tpl",
                                validation="{}".format(e),
@@ -157,7 +158,7 @@ def analysis_post():
         inputs = [[l.name for l in x._to_connections]
                   for x in m.inputs.values()]
         inputs = sorted(set(chain.from_iterable(inputs)))
-    except Exception as e:
+    except TilapiaError as e:
         print(e)
         return render_template("analysis.tpl",
                                rla=-.05,
@@ -251,7 +252,7 @@ def main_experiment():
                  decay_rate=float(decay),
                  minimum_activation=float(min_val),
                  adapt_weights=bool(w))
-    except Exception as e:
+    except TilapiaError as e:
         print(e)
         return render_template("experiment.tpl",
                                rla=-.05,
