@@ -2,8 +2,8 @@
 {% block content %}
     <form action="/experiment" method="post" enctype="multipart/form-data">
         <div class="form-group row mb-0">
-            <label for="path_train" class="col-sm-5 col-form-label">Path to training file</label>
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="A CSV containing your training data. Make sure to prepare it first using the prepare tab, above.">
+            <label for="path_train" class="col-sm-5 col-form-label">Path to lexicon data</label>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="A CSV containing your lexicon. The lexicon is the set of data on which the model is built. Make sure to prepare it first using the prepare tab, above.">
                 ?
             </button>
             <div class="col-sm-5">
@@ -11,8 +11,8 @@
             </div>
         </div>
         <div class="form-group row mb-0">
-            <label for="path_test" class="col-sm-5 col-form-label">Path to test file</label>
-            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="A CSV containing your test data. Make sure to prepare it first using the prepare tab, above.">
+            <label for="path_test" class="col-sm-5 col-form-label">Path to trial data</label>
+            <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" data-placement="top" data-original-title="A CSV containing your trial data. Make sure to prepare it first using the prepare tab, above.">
                 ?
             </button>
             <div class="col-sm-5">
