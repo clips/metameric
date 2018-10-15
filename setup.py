@@ -15,19 +15,19 @@ if "--cython" in sys.argv:
 
 if cython:
     from Cython.Build import cythonize
-    extensions = cythonize([Extension("diploria.core.metric",
-                                      ["diploria/core/metric.pyx"])],
+    extensions = cythonize([Extension("metameric.core.metric",
+                                      ["metameric/core/metric.pyx"])],
                            include_dirs=[np.get_include()])
 else:
-    extensions = [Extension("diploria.core.metric",
-                            ["diploria/core/metric.c"])]
+    extensions = [Extension("metameric.core.metric",
+                            ["metameric/core/metric.c"])]
 
-setup(name='diploria',
+setup(name='metameric',
       version='1.0.4',
       description='Interactive activation',
       author='Stéphan Tulkens',
       author_email='stephan.tulkens@uantwerpen.be',
-      url='https://github.com/stephantul/diploria',
+      url='https://github.com/stephantul/metameric',
       license='MIT',
       packages=find_packages(),
       install_requires=['numpy>=1.11.0'],

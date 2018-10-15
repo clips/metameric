@@ -2,8 +2,8 @@
 import numpy as np
 import pandas as pd
 
-from diploria.prepare.weights import IA_WEIGHTS
-from diploria.builder import Builder
+from .prepare.weights import IA_WEIGHTS
+from .builder import Builder
 from itertools import chain
 from collections import Counter
 

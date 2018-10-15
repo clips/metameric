@@ -5,7 +5,7 @@
     "distutils": {
         "depends": []
     },
-    "module_name": "diploria.core.metric"
+    "module_name": "metameric.core.metric"
 }
 END: Cython Metadata */
 
@@ -436,8 +436,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__diploria__core__metric
-#define __PYX_HAVE_API__diploria__core__metric
+#define __PYX_HAVE__metameric__core__metric
+#define __PYX_HAVE_API__metameric__core__metric
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -660,7 +660,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "diploria/core/metric.pyx",
+  "metameric/core/metric.pyx",
   "__init__.pxd",
   "type.pxd",
 };
@@ -1405,12 +1405,12 @@ static PyTypeObject *__pyx_ptype_5numpy_ndarray = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
-/* Module declarations from 'diploria.core.metric' */
+/* Module declarations from 'metameric.core.metric' */
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t", NULL, sizeof(__pyx_t_5numpy_float64_t), { 0 }, 0, 'R', 0, 0 };
-#define __Pyx_MODULE_NAME "diploria.core.metric"
-int __pyx_module_is_main_diploria__core__metric = 0;
+#define __Pyx_MODULE_NAME "metameric.core.metric"
+int __pyx_module_is_main_metameric__core__metric = 0;
 
-/* Implementation of 'diploria.core.metric' */
+/* Implementation of 'metameric.core.metric' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_RuntimeError;
@@ -1445,9 +1445,9 @@ static const char __pyx_k_RuntimeError[] = "RuntimeError";
 static const char __pyx_k_strength_new[] = "strength_new";
 static const char __pyx_k_strength_old[] = "strength_old";
 static const char __pyx_k_total_recurrence[] = "total_recurrence";
-static const char __pyx_k_diploria_core_metric[] = "diploria.core.metric";
+static const char __pyx_k_metameric_core_metric[] = "metameric.core.metric";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
-static const char __pyx_k_Users_stephantulkens_Documents[] = "/Users/stephantulkens/Documents/github/tilapia/diploria/core/metric.pyx";
+static const char __pyx_k_Users_stephantulkens_Documents[] = "/Users/stephantulkens/Documents/github/tilapia/metameric/core/metric.pyx";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
 static const char __pyx_k_unknown_dtype_code_in_numpy_pxd[] = "unknown dtype code in numpy.pxd (%d)";
 static const char __pyx_k_Format_string_allocated_too_shor[] = "Format string allocated too short, see comment in numpy.pxd";
@@ -1466,7 +1466,7 @@ static PyObject *__pyx_n_s_activations;
 static PyObject *__pyx_n_s_c;
 static PyObject *__pyx_n_s_conn;
 static PyObject *__pyx_n_s_decay;
-static PyObject *__pyx_n_s_diploria_core_metric;
+static PyObject *__pyx_n_s_metameric_core_metric;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_float64;
 static PyObject *__pyx_n_s_i;
@@ -1495,8 +1495,8 @@ static PyObject *__pyx_n_s_total_recurrence;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
-static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
+static PyObject *__pyx_pf_8metameric_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
+static PyObject *__pyx_pf_8metameric_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1513,7 +1513,7 @@ static PyObject *__pyx_tuple__12;
 static PyObject *__pyx_codeobj__11;
 static PyObject *__pyx_codeobj__13;
 
-/* "diploria/core/metric.pyx":8
+/* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -1522,10 +1522,10 @@ static PyObject *__pyx_codeobj__13;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8diploria_4core_6metric_strength_old[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_8diploria_4core_6metric_1strength_old = {"strength_old", (PyCFunction)__pyx_pw_8diploria_4core_6metric_1strength_old, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8diploria_4core_6metric_strength_old};
-static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8metameric_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_8metameric_4core_6metric_strength_old[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_8metameric_4core_6metric_1strength_old = {"strength_old", (PyCFunction)__pyx_pw_8metameric_4core_6metric_1strength_old, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8metameric_4core_6metric_strength_old};
+static PyObject *__pyx_pw_8metameric_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
   PyArrayObject *__pyx_v_conn = 0;
@@ -1615,7 +1615,7 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("strength_old", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("diploria.core.metric.strength_old", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("metameric.core.metric.strength_old", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
@@ -1623,7 +1623,7 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 10, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 11, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8diploria_4core_6metric_strength_old(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
+  __pyx_r = __pyx_pf_8metameric_4core_6metric_strength_old(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1634,7 +1634,7 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_1strength_old(PyObject *__pyx_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
+static PyObject *__pyx_pf_8metameric_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_n_conns;
@@ -1719,7 +1719,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   }
   __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
 
-  /* "diploria/core/metric.pyx":17
+  /* "metameric/core/metric.pyx":17
  *     """Fast function for calculating association strength."""
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]             # <<<<<<<<<<<<<<
@@ -1728,7 +1728,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
  */
   __pyx_v_n_conns = (__pyx_v_conn->dimensions[0]);
 
-  /* "diploria/core/metric.pyx":18
+  /* "metameric/core/metric.pyx":18
  *     cdef int i, j
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]             # <<<<<<<<<<<<<<
@@ -1737,7 +1737,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
  */
   __pyx_v_n_neurons = (__pyx_v_mtr->dimensions[1]);
 
-  /* "diploria/core/metric.pyx":19
+  /* "metameric/core/metric.pyx":19
  *     cdef int n_conns = conn.shape[0]
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef float total_recurrence = 0             # <<<<<<<<<<<<<<
@@ -1746,7 +1746,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
  */
   __pyx_v_total_recurrence = 0.0;
 
-  /* "diploria/core/metric.pyx":20
+  /* "metameric/core/metric.pyx":20
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef float total_recurrence = 0
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
@@ -1771,7 +1771,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "diploria/core/metric.pyx":21
+  /* "metameric/core/metric.pyx":21
  *     cdef float total_recurrence = 0
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
  *                                                          dtype=np.float64)             # <<<<<<<<<<<<<<
@@ -1788,7 +1788,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":20
+  /* "metameric/core/metric.pyx":20
  *     cdef int n_neurons = mtr.shape[1]
  *     cdef float total_recurrence = 0
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
@@ -1814,7 +1814,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   __pyx_v_net = ((PyArrayObject *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":23
+  /* "metameric/core/metric.pyx":23
  *                                                          dtype=np.float64)
  * 
  *     for i in range(n_conns):             # <<<<<<<<<<<<<<
@@ -1825,7 +1825,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "diploria/core/metric.pyx":24
+    /* "metameric/core/metric.pyx":24
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -1836,7 +1836,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
     __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_conn.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "diploria/core/metric.pyx":25
+      /* "metameric/core/metric.pyx":25
  *     for i in range(n_conns):
  *         if conn[i] > 0:
  *             for j in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -1847,7 +1847,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
       for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
         __pyx_v_j = __pyx_t_12;
 
-        /* "diploria/core/metric.pyx":26
+        /* "metameric/core/metric.pyx":26
  *         if conn[i] > 0:
  *             for j in range(n_neurons):
  *                 net[j] += conn[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -1861,7 +1861,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
         *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_conn.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_conn.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_15, __pyx_pybuffernd_mtr.diminfo[1].strides)));
       }
 
-      /* "diploria/core/metric.pyx":24
+      /* "metameric/core/metric.pyx":24
  * 
  *     for i in range(n_conns):
  *         if conn[i] > 0:             # <<<<<<<<<<<<<<
@@ -1871,7 +1871,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
     }
   }
 
-  /* "diploria/core/metric.pyx":28
+  /* "metameric/core/metric.pyx":28
  *                 net[j] += conn[i] * mtr[i, j]
  * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -1882,7 +1882,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "diploria/core/metric.pyx":29
+    /* "metameric/core/metric.pyx":29
  * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
@@ -1893,7 +1893,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
     __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_10) {
 
-      /* "diploria/core/metric.pyx":30
+      /* "metameric/core/metric.pyx":30
  *     for i in range(n_neurons):
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]             # <<<<<<<<<<<<<<
@@ -1904,7 +1904,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
       __pyx_t_19 = __pyx_v_i;
       *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_activations.diminfo[0].strides)));
 
-      /* "diploria/core/metric.pyx":29
+      /* "metameric/core/metric.pyx":29
  * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
@@ -1914,7 +1914,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
       goto __pyx_L10;
     }
 
-    /* "diploria/core/metric.pyx":32
+    /* "metameric/core/metric.pyx":32
  *             net[i] *= 1.0 - activations[i]
  *         else:
  *             net[i] *= activations[i] - minimum             # <<<<<<<<<<<<<<
@@ -1928,7 +1928,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
     }
     __pyx_L10:;
 
-    /* "diploria/core/metric.pyx":33
+    /* "metameric/core/metric.pyx":33
  *         else:
  *             net[i] *= activations[i] - minimum
  *         net[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
@@ -1941,7 +1941,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
     *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "diploria/core/metric.pyx":35
+  /* "metameric/core/metric.pyx":35
  *         net[i] -= decay * (activations[i] - resting[i])
  * 
  *     return net * step_size             # <<<<<<<<<<<<<<
@@ -1958,7 +1958,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "diploria/core/metric.pyx":8
+  /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -1983,7 +1983,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("diploria.core.metric.strength_old", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("metameric.core.metric.strength_old", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -1999,7 +1999,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "diploria/core/metric.pyx":38
+/* "metameric/core/metric.pyx":38
  * 
  * 
  * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -2008,10 +2008,10 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_strength_old(CYTHON_UNUSED PyO
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8diploria_4core_6metric_2strength_new[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_8diploria_4core_6metric_3strength_new = {"strength_new", (PyCFunction)__pyx_pw_8diploria_4core_6metric_3strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8diploria_4core_6metric_2strength_new};
-static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8metameric_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_8metameric_4core_6metric_2strength_new[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_8metameric_4core_6metric_3strength_new = {"strength_new", (PyCFunction)__pyx_pw_8metameric_4core_6metric_3strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8metameric_4core_6metric_2strength_new};
+static PyObject *__pyx_pw_8metameric_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
   PyObject *__pyx_v_conn = 0;
@@ -2101,7 +2101,7 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 38, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("diploria.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("metameric.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
@@ -2109,7 +2109,7 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 39, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), (&PyList_Type), 1, "conn", 1))) __PYX_ERR(0, 40, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtrs), (&PyList_Type), 1, "mtrs", 1))) __PYX_ERR(0, 41, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8diploria_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
+  __pyx_r = __pyx_pf_8metameric_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2120,7 +2120,7 @@ static PyObject *__pyx_pw_8diploria_4core_6metric_3strength_new(PyObject *__pyx_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
+static PyObject *__pyx_pf_8metameric_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_z;
@@ -2204,7 +2204,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   }
   __pyx_pybuffernd_resting.diminfo[0].strides = __pyx_pybuffernd_resting.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_resting.diminfo[0].shape = __pyx_pybuffernd_resting.rcbuffer->pybuffer.shape[0];
 
-  /* "diploria/core/metric.pyx":47
+  /* "metameric/core/metric.pyx":47
  *     """Fast function for calculating association strength."""
  *     cdef int i, j, z
  *     cdef int n_neurons = activations.shape[0]             # <<<<<<<<<<<<<<
@@ -2213,7 +2213,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
  */
   __pyx_v_n_neurons = (__pyx_v_activations->dimensions[0]);
 
-  /* "diploria/core/metric.pyx":48
+  /* "metameric/core/metric.pyx":48
  *     cdef int i, j, z
  *     cdef int n_neurons = activations.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
@@ -2238,7 +2238,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "diploria/core/metric.pyx":49
+  /* "metameric/core/metric.pyx":49
  *     cdef int n_neurons = activations.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
  *                                                          dtype=np.float64)             # <<<<<<<<<<<<<<
@@ -2255,7 +2255,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":48
+  /* "metameric/core/metric.pyx":48
  *     cdef int i, j, z
  *     cdef int n_neurons = activations.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
@@ -2281,7 +2281,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   __pyx_v_net = ((PyArrayObject *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "diploria/core/metric.pyx":54
+  /* "metameric/core/metric.pyx":54
  *     cdef np.ndarray[np.float64_t, ndim=2] mtr
  *     # There are as many conn as mtr.
  *     for z in range(len(conn)):             # <<<<<<<<<<<<<<
@@ -2296,7 +2296,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_z = __pyx_t_8;
 
-    /* "diploria/core/metric.pyx":55
+    /* "metameric/core/metric.pyx":55
  *     # There are as many conn as mtr.
  *     for z in range(len(conn)):
  *         c = conn[z]             # <<<<<<<<<<<<<<
@@ -2331,7 +2331,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     __Pyx_XDECREF_SET(__pyx_v_c, ((PyArrayObject *)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "diploria/core/metric.pyx":56
+    /* "metameric/core/metric.pyx":56
  *     for z in range(len(conn)):
  *         c = conn[z]
  *         mtr = mtrs[z]             # <<<<<<<<<<<<<<
@@ -2366,7 +2366,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     __Pyx_XDECREF_SET(__pyx_v_mtr, ((PyArrayObject *)__pyx_t_5));
     __pyx_t_5 = 0;
 
-    /* "diploria/core/metric.pyx":57
+    /* "metameric/core/metric.pyx":57
  *         c = conn[z]
  *         mtr = mtrs[z]
  *         for i in range(c.shape[0]):             # <<<<<<<<<<<<<<
@@ -2377,7 +2377,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_15; __pyx_t_10+=1) {
       __pyx_v_i = __pyx_t_10;
 
-      /* "diploria/core/metric.pyx":58
+      /* "metameric/core/metric.pyx":58
  *         mtr = mtrs[z]
  *         for i in range(c.shape[0]):
  *             if c[i] > 0:             # <<<<<<<<<<<<<<
@@ -2397,7 +2397,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
       __pyx_t_18 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_c.diminfo[0].strides)) > 0.0) != 0);
       if (__pyx_t_18) {
 
-        /* "diploria/core/metric.pyx":59
+        /* "metameric/core/metric.pyx":59
  *         for i in range(c.shape[0]):
  *             if c[i] > 0:
  *                 for j in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2408,7 +2408,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
         for (__pyx_t_19 = 0; __pyx_t_19 < __pyx_t_17; __pyx_t_19+=1) {
           __pyx_v_j = __pyx_t_19;
 
-          /* "diploria/core/metric.pyx":60
+          /* "metameric/core/metric.pyx":60
  *             if c[i] > 0:
  *                 for j in range(n_neurons):
  *                     net[j] += c[i] * mtr[i, j]             # <<<<<<<<<<<<<<
@@ -2453,7 +2453,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
           *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_c.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_23, __pyx_pybuffernd_mtr.diminfo[1].strides)));
         }
 
-        /* "diploria/core/metric.pyx":58
+        /* "metameric/core/metric.pyx":58
  *         mtr = mtrs[z]
  *         for i in range(c.shape[0]):
  *             if c[i] > 0:             # <<<<<<<<<<<<<<
@@ -2464,7 +2464,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     }
   }
 
-  /* "diploria/core/metric.pyx":62
+  /* "metameric/core/metric.pyx":62
  *                     net[j] += c[i] * mtr[i, j]
  * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
@@ -2475,7 +2475,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_8; __pyx_t_10+=1) {
     __pyx_v_i = __pyx_t_10;
 
-    /* "diploria/core/metric.pyx":63
+    /* "metameric/core/metric.pyx":63
  * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
@@ -2495,7 +2495,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     __pyx_t_18 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
     if (__pyx_t_18) {
 
-      /* "diploria/core/metric.pyx":64
+      /* "metameric/core/metric.pyx":64
  *     for i in range(n_neurons):
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]             # <<<<<<<<<<<<<<
@@ -2524,7 +2524,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
       }
       *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_27, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_activations.diminfo[0].strides)));
 
-      /* "diploria/core/metric.pyx":63
+      /* "metameric/core/metric.pyx":63
  * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
@@ -2534,7 +2534,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
       goto __pyx_L12;
     }
 
-    /* "diploria/core/metric.pyx":66
+    /* "metameric/core/metric.pyx":66
  *             net[i] *= 1.0 - activations[i]
  *         else:
  *             net[i] *= activations[i] - minimum             # <<<<<<<<<<<<<<
@@ -2566,7 +2566,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     }
     __pyx_L12:;
 
-    /* "diploria/core/metric.pyx":67
+    /* "metameric/core/metric.pyx":67
  *         else:
  *             net[i] *= activations[i] - minimum
  *         net[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
@@ -2606,7 +2606,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_32, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_31, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "diploria/core/metric.pyx":69
+  /* "metameric/core/metric.pyx":69
  *         net[i] -= decay * (activations[i] - resting[i])
  * 
  *     return net * step_size             # <<<<<<<<<<<<<<
@@ -2621,7 +2621,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "diploria/core/metric.pyx":38
+  /* "metameric/core/metric.pyx":38
  * 
  * 
  * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -2646,7 +2646,7 @@ static PyObject *__pyx_pf_8diploria_4core_6metric_2strength_new(CYTHON_UNUSED Py
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("diploria.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("metameric.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -5212,7 +5212,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
   {&__pyx_n_s_conn, __pyx_k_conn, sizeof(__pyx_k_conn), 0, 0, 1, 1},
   {&__pyx_n_s_decay, __pyx_k_decay, sizeof(__pyx_k_decay), 0, 0, 1, 1},
-  {&__pyx_n_s_diploria_core_metric, __pyx_k_diploria_core_metric, sizeof(__pyx_k_diploria_core_metric), 0, 0, 1, 1},
+  {&__pyx_n_s_metameric_core_metric, __pyx_k_metameric_core_metric, sizeof(__pyx_k_metameric_core_metric), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
@@ -5354,7 +5354,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "diploria/core/metric.pyx":8
+  /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -5366,7 +5366,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__10);
   __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(7, 0, 13, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_old, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 8, __pyx_L1_error)
 
-  /* "diploria/core/metric.pyx":38
+  /* "metameric/core/metric.pyx":38
  * 
  * 
  * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
@@ -5456,14 +5456,14 @@ PyMODINIT_FUNC PyInit_metric(void)
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_diploria__core__metric) {
+  if (__pyx_module_is_main_metameric__core__metric) {
     if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "diploria.core.metric")) {
-      if (unlikely(PyDict_SetItemString(modules, "diploria.core.metric", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "metameric.core.metric")) {
+      if (unlikely(PyDict_SetItemString(modules, "metameric.core.metric", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -5495,7 +5495,7 @@ PyMODINIT_FUNC PyInit_metric(void)
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "diploria/core/metric.pyx":3
+  /* "metameric/core/metric.pyx":3
  * cimport cython
  * cimport numpy as np
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -5507,31 +5507,31 @@ PyMODINIT_FUNC PyInit_metric(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 3, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "diploria/core/metric.pyx":8
+  /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
  * def strength_old(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.float64_t, ndim=1] resting,
  *                  np.ndarray[np.float64_t, ndim=1] conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_1strength_old, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8metameric_4core_6metric_1strength_old, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_old, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "diploria/core/metric.pyx":38
+  /* "metameric/core/metric.pyx":38
  * 
  * 
  * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
  *                  np.ndarray[np.float64_t, ndim=1] resting,
  *                  list conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8diploria_4core_6metric_3strength_new, NULL, __pyx_n_s_diploria_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8metameric_4core_6metric_3strength_new, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "diploria/core/metric.pyx":1
+  /* "metameric/core/metric.pyx":1
  * cimport cython             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * import numpy as np
@@ -5556,11 +5556,11 @@ PyMODINIT_FUNC PyInit_metric(void)
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init diploria.core.metric", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init metameric.core.metric", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init diploria.core.metric");
+    PyErr_SetString(PyExc_ImportError, "init metameric.core.metric");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

@@ -2,9 +2,9 @@ import numpy as np
 import random
 import pandas as pd
 
-from diploria.builder import Builder
-from diploria.prepare.weights import IA_WEIGHTS
-from diploria.prepare.data import process_data
+from metameric.builder import Builder
+from metameric.prepare.weights import IA_WEIGHTS
+from metameric.prepare.data import process_data
 from experiments.data import read_elp_format
 from copy import deepcopy
 from tqdm import tqdm
@@ -92,4 +92,4 @@ if __name__ == "__main__":
                             c])
 
     df = pd.DataFrame(results, columns=header)
-    df.to_csv("diploria_experiment_1.csv", sep=",", index=False)
+    df.to_csv("metameric_experiment_1.csv", sep=",", index=False)

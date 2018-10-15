@@ -1,4 +1,4 @@
-"""Prepare word lists for analysis using diploria."""
+"""Prepare word lists for analysis using metameric."""
 from .data import process_data, process_and_write
 from .weights import IA_WEIGHTS
 

@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 
 from flask import Flask, render_template, request, Response
 from itertools import chain
-from diploria.prepare.data import process_and_write
-from diploria.run import make_run, get_model
-from diploria.builder.builder import TilapiaError
+from metameric.prepare.data import process_and_write
+from metameric.run import make_run, get_model
+from metameric.builder.builder import MetaMericError
 
 # Switch backend because of tk errors.
 plt.switch_backend("Agg")
-from diploria.plot import result_plot # noqa
+from metameric.plot import result_plot # noqa
 
 global m
 global max_cycles
@@ -88,7 +88,7 @@ def prepare_post():
                           f_layers.split(),
                           f_set.split(),
                           strict=False)
-    except TilapiaError as e:
+    except MetaMericError as e:
         print(e)
         return render_template("prepare.tpl",
                                validation="{}".format(e),
@@ -160,7 +160,7 @@ def analysis_post():
         inputs = [[l.name for l in x._to_connections]
                   for x in m.inputs.values()]
         inputs = sorted(set(chain.from_iterable(inputs)))
-    except TilapiaError as e:
+    except MetaMericError as e:
         print(e)
         return render_template("analysis.tpl",
                                rla=-.05,
@@ -253,7 +253,7 @@ def main_experiment():
                  decay_rate=float(decay),
                  minimum_activation=float(min_val),
                  adapt_weights=w)
-    except TilapiaError as e:
+    except MetaMericError as e:
         print(e)
         return render_template("experiment.tpl",
                                rla=-.05,

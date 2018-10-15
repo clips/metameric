@@ -1,4 +1,4 @@
-"""Diploria."""
+"""metameric."""
 from .core import Network
 from .core.layer import Layer
 

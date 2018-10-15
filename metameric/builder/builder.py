@@ -6,7 +6,7 @@ from itertools import chain, product
 from collections import Counter, defaultdict
 
 
-class TilapiaError(Exception):
+class MetaMericError(Exception):
 
     pass
 
@@ -102,13 +102,13 @@ class Builder(object):
             try:
                 f = i[field_to_sum]
             except KeyError:
-                raise TilapiaError("The RLA variable {} was not in "
+                raise MetaMericError("The RLA variable {} was not in "
                                    "all of your items".format(field_to_sum))
             try:
                 for x in i[key]:
                     sums[k_1[x]] += f
             except KeyError:
-                raise TilapiaError("The RLA field {} was not in all of your "
+                raise MetaMericError("The RLA field {} was not in all of your "
                                    "items.".format(key))
 
         return sums
@@ -118,7 +118,7 @@ class Builder(object):
         all_keys = set(chain.from_iterable([i.keys() for i in items]))
         diff = set(layer_names) - all_keys
         if diff:
-            raise TilapiaError("{} were selected as layer names, but not "
+            raise MetaMericError("{} were selected as layer names, but not "
                                "present in your items".format(",".join(diff)))
 
     def build_model(self, items):
@@ -135,7 +135,7 @@ class Builder(object):
         self._check(items, self.layer_names)
         out_layers = set(self.outputs) - set(self.layer_names)
         if out_layers:
-            raise TilapiaError("{} were selected as output layers, but were "
+            raise MetaMericError("{} were selected as output layers, but were "
                                "not in the layer names: {}"
                                "".format(out_layers, self.layer_names))
 
@@ -143,11 +143,11 @@ class Builder(object):
         print(rla_layers, self.rla)
         rla_layers -= set(self.layer_names)
         if rla_layers:
-            raise TilapiaError("{} were selected as rla layers, but were "
+            raise MetaMericError("{} were selected as rla layers, but were "
                                "not in the layer names: {}"
                                "".format(rla_layers, self.layer_names))
 
-        # Initialize the Diploria.
+        # Initialize the metameric.
         m = Network(minimum=self.minimum,
                     step_size=self.step_size,
                     decay_rate=self.decay_rate)

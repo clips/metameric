@@ -1,4 +1,4 @@
-"""Utilities specifically for IA models."""
+"""IA weights."""
 
 # Dict format
 IA_WEIGHTS = {("letters", "orthography"): [.28, -.01],

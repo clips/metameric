@@ -1,4 +1,4 @@
-include diploria/web/templates/*
-include diploria/web/static/content/*
-include diploria/web/static/fonts/*
-include diploria/web/static/scripts/*
+include metameric/web/templates/*
+include metameric/web/static/content/*
+include metameric/web/static/fonts/*
+include metameric/web/static/scripts/*

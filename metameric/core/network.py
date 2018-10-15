@@ -363,7 +363,7 @@ class Network(object):
         from_layer.add_to_connection(to_layer)
 
     def __repr__(self):
-        """Print the Diploria."""
+        """Print the metameric."""
         string = "Network with {} layers\n".format(len(self.layers))
         string += "\n".join(["{}:\t {}".format(a, str(b))
                              for a, b in sorted(self.layers.items())])
