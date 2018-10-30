@@ -34,7 +34,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="number" class="form-control form-control-sm" id="rla" value="-0.05" step="0.01" min="-1.0" max=".0" name="rla" required>
+                <input type="number" class="form-control form-control-sm" id="rla" value="{{ rla }}" step="0.01" min="-1.0" max=".0" name="rla" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -43,7 +43,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="number" class="form-control form-control-sm" id="step" value="1.0" step="0.1" min=".1" max="1.0" name="step" required>
+                <input type="number" class="form-control form-control-sm" id="step" value="{{ step }}" step="0.1" min=".1" max="1.0" name="step" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -52,7 +52,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="number" class="form-control form-control-sm" id="decay" value="0.07" step="0.01" min="0.01" max="1.0" name="decay" required>
+                <input type="number" class="form-control form-control-sm" id="decay" value="{{ decay }}" step="0.01" min="0.01" max="1.0" name="decay" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -61,7 +61,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="number" class="form-control form-control-sm" id="min" value="-0.02" min="-1.0" step=".01" max="1.0" name="min" required>
+                <input type="number" class="form-control form-control-sm" id="min" value="{{ min }}" min="-1.0" step=".01" max="1.0" name="min" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -70,7 +70,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="number" class="form-control form-control-sm" id="max" value="350" min="1" max="100000" name="max" required>
+                <input type="number" class="form-control form-control-sm" id="max" value="{{ max }}" min="1" max="100000" name="max" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -79,7 +79,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="number" class="form-control form-control-sm" id="threshold" value=".7" name="threshold" required>
+                <input type="number" class="form-control form-control-sm" id="threshold" value="{{ threshold }}" name="threshold" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -88,7 +88,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" class="form-control form-control-sm" id="monitorlayers" value="orthography" name="monitorlayers" required>
+                <input type="text" class="form-control form-control-sm" id="monitorlayers" value="{{ monitorlayers }}" name="monitorlayers" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -97,7 +97,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" class="form-control form-control-sm" id="rlalayers" value="orthography" name="rlalayers" required>
+                <input type="text" class="form-control form-control-sm" id="rlalayers" value="{{ rlalayers }}" name="rlalayers" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -106,7 +106,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="text" class="form-control form-control-sm" id="rlavars" value="frequency" name="rlavars" value="frequency" required>
+                <input type="text" class="form-control form-control-sm" id="rlavars" value="{{ rlavars }}" name="rlavars" value="frequency" required>
             </div>
         </div>
         <div class="form-group row mb-0">
@@ -115,7 +115,7 @@
                 ?
             </button>
             <div class="col-sm-5">
-                <input type="checkbox" class="form-control form-control-sm" id="w" value="w" checked name="w">
+                <input type="checkbox" class="form-control form-control-sm" id="w" value="{{ adapt_weights }}" checked name="w">
             </div>
         </div>
         {% if validation %}
