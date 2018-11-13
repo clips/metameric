@@ -23,18 +23,20 @@ class Builder(object):
 
     Parameters
     ----------
-    store : Store
-        A store object containing the data on which to build the model.
-    layer_names : list
-        A list of strings, containing the names of the layers to be
-        created.
-    weight_matrix : np.array
-        The weights from each layer to each other layer.
+    weights : dict
+        A dictionary with tuples as keys. The first item of the tuple is the
+        from layer, the second the to layer. Each value is also a tuple, the
+        first value of which is the positive weight, and the second value of
+        which is the negative weight.
+
+        Example:
+            {("orthography", "letters"): [.01, -.01]}
     rla : dict
         A dictionary specifying which fields are used to establish the variable
         RLA for each layer that has a variable RLA.
     global_rla : float
-        The global RLA, used to scale the variable RLA.
+        The global RLA. This value is assigned to all non-variable RLA layers,
+        and is used to scale the global RLA layers.
     outputs : tuple
         The names of the layers which are used as output.
     monitors : tuple
@@ -126,6 +128,12 @@ class Builder(object):
     def build_model(self, items):
         """
         Builds a network by iterating over all items and building layers.
+
+        Parameters
+        ----------
+        items : list
+            A list of dicts, where each dictionary has all the layers of the
+            model as keys.
 
         Returns
         -------
