@@ -26,7 +26,12 @@ These three innovations are fully explained in the companion paper, which is cur
 The name Metameric comes from the short story ``The White Death`` by polish author [Stanisław Lem](https://en.wikipedia.org/wiki/Stanis%C5%82aw_Lem):
 
 ```
-The hereditary and at the same time perpetual ruler was Metameric, for he possessed a cold, beautiful and many-membered frame, and in the first of these members resided his mind; when that grew old, after thousands of years, when the crystal networks had been worn away from much administrative thinking, its authority was taken over by the next member, and thus it went, for of these he had ten billion.
+The hereditary and at the same time perpetual ruler was Metameric, for he
+possessed a cold, beautiful and many-membered frame, and in the first of
+these members resided his mind; when that grew old, after thousands of years,
+when the crystal networks had been worn away from much administrative
+thinking, its authority was taken over by the next member, and thus it went,
+for of these he had ten billion.
 ```
 
 # Usage
