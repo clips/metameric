@@ -1447,7 +1447,7 @@ static const char __pyx_k_strength_old[] = "strength_old";
 static const char __pyx_k_total_recurrence[] = "total_recurrence";
 static const char __pyx_k_metameric_core_metric[] = "metameric.core.metric";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
-static const char __pyx_k_Users_stephantulkens_Documents[] = "/Users/stephantulkens/Documents/github/tilapia/metameric/core/metric.pyx";
+static const char __pyx_k_Users_stephantulkens_Documents[] = "/Users/stephantulkens/Documents/github/metameric/metameric/core/metric.pyx";
 static const char __pyx_k_numpy_core_multiarray_failed_to[] = "numpy.core.multiarray failed to import";
 static const char __pyx_k_unknown_dtype_code_in_numpy_pxd[] = "unknown dtype code in numpy.pxd (%d)";
 static const char __pyx_k_Format_string_allocated_too_shor[] = "Format string allocated too short, see comment in numpy.pxd";
@@ -1466,13 +1466,13 @@ static PyObject *__pyx_n_s_activations;
 static PyObject *__pyx_n_s_c;
 static PyObject *__pyx_n_s_conn;
 static PyObject *__pyx_n_s_decay;
-static PyObject *__pyx_n_s_metameric_core_metric;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_float64;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_j;
 static PyObject *__pyx_n_s_main;
+static PyObject *__pyx_n_s_metameric_core_metric;
 static PyObject *__pyx_n_s_minimum;
 static PyObject *__pyx_n_s_mtr;
 static PyObject *__pyx_n_s_mtrs;
@@ -1495,8 +1495,8 @@ static PyObject *__pyx_n_s_total_recurrence;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_8metameric_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
-static PyObject *__pyx_pf_8metameric_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
+static PyObject *__pyx_pf_9metameric_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
+static PyObject *__pyx_pf_9metameric_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1522,10 +1522,10 @@ static PyObject *__pyx_codeobj__13;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8metameric_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8metameric_4core_6metric_strength_old[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_8metameric_4core_6metric_1strength_old = {"strength_old", (PyCFunction)__pyx_pw_8metameric_4core_6metric_1strength_old, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8metameric_4core_6metric_strength_old};
-static PyObject *__pyx_pw_8metameric_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9metameric_4core_6metric_strength_old[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_9metameric_4core_6metric_1strength_old = {"strength_old", (PyCFunction)__pyx_pw_9metameric_4core_6metric_1strength_old, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9metameric_4core_6metric_strength_old};
+static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_old(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
   PyArrayObject *__pyx_v_conn = 0;
@@ -1623,7 +1623,7 @@ static PyObject *__pyx_pw_8metameric_4core_6metric_1strength_old(PyObject *__pyx
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), __pyx_ptype_5numpy_ndarray, 1, "conn", 0))) __PYX_ERR(0, 10, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtr), __pyx_ptype_5numpy_ndarray, 1, "mtr", 0))) __PYX_ERR(0, 11, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8metameric_4core_6metric_strength_old(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
+  __pyx_r = __pyx_pf_9metameric_4core_6metric_strength_old(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtr, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1634,7 +1634,7 @@ static PyObject *__pyx_pw_8metameric_4core_6metric_1strength_old(PyObject *__pyx
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8metameric_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
+static PyObject *__pyx_pf_9metameric_4core_6metric_strength_old(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyArrayObject *__pyx_v_conn, PyArrayObject *__pyx_v_mtr, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_n_conns;
@@ -2008,10 +2008,10 @@ static PyObject *__pyx_pf_8metameric_4core_6metric_strength_old(CYTHON_UNUSED Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_8metameric_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_8metameric_4core_6metric_2strength_new[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_8metameric_4core_6metric_3strength_new = {"strength_new", (PyCFunction)__pyx_pw_8metameric_4core_6metric_3strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_8metameric_4core_6metric_2strength_new};
-static PyObject *__pyx_pw_8metameric_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9metameric_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9metameric_4core_6metric_2strength_new[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_9metameric_4core_6metric_3strength_new = {"strength_new", (PyCFunction)__pyx_pw_9metameric_4core_6metric_3strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9metameric_4core_6metric_2strength_new};
+static PyObject *__pyx_pw_9metameric_4core_6metric_3strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
   PyObject *__pyx_v_conn = 0;
@@ -2109,7 +2109,7 @@ static PyObject *__pyx_pw_8metameric_4core_6metric_3strength_new(PyObject *__pyx
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 39, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), (&PyList_Type), 1, "conn", 1))) __PYX_ERR(0, 40, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtrs), (&PyList_Type), 1, "mtrs", 1))) __PYX_ERR(0, 41, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8metameric_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
+  __pyx_r = __pyx_pf_9metameric_4core_6metric_2strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2120,7 +2120,7 @@ static PyObject *__pyx_pw_8metameric_4core_6metric_3strength_new(PyObject *__pyx
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8metameric_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
+static PyObject *__pyx_pf_9metameric_4core_6metric_2strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_z;
@@ -5212,13 +5212,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
   {&__pyx_n_s_conn, __pyx_k_conn, sizeof(__pyx_k_conn), 0, 0, 1, 1},
   {&__pyx_n_s_decay, __pyx_k_decay, sizeof(__pyx_k_decay), 0, 0, 1, 1},
-  {&__pyx_n_s_metameric_core_metric, __pyx_k_metameric_core_metric, sizeof(__pyx_k_metameric_core_metric), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_j, __pyx_k_j, sizeof(__pyx_k_j), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
+  {&__pyx_n_s_metameric_core_metric, __pyx_k_metameric_core_metric, sizeof(__pyx_k_metameric_core_metric), 0, 0, 1, 1},
   {&__pyx_n_s_minimum, __pyx_k_minimum, sizeof(__pyx_k_minimum), 0, 0, 1, 1},
   {&__pyx_n_s_mtr, __pyx_k_mtr, sizeof(__pyx_k_mtr), 0, 0, 1, 1},
   {&__pyx_n_s_mtrs, __pyx_k_mtrs, sizeof(__pyx_k_mtrs), 0, 0, 1, 1},
@@ -5514,7 +5514,7 @@ PyMODINIT_FUNC PyInit_metric(void)
  *                  np.ndarray[np.float64_t, ndim=1] resting,
  *                  np.ndarray[np.float64_t, ndim=1] conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8metameric_4core_6metric_1strength_old, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9metameric_4core_6metric_1strength_old, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_old, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -5526,7 +5526,7 @@ PyMODINIT_FUNC PyInit_metric(void)
  *                  np.ndarray[np.float64_t, ndim=1] resting,
  *                  list conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8metameric_4core_6metric_3strength_new, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9metameric_4core_6metric_3strength_new, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
