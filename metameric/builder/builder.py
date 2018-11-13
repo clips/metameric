@@ -61,7 +61,8 @@ class Builder(object):
         """Build a model out of a set of items."""
         self.layer_names = sorted(set(chain.from_iterable(weights.keys())))
         self.weights = weights
-        self.rla = rla
+        self.rla = defaultdict(lambda: "global")
+        self.rla.update(rla)
         self.global_rla = global_rla
         self.outputs = outputs
         self.monitors = monitors
@@ -103,13 +104,13 @@ class Builder(object):
                 f = i[field_to_sum]
             except KeyError:
                 raise MetaMericError("The RLA variable {} was not in "
-                                   "all of your items".format(field_to_sum))
+                                     "all of your items".format(field_to_sum))
             try:
                 for x in i[key]:
                     sums[k_1[x]] += f
             except KeyError:
                 raise MetaMericError("The RLA field {} was not in all of your "
-                                   "items.".format(key))
+                                     "items.".format(key))
 
         return sums
 
@@ -118,8 +119,9 @@ class Builder(object):
         all_keys = set(chain.from_iterable([i.keys() for i in items]))
         diff = set(layer_names) - all_keys
         if diff:
+            z = ",".join(diff)
             raise MetaMericError("{} were selected as layer names, but not "
-                               "present in your items".format(",".join(diff)))
+                                 "present in your items".format(z))
 
     def build_model(self, items):
         """
@@ -136,16 +138,15 @@ class Builder(object):
         out_layers = set(self.outputs) - set(self.layer_names)
         if out_layers:
             raise MetaMericError("{} were selected as output layers, but were "
-                               "not in the layer names: {}"
-                               "".format(out_layers, self.layer_names))
+                                 "not in the layer names: {}"
+                                 "".format(out_layers, self.layer_names))
 
         rla_layers = {k for k, v in self.rla.items() if v != "global"}
-        print(rla_layers, self.rla)
         rla_layers -= set(self.layer_names)
         if rla_layers:
             raise MetaMericError("{} were selected as rla layers, but were "
-                               "not in the layer names: {}"
-                               "".format(rla_layers, self.layer_names))
+                                 "not in the layer names: {}"
+                                 "".format(rla_layers, self.layer_names))
 
         # Initialize the metameric.
         m = Network(minimum=self.minimum,
