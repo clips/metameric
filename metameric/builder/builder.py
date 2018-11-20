@@ -52,8 +52,8 @@ class Builder(object):
 
     def __init__(self,
                  weights,
-                 rla,
-                 global_rla,
+                 rla=None,
+                 global_rla=-.05,
                  outputs=(),
                  monitors=(),
                  minimum=-.2,
@@ -64,10 +64,19 @@ class Builder(object):
         self.layer_names = sorted(set(chain.from_iterable(weights.keys())))
         self.weights = weights
         self.rla = defaultdict(lambda: "global")
-        self.rla.update(rla)
+        if rla:
+            self.rla.update(rla)
         self.global_rla = global_rla
+        if isinstance(outputs, str):
+            outputs = (outputs,)
+        if isinstance(monitors, str):
+            monitors = (monitors,)
+
         self.outputs = outputs
-        self.monitors = monitors
+        if not monitors:
+            self.monitors = outputs
+        else:
+            self.monitors = monitors
         self.minimum = minimum
         self.step_size = step_size
         self.decay_rate = decay_rate
@@ -242,8 +251,8 @@ class Builder(object):
             # the weights to the length of the longest input.
             # Gets overridden by the weight adaptation switch.
             if self.weight_adaptation and (a_slot or b_slot) and not f:
-                true_num_slots = max(self.num_slots.get(a, 0),
-                                     self.num_slots.get(b, 0))
+                true_num_slots = max(self.num_slots.get(a, 1),
+                                     self.num_slots.get(b, 1))
                 pos = pos / true_num_slots
                 neg = neg * true_num_slots
 

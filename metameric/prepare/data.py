@@ -138,15 +138,23 @@ def add_features(items,
 
 
 def process_data(items,
-                 decomposable,
-                 decomposable_names,
-                 feature_layers,
-                 feature_sets,
+                 decomposable=(),
+                 decomposable_names=(),
+                 feature_layers=(),
+                 feature_sets=(),
                  negative_features=True,
                  length_adaptation=True,
                  strict=True):
     """Process data, add fields, and add them to the item."""
     item_keys = set(chain.from_iterable([x.keys() for x in items]))
+    if isinstance(decomposable, str):
+        decomposable = (decomposable,)
+    if isinstance(decomposable_names, str):
+        decomposable_names = (decomposable_names,)
+    if isinstance(feature_layers, str):
+        feature_layers = (feature_layers,)
+    if isinstance(feature_sets, str):
+        feature_sets = (feature_sets,)
     for x in decomposable:
         if x not in item_keys:
             raise ValueError("Could not decompose '{}', as it was not in the "
