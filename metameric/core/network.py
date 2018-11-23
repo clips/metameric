@@ -308,9 +308,8 @@ class Network(object):
                 # might throw an error, depending on the value of the strict
                 # flag.
                 if strict:
-                    max_activation = np.max([x.activations
-                                             for x in self.monitors.values()],
-                                            1)
+                    max_activation = max([max(x.activations)
+                                          for x in self.monitors.values()])
                     raise ValueError("Maximum cycles reached, maximum "
                                      "activation was {}, input was {}"
                                      "".format(max_activation, x))
