@@ -212,7 +212,7 @@ class Network(object):
 
         Parameters
         ----------
-        x : list dictionaries.
+        X : list dictionaries.
             The inputs to the model. The dictionaries have layer names as their
             keys, and tuples of symbols as their values.
         max_cycles : int, optional, default 30
@@ -236,6 +236,8 @@ class Network(object):
         inputs : tuple of strings
             Use this field to override the behavior of the network and to
             specify your own inputs.
+        shallow_run : bool, optiodefault False
+            If a run is shallow, only the final activations are returned.
 
         """
         if not self.checked:
@@ -336,6 +338,17 @@ class Network(object):
                                                  a_min=self.minimum,
                                                  a_max=1.0)
 
+    def _collect_net(self):
+        """Convenience function for diagnostic."""
+        net = {}
+        for k, layer in self.layers.items():
+            # Static layers don't have net input.
+            if layer.static or layer.clamped:
+                continue
+            net[k] = layer.net_input()
+
+        return net
+
     def _reset(self):
         """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
@@ -368,6 +381,39 @@ class Network(object):
                              for a, b in sorted(self.layers.items())])
 
         return string
+
+    def diagnostic_run(self,
+                       X,
+                       max_cycles=30,
+                       threshold=.7):
+        """Do a run while tracking all positive and negative connections."""
+        # Make a simpler thing, we are not interested in error checking.
+        strengths = []
+        for x in X:
+            # Always reset
+            s = []
+            self._reset()
+            # Clamp the inputs
+            for name, layer in self.inputs.items():
+                data = x[name]
+                # Can be necessary if someone wants to clamp orthography
+                if not isinstance(data, (tuple, set, list)):
+                    data = [data]
+                # Reset only the input layer to 0
+                layer.reset()
+                layer.activations[[layer.name2idx[p] for p in data]] = 1
+                layer.clamped = True
+
+            for idx in range(max_cycles):
+
+                self._single_cycle()
+                # After each cycle, collect the incoming and outgoing
+                # connections.
+                s.append(self._collect_net())
+
+            strengths.append(s)
+
+        return strengths
 
     def expand(self, item, overwrite=False):
         """Expands an item for which we only have partial data."""

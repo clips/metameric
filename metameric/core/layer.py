@@ -139,6 +139,22 @@ class Layer(object):
         """Reset the activations to resting level."""
         self.activations = np.copy(self.resting)
 
+    def net_input(self):
+        """
+        Get the net input for diagnostic purposes.
+
+        NOTE: This function should not be used in a serious manner, as it is
+        much slower than the cythonized functions.
+
+        Use the core.metric functions for anything involving speed.
+        """
+        net = {}
+        for mtr, layer in zip(self.weights, self._from_connections):
+            a = layer.activations.clip(.0, 1.0)
+            net[layer.name] = a.dot(mtr)
+
+        return net
+
     def activate(self):
         """
         Activate the layer.
