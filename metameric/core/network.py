@@ -410,6 +410,11 @@ class Network(object):
                 # After each cycle, collect the incoming and outgoing
                 # connections.
                 s.append(self._collect_net())
+                # Check the monitor layers for convergence
+                if self.monitors:
+                    if np.all([np.any(l.activations > threshold)
+                               for l in self.monitors.values()]):
+                        break
 
             strengths.append(s)
 
