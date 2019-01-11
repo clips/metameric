@@ -1,6 +1,6 @@
 """Layers in competitive networks."""
 import numpy as np
-from .metric import strength_new
+from .metric import strength
 
 
 class Layer(object):
@@ -177,13 +177,13 @@ class Layer(object):
         """
         if not self._from_connections:
             return np.zeros_like(self.activations)
-        return strength_new(self.activations,
-                            self.resting,
-                            [x.activations for x in self._from_connections],
-                            self.weights,
-                            self.minimum,
-                            self.decay_rate,
-                            self.step_size)
+        return strength(self.activations,
+                        self.resting,
+                        [x.activations for x in self._from_connections],
+                        self.weights,
+                        self.minimum,
+                        self.decay_rate,
+                        self.step_size)
 
     def __repr__(self):
         """Return a description of the layer."""

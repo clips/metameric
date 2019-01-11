@@ -1073,28 +1073,11 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 /* ExtTypeTest.proto */
 static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
 
-/* PyFunctionFastCall.proto */
-#if CYTHON_FAST_PYCALL
-#define __Pyx_PyFunction_FastCall(func, args, nargs)\
-    __Pyx_PyFunction_FastCallDict((func), (args), (nargs), NULL)
-#if 1 || PY_VERSION_HEX < 0x030600B1
-static PyObject *__Pyx_PyFunction_FastCallDict(PyObject *func, PyObject **args, int nargs, PyObject *kwargs);
-#else
-#define __Pyx_PyFunction_FastCallDict(func, args, nargs, kwargs) _PyFunction_FastCallDict(func, args, nargs, kwargs)
-#endif
-#endif
-
-/* PyCFunctionFastCall.proto */
-#if CYTHON_FAST_PYCCALL
-static CYTHON_INLINE PyObject *__Pyx_PyCFunction_FastCall(PyObject *func, PyObject **args, Py_ssize_t nargs);
-#else
-#define __Pyx_PyCFunction_FastCall(func, args, nargs)  (assert(0), NULL)
-#endif
-
 /* BufferFallbackError.proto */
 static void __Pyx_RaiseBufferFallbackError(void);
 
 #define __Pyx_BufPtrStrided1d(type, buf, i0, s0) (type)((char*)buf + i0 * s0)
+#define __Pyx_BufPtrStrided2d(type, buf, i0, s0, i1, s1) (type)((char*)buf + i0 * s0 + i1 * s1)
 /* PyThreadStateGet.proto */
 #if CYTHON_FAST_THREAD_STATE
 #define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
@@ -1119,7 +1102,6 @@ static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject 
 #define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
 #endif
 
-#define __Pyx_BufPtrStrided2d(type, buf, i0, s0, i1, s1) (type)((char*)buf + i0 * s0 + i1 * s1)
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
@@ -1428,14 +1410,13 @@ static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_float64[] = "float64";
 static const char __pyx_k_minimum[] = "minimum";
 static const char __pyx_k_resting[] = "resting";
-static const char __pyx_k_calc_net[] = "calc_net";
+static const char __pyx_k_strength[] = "strength";
 static const char __pyx_k_n_neurons[] = "n_neurons";
 static const char __pyx_k_step_size[] = "step_size";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_activations[] = "activations";
 static const char __pyx_k_RuntimeError[] = "RuntimeError";
-static const char __pyx_k_strength_new[] = "strength_new";
 static const char __pyx_k_metameric_core_metric[] = "metameric.core.metric";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
 static const char __pyx_k_Users_stephantulkens_Documents[] = "/Users/stephantulkens/Documents/github/metameric/metameric/core/metric.pyx";
@@ -1455,7 +1436,6 @@ static PyObject *__pyx_kp_s_Users_stephantulkens_Documents;
 static PyObject *__pyx_n_s_ValueError;
 static PyObject *__pyx_n_s_activations;
 static PyObject *__pyx_n_s_c;
-static PyObject *__pyx_n_s_calc_net;
 static PyObject *__pyx_n_s_conn;
 static PyObject *__pyx_n_s_decay;
 static PyObject *__pyx_n_s_dtype;
@@ -1479,13 +1459,12 @@ static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_resting;
 static PyObject *__pyx_n_s_step_size;
-static PyObject *__pyx_n_s_strength_new;
+static PyObject *__pyx_n_s_strength;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_z;
 static PyObject *__pyx_n_s_zeros;
-static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
-static PyObject *__pyx_pf_9metameric_4core_6metric_2calc_net(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_net, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs); /* proto */
+static PyObject *__pyx_pf_9metameric_4core_6metric_strength(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1498,23 +1477,21 @@ static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__8;
 static PyObject *__pyx_tuple__9;
 static PyObject *__pyx_tuple__10;
-static PyObject *__pyx_tuple__12;
 static PyObject *__pyx_codeobj__11;
-static PyObject *__pyx_codeobj__13;
 
 /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[np.float64_t, ndim=1] resting,
- *                  list conn,
+ * def strength(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *              np.ndarray[np.float64_t, ndim=1] resting,
+ *              list conn,
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9metameric_4core_6metric_strength_new[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_9metameric_4core_6metric_1strength_new = {"strength_new", (PyCFunction)__pyx_pw_9metameric_4core_6metric_1strength_new, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9metameric_4core_6metric_strength_new};
-static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_9metameric_4core_6metric_1strength(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_9metameric_4core_6metric_strength[] = "Fast function for calculating association strength.";
+static PyMethodDef __pyx_mdef_9metameric_4core_6metric_1strength = {"strength", (PyCFunction)__pyx_pw_9metameric_4core_6metric_1strength, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9metameric_4core_6metric_strength};
+static PyObject *__pyx_pw_9metameric_4core_6metric_1strength(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_activations = 0;
   PyArrayObject *__pyx_v_resting = 0;
   PyObject *__pyx_v_conn = 0;
@@ -1524,7 +1501,7 @@ static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx
   __pyx_t_5numpy_float64_t __pyx_v_step_size;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("strength_new (wrapper)", 0);
+  __Pyx_RefNannySetupContext("strength (wrapper)", 0);
   {
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_activations,&__pyx_n_s_resting,&__pyx_n_s_conn,&__pyx_n_s_mtrs,&__pyx_n_s_minimum,&__pyx_n_s_decay,&__pyx_n_s_step_size,0};
     PyObject* values[7] = {0,0,0,0,0,0,0};
@@ -1550,36 +1527,36 @@ static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_resting)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 1); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, 1); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 2); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, 2); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtrs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 3); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, 3); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_minimum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 4); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, 4); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_decay)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 5); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, 5); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_step_size)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, 6); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, 6); __PYX_ERR(0, 8, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength_new") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "strength") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -1602,9 +1579,9 @@ static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("strength_new", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("strength", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("metameric.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("metameric.core.metric.strength", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
@@ -1612,7 +1589,7 @@ static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_resting), __pyx_ptype_5numpy_ndarray, 1, "resting", 0))) __PYX_ERR(0, 9, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), (&PyList_Type), 1, "conn", 1))) __PYX_ERR(0, 10, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtrs), (&PyList_Type), 1, "mtrs", 1))) __PYX_ERR(0, 11, __pyx_L1_error)
-  __pyx_r = __pyx_pf_9metameric_4core_6metric_strength_new(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
+  __pyx_r = __pyx_pf_9metameric_4core_6metric_strength(__pyx_self, __pyx_v_activations, __pyx_v_resting, __pyx_v_conn, __pyx_v_mtrs, __pyx_v_minimum, __pyx_v_decay, __pyx_v_step_size);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1623,12 +1600,20 @@ static PyObject *__pyx_pw_9metameric_4core_6metric_1strength_new(PyObject *__pyx
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
+static PyObject *__pyx_pf_9metameric_4core_6metric_strength(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_resting, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs, __pyx_t_5numpy_float64_t __pyx_v_minimum, __pyx_t_5numpy_float64_t __pyx_v_decay, __pyx_t_5numpy_float64_t __pyx_v_step_size) {
   int __pyx_v_i;
+  int __pyx_v_j;
+  int __pyx_v_z;
   int __pyx_v_n_neurons;
   PyArrayObject *__pyx_v_net = 0;
+  PyArrayObject *__pyx_v_c = 0;
+  PyArrayObject *__pyx_v_mtr = 0;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_activations;
   __Pyx_Buffer __pyx_pybuffer_activations;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_c;
+  __Pyx_Buffer __pyx_pybuffer_c;
+  __Pyx_LocalBuf_ND __pyx_pybuffernd_mtr;
+  __Pyx_Buffer __pyx_pybuffer_mtr;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_net;
   __Pyx_Buffer __pyx_pybuffer_net;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_resting;
@@ -1641,25 +1626,42 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
   PyObject *__pyx_t_4 = NULL;
   PyObject *__pyx_t_5 = NULL;
   PyArrayObject *__pyx_t_6 = NULL;
-  int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
+  Py_ssize_t __pyx_t_7;
+  int __pyx_t_8;
+  int __pyx_t_9;
   PyObject *__pyx_t_10 = NULL;
-  int __pyx_t_11;
-  Py_ssize_t __pyx_t_12;
-  int __pyx_t_13;
+  PyObject *__pyx_t_11 = NULL;
+  PyObject *__pyx_t_12 = NULL;
+  npy_intp __pyx_t_13;
   Py_ssize_t __pyx_t_14;
-  Py_ssize_t __pyx_t_15;
-  Py_ssize_t __pyx_t_16;
-  Py_ssize_t __pyx_t_17;
+  int __pyx_t_15;
+  int __pyx_t_16;
+  int __pyx_t_17;
   Py_ssize_t __pyx_t_18;
   Py_ssize_t __pyx_t_19;
   Py_ssize_t __pyx_t_20;
-  __Pyx_RefNannySetupContext("strength_new", 0);
+  Py_ssize_t __pyx_t_21;
+  Py_ssize_t __pyx_t_22;
+  Py_ssize_t __pyx_t_23;
+  Py_ssize_t __pyx_t_24;
+  Py_ssize_t __pyx_t_25;
+  Py_ssize_t __pyx_t_26;
+  Py_ssize_t __pyx_t_27;
+  Py_ssize_t __pyx_t_28;
+  Py_ssize_t __pyx_t_29;
+  __Pyx_RefNannySetupContext("strength", 0);
   __pyx_pybuffer_net.pybuffer.buf = NULL;
   __pyx_pybuffer_net.refcount = 0;
   __pyx_pybuffernd_net.data = NULL;
   __pyx_pybuffernd_net.rcbuffer = &__pyx_pybuffer_net;
+  __pyx_pybuffer_c.pybuffer.buf = NULL;
+  __pyx_pybuffer_c.refcount = 0;
+  __pyx_pybuffernd_c.data = NULL;
+  __pyx_pybuffernd_c.rcbuffer = &__pyx_pybuffer_c;
+  __pyx_pybuffer_mtr.pybuffer.buf = NULL;
+  __pyx_pybuffer_mtr.refcount = 0;
+  __pyx_pybuffernd_mtr.data = NULL;
+  __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
   __pyx_pybuffer_activations.pybuffer.buf = NULL;
   __pyx_pybuffer_activations.refcount = 0;
   __pyx_pybuffernd_activations.data = NULL;
@@ -1681,7 +1683,7 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
 
   /* "metameric/core/metric.pyx":17
  *     """Fast function for calculating association strength."""
- *     cdef int i
+ *     cdef int i, j, z
  *     cdef int n_neurons = activations.shape[0]             # <<<<<<<<<<<<<<
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
  *                                                          dtype=np.float64)
@@ -1689,11 +1691,11 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
   __pyx_v_n_neurons = (__pyx_v_activations->dimensions[0]);
 
   /* "metameric/core/metric.pyx":18
- *     cdef int i
+ *     cdef int i, j, z
  *     cdef int n_neurons = activations.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                          dtype=np.float64)
- *     net += calc_net(activations, net, conn, mtrs)
+ * 
  */
   __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1717,8 +1719,8 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
  *     cdef int n_neurons = activations.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
  *                                                          dtype=np.float64)             # <<<<<<<<<<<<<<
- *     net += calc_net(activations, net, conn, mtrs)
- *     for i in range(n_neurons):
+ * 
+ *     cdef np.ndarray[np.float64_t, ndim=1] c
  */
   __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
@@ -1731,11 +1733,11 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "metameric/core/metric.pyx":18
- *     cdef int i
+ *     cdef int i, j, z
  *     cdef int n_neurons = activations.shape[0]
  *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],             # <<<<<<<<<<<<<<
  *                                                          dtype=np.float64)
- *     net += calc_net(activations, net, conn, mtrs)
+ * 
  */
   __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
@@ -1756,135 +1758,189 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
   __pyx_v_net = ((PyArrayObject *)__pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "metameric/core/metric.pyx":20
- *     cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
- *                                                          dtype=np.float64)
- *     net += calc_net(activations, net, conn, mtrs)             # <<<<<<<<<<<<<<
- *     for i in range(n_neurons):
- *         if net[i] > 0:
+  /* "metameric/core/metric.pyx":24
+ *     cdef np.ndarray[np.float64_t, ndim=2] mtr
+ *     # There are as many conn as mtr.
+ *     for z in range(len(conn)):             # <<<<<<<<<<<<<<
+ *         c = conn[z]
+ *         mtr = mtrs[z]
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_calc_net); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = NULL;
-  __pyx_t_7 = 0;
-  if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
-    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
-    if (likely(__pyx_t_1)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-      __Pyx_INCREF(__pyx_t_1);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_3, function);
-      __pyx_t_7 = 1;
-    }
+  if (unlikely(__pyx_v_conn == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
+    __PYX_ERR(0, 24, __pyx_L1_error)
   }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_3)) {
-    PyObject *__pyx_temp[5] = {__pyx_t_1, ((PyObject *)__pyx_v_activations), ((PyObject *)__pyx_v_net), __pyx_v_conn, __pyx_v_mtrs};
-    __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 4+__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_GOTREF(__pyx_t_5);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
-    PyObject *__pyx_temp[5] = {__pyx_t_1, ((PyObject *)__pyx_v_activations), ((PyObject *)__pyx_v_net), __pyx_v_conn, __pyx_v_mtrs};
-    __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 4+__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_GOTREF(__pyx_t_5);
-  } else
-  #endif
-  {
-    __pyx_t_2 = PyTuple_New(4+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    if (__pyx_t_1) {
-      __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1); __pyx_t_1 = NULL;
+  __pyx_t_7 = PyList_GET_SIZE(__pyx_v_conn); if (unlikely(__pyx_t_7 == -1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+    __pyx_v_z = __pyx_t_8;
+
+    /* "metameric/core/metric.pyx":25
+ *     # There are as many conn as mtr.
+ *     for z in range(len(conn)):
+ *         c = conn[z]             # <<<<<<<<<<<<<<
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):
+ */
+    if (unlikely(__pyx_v_conn == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 25, __pyx_L1_error)
     }
-    __Pyx_INCREF(((PyObject *)__pyx_v_activations));
-    __Pyx_GIVEREF(((PyObject *)__pyx_v_activations));
-    PyTuple_SET_ITEM(__pyx_t_2, 0+__pyx_t_7, ((PyObject *)__pyx_v_activations));
-    __Pyx_INCREF(((PyObject *)__pyx_v_net));
-    __Pyx_GIVEREF(((PyObject *)__pyx_v_net));
-    PyTuple_SET_ITEM(__pyx_t_2, 1+__pyx_t_7, ((PyObject *)__pyx_v_net));
-    __Pyx_INCREF(__pyx_v_conn);
-    __Pyx_GIVEREF(__pyx_v_conn);
-    PyTuple_SET_ITEM(__pyx_t_2, 2+__pyx_t_7, __pyx_v_conn);
-    __Pyx_INCREF(__pyx_v_mtrs);
-    __Pyx_GIVEREF(__pyx_v_mtrs);
-    PyTuple_SET_ITEM(__pyx_t_2, 3+__pyx_t_7, __pyx_v_mtrs);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_InPlaceAdd(((PyObject *)__pyx_v_net), __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 20, __pyx_L1_error)
-  __pyx_t_6 = ((PyArrayObject *)__pyx_t_3);
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-    __pyx_t_7 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_t_6, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack);
-    if (unlikely(__pyx_t_7 < 0)) {
-      PyErr_Fetch(&__pyx_t_8, &__pyx_t_9, &__pyx_t_10);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_v_net, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) {
-        Py_XDECREF(__pyx_t_8); Py_XDECREF(__pyx_t_9); Py_XDECREF(__pyx_t_10);
-        __Pyx_RaiseBufferFallbackError();
-      } else {
-        PyErr_Restore(__pyx_t_8, __pyx_t_9, __pyx_t_10);
+    if (!(likely(((PyList_GET_ITEM(__pyx_v_conn, __pyx_v_z)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_conn, __pyx_v_z), __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 25, __pyx_L1_error)
+    __pyx_t_5 = PyList_GET_ITEM(__pyx_v_conn, __pyx_v_z);
+    __Pyx_INCREF(__pyx_t_5);
+    {
+      __Pyx_BufFmt_StackElem __pyx_stack[1];
+      __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
+      __pyx_t_9 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_5), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+      if (unlikely(__pyx_t_9 < 0)) {
+        PyErr_Fetch(&__pyx_t_10, &__pyx_t_11, &__pyx_t_12);
+        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)__pyx_v_c, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+          Py_XDECREF(__pyx_t_10); Py_XDECREF(__pyx_t_11); Py_XDECREF(__pyx_t_12);
+          __Pyx_RaiseBufferFallbackError();
+        } else {
+          PyErr_Restore(__pyx_t_10, __pyx_t_11, __pyx_t_12);
+        }
+      }
+      __pyx_pybuffernd_c.diminfo[0].strides = __pyx_pybuffernd_c.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_c.diminfo[0].shape = __pyx_pybuffernd_c.rcbuffer->pybuffer.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 25, __pyx_L1_error)
+    }
+    __Pyx_XDECREF_SET(__pyx_v_c, ((PyArrayObject *)__pyx_t_5));
+    __pyx_t_5 = 0;
+
+    /* "metameric/core/metric.pyx":26
+ *     for z in range(len(conn)):
+ *         c = conn[z]
+ *         mtr = mtrs[z]             # <<<<<<<<<<<<<<
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:
+ */
+    if (unlikely(__pyx_v_mtrs == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 26, __pyx_L1_error)
+    }
+    if (!(likely(((PyList_GET_ITEM(__pyx_v_mtrs, __pyx_v_z)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_mtrs, __pyx_v_z), __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 26, __pyx_L1_error)
+    __pyx_t_5 = PyList_GET_ITEM(__pyx_v_mtrs, __pyx_v_z);
+    __Pyx_INCREF(__pyx_t_5);
+    {
+      __Pyx_BufFmt_StackElem __pyx_stack[1];
+      __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
+      __pyx_t_9 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_5), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
+      if (unlikely(__pyx_t_9 < 0)) {
+        PyErr_Fetch(&__pyx_t_12, &__pyx_t_11, &__pyx_t_10);
+        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+          Py_XDECREF(__pyx_t_12); Py_XDECREF(__pyx_t_11); Py_XDECREF(__pyx_t_10);
+          __Pyx_RaiseBufferFallbackError();
+        } else {
+          PyErr_Restore(__pyx_t_12, __pyx_t_11, __pyx_t_10);
+        }
+      }
+      __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
+      if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 26, __pyx_L1_error)
+    }
+    __Pyx_XDECREF_SET(__pyx_v_mtr, ((PyArrayObject *)__pyx_t_5));
+    __pyx_t_5 = 0;
+
+    /* "metameric/core/metric.pyx":27
+ *         c = conn[z]
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):             # <<<<<<<<<<<<<<
+ *             if c[i] > 0:
+ *                 for j in range(n_neurons):
+ */
+    __pyx_t_13 = (__pyx_v_c->dimensions[0]);
+    for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_13; __pyx_t_9+=1) {
+      __pyx_v_i = __pyx_t_9;
+
+      /* "metameric/core/metric.pyx":28
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:             # <<<<<<<<<<<<<<
+ *                 for j in range(n_neurons):
+ *                     net[j] += c[i] * mtr[i, j]
+ */
+      __pyx_t_14 = __pyx_v_i;
+      __pyx_t_15 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_c.diminfo[0].strides)) > 0.0) != 0);
+      if (__pyx_t_15) {
+
+        /* "metameric/core/metric.pyx":29
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:
+ *                 for j in range(n_neurons):             # <<<<<<<<<<<<<<
+ *                     net[j] += c[i] * mtr[i, j]
+ * 
+ */
+        __pyx_t_16 = __pyx_v_n_neurons;
+        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
+          __pyx_v_j = __pyx_t_17;
+
+          /* "metameric/core/metric.pyx":30
+ *             if c[i] > 0:
+ *                 for j in range(n_neurons):
+ *                     net[j] += c[i] * mtr[i, j]             # <<<<<<<<<<<<<<
+ * 
+ *     for i in range(n_neurons):
+ */
+          __pyx_t_18 = __pyx_v_i;
+          __pyx_t_19 = __pyx_v_i;
+          __pyx_t_20 = __pyx_v_j;
+          __pyx_t_21 = __pyx_v_j;
+          *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_21, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_c.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_20, __pyx_pybuffernd_mtr.diminfo[1].strides)));
+        }
+
+        /* "metameric/core/metric.pyx":28
+ *         mtr = mtrs[z]
+ *         for i in range(c.shape[0]):
+ *             if c[i] > 0:             # <<<<<<<<<<<<<<
+ *                 for j in range(n_neurons):
+ *                     net[j] += c[i] * mtr[i, j]
+ */
       }
     }
-    __pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
-    if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 20, __pyx_L1_error)
   }
-  __pyx_t_6 = 0;
-  __Pyx_DECREF_SET(__pyx_v_net, ((PyArrayObject *)__pyx_t_3));
-  __pyx_t_3 = 0;
 
-  /* "metameric/core/metric.pyx":21
- *                                                          dtype=np.float64)
- *     net += calc_net(activations, net, conn, mtrs)
+  /* "metameric/core/metric.pyx":32
+ *                     net[j] += c[i] * mtr[i, j]
+ * 
  *     for i in range(n_neurons):             # <<<<<<<<<<<<<<
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]
  */
-  __pyx_t_7 = __pyx_v_n_neurons;
-  for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_7; __pyx_t_11+=1) {
-    __pyx_v_i = __pyx_t_11;
+  __pyx_t_8 = __pyx_v_n_neurons;
+  for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
+    __pyx_v_i = __pyx_t_9;
 
-    /* "metameric/core/metric.pyx":22
- *     net += calc_net(activations, net, conn, mtrs)
+    /* "metameric/core/metric.pyx":33
+ * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
  *             net[i] *= 1.0 - activations[i]
  *         else:
  */
-    __pyx_t_12 = __pyx_v_i;
-    __pyx_t_13 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_12, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
-    if (__pyx_t_13) {
+    __pyx_t_22 = __pyx_v_i;
+    __pyx_t_15 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_net.diminfo[0].strides)) > 0.0) != 0);
+    if (__pyx_t_15) {
 
-      /* "metameric/core/metric.pyx":23
+      /* "metameric/core/metric.pyx":34
  *     for i in range(n_neurons):
  *         if net[i] > 0:
  *             net[i] *= 1.0 - activations[i]             # <<<<<<<<<<<<<<
  *         else:
  *             net[i] *= activations[i] - minimum
  */
-      __pyx_t_14 = __pyx_v_i;
-      __pyx_t_15 = __pyx_v_i;
-      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_activations.diminfo[0].strides)));
+      __pyx_t_23 = __pyx_v_i;
+      __pyx_t_24 = __pyx_v_i;
+      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_net.diminfo[0].strides) *= (1.0 - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_activations.diminfo[0].strides)));
 
-      /* "metameric/core/metric.pyx":22
- *     net += calc_net(activations, net, conn, mtrs)
+      /* "metameric/core/metric.pyx":33
+ * 
  *     for i in range(n_neurons):
  *         if net[i] > 0:             # <<<<<<<<<<<<<<
  *             net[i] *= 1.0 - activations[i]
  *         else:
  */
-      goto __pyx_L5;
+      goto __pyx_L12;
     }
 
-    /* "metameric/core/metric.pyx":25
+    /* "metameric/core/metric.pyx":36
  *             net[i] *= 1.0 - activations[i]
  *         else:
  *             net[i] *= activations[i] - minimum             # <<<<<<<<<<<<<<
@@ -1892,48 +1948,46 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
  * 
  */
     /*else*/ {
-      __pyx_t_16 = __pyx_v_i;
-      __pyx_t_17 = __pyx_v_i;
-      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_net.diminfo[0].strides) *= ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum);
+      __pyx_t_25 = __pyx_v_i;
+      __pyx_t_26 = __pyx_v_i;
+      *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_net.diminfo[0].strides) *= ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_25, __pyx_pybuffernd_activations.diminfo[0].strides)) - __pyx_v_minimum);
     }
-    __pyx_L5:;
+    __pyx_L12:;
 
-    /* "metameric/core/metric.pyx":26
+    /* "metameric/core/metric.pyx":37
  *         else:
  *             net[i] *= activations[i] - minimum
  *         net[i] -= decay * (activations[i] - resting[i])             # <<<<<<<<<<<<<<
  * 
  *     return net * step_size
  */
-    __pyx_t_18 = __pyx_v_i;
-    __pyx_t_19 = __pyx_v_i;
-    __pyx_t_20 = __pyx_v_i;
-    *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_resting.diminfo[0].strides))));
+    __pyx_t_27 = __pyx_v_i;
+    __pyx_t_28 = __pyx_v_i;
+    __pyx_t_29 = __pyx_v_i;
+    *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_29, __pyx_pybuffernd_net.diminfo[0].strides) -= (__pyx_v_decay * ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_activations.rcbuffer->pybuffer.buf, __pyx_t_27, __pyx_pybuffernd_activations.diminfo[0].strides)) - (*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_resting.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_resting.diminfo[0].strides))));
   }
 
-  /* "metameric/core/metric.pyx":28
+  /* "metameric/core/metric.pyx":39
  *         net[i] -= decay * (activations[i] - resting[i])
  * 
  *     return net * step_size             # <<<<<<<<<<<<<<
- * 
- * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 28, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_step_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_r = __pyx_t_5;
-  __pyx_t_5 = 0;
+  __pyx_t_3 = PyNumber_Multiply(((PyObject *)__pyx_v_net), __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
   goto __pyx_L0;
 
   /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[np.float64_t, ndim=1] resting,
- *                  list conn,
+ * def strength(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *              np.ndarray[np.float64_t, ndim=1] resting,
+ *              list conn,
  */
 
   /* function exit code */
@@ -1948,357 +2002,12 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_strength_new(CYTHON_UNUSED Py
     __Pyx_PyThreadState_assign
     __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_activations.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
-  __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("metameric.core.metric.strength_new", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  goto __pyx_L2;
-  __pyx_L0:;
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_activations.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
-  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
-  __pyx_L2:;
-  __Pyx_XDECREF((PyObject *)__pyx_v_net);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "metameric/core/metric.pyx":34
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def calc_net(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[np.float64_t, ndim=1] net,
- *              list conn,
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_9metameric_4core_6metric_3calc_net(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_9metameric_4core_6metric_2calc_net[] = "Fast function for calculating association strength.";
-static PyMethodDef __pyx_mdef_9metameric_4core_6metric_3calc_net = {"calc_net", (PyCFunction)__pyx_pw_9metameric_4core_6metric_3calc_net, METH_VARARGS|METH_KEYWORDS, __pyx_doc_9metameric_4core_6metric_2calc_net};
-static PyObject *__pyx_pw_9metameric_4core_6metric_3calc_net(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
-  PyArrayObject *__pyx_v_activations = 0;
-  PyArrayObject *__pyx_v_net = 0;
-  PyObject *__pyx_v_conn = 0;
-  PyObject *__pyx_v_mtrs = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("calc_net (wrapper)", 0);
-  {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_activations,&__pyx_n_s_net,&__pyx_n_s_conn,&__pyx_n_s_mtrs,0};
-    PyObject* values[4] = {0,0,0,0};
-    if (unlikely(__pyx_kwds)) {
-      Py_ssize_t kw_args;
-      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
-      switch (pos_args) {
-        case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-        case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = PyDict_Size(__pyx_kwds);
-      switch (pos_args) {
-        case  0:
-        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_activations)) != 0)) kw_args--;
-        else goto __pyx_L5_argtuple_error;
-        case  1:
-        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_net)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("calc_net", 1, 4, 4, 1); __PYX_ERR(0, 34, __pyx_L3_error)
-        }
-        case  2:
-        if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_conn)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("calc_net", 1, 4, 4, 2); __PYX_ERR(0, 34, __pyx_L3_error)
-        }
-        case  3:
-        if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mtrs)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("calc_net", 1, 4, 4, 3); __PYX_ERR(0, 34, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "calc_net") < 0)) __PYX_ERR(0, 34, __pyx_L3_error)
-      }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
-      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
-      values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-      values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
-    }
-    __pyx_v_activations = ((PyArrayObject *)values[0]);
-    __pyx_v_net = ((PyArrayObject *)values[1]);
-    __pyx_v_conn = ((PyObject*)values[2]);
-    __pyx_v_mtrs = ((PyObject*)values[3]);
-  }
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calc_net", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 34, __pyx_L3_error)
-  __pyx_L3_error:;
-  __Pyx_AddTraceback("metameric.core.metric.calc_net", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_activations), __pyx_ptype_5numpy_ndarray, 1, "activations", 0))) __PYX_ERR(0, 34, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_net), __pyx_ptype_5numpy_ndarray, 1, "net", 0))) __PYX_ERR(0, 35, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_conn), (&PyList_Type), 1, "conn", 1))) __PYX_ERR(0, 36, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_mtrs), (&PyList_Type), 1, "mtrs", 1))) __PYX_ERR(0, 37, __pyx_L1_error)
-  __pyx_r = __pyx_pf_9metameric_4core_6metric_2calc_net(__pyx_self, __pyx_v_activations, __pyx_v_net, __pyx_v_conn, __pyx_v_mtrs);
-
-  /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_9metameric_4core_6metric_2calc_net(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_activations, PyArrayObject *__pyx_v_net, PyObject *__pyx_v_conn, PyObject *__pyx_v_mtrs) {
-  int __pyx_v_i;
-  int __pyx_v_j;
-  int __pyx_v_z;
-  int __pyx_v_n_neurons;
-  PyArrayObject *__pyx_v_c = 0;
-  PyArrayObject *__pyx_v_mtr = 0;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_activations;
-  __Pyx_Buffer __pyx_pybuffer_activations;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_c;
-  __Pyx_Buffer __pyx_pybuffer_c;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_mtr;
-  __Pyx_Buffer __pyx_pybuffer_mtr;
-  __Pyx_LocalBuf_ND __pyx_pybuffernd_net;
-  __Pyx_Buffer __pyx_pybuffer_net;
-  PyObject *__pyx_r = NULL;
-  __Pyx_RefNannyDeclarations
-  Py_ssize_t __pyx_t_1;
-  int __pyx_t_2;
-  PyObject *__pyx_t_3 = NULL;
-  int __pyx_t_4;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  PyObject *__pyx_t_7 = NULL;
-  npy_intp __pyx_t_8;
-  Py_ssize_t __pyx_t_9;
-  int __pyx_t_10;
-  int __pyx_t_11;
-  int __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
-  Py_ssize_t __pyx_t_14;
-  Py_ssize_t __pyx_t_15;
-  Py_ssize_t __pyx_t_16;
-  __Pyx_RefNannySetupContext("calc_net", 0);
-  __pyx_pybuffer_c.pybuffer.buf = NULL;
-  __pyx_pybuffer_c.refcount = 0;
-  __pyx_pybuffernd_c.data = NULL;
-  __pyx_pybuffernd_c.rcbuffer = &__pyx_pybuffer_c;
-  __pyx_pybuffer_mtr.pybuffer.buf = NULL;
-  __pyx_pybuffer_mtr.refcount = 0;
-  __pyx_pybuffernd_mtr.data = NULL;
-  __pyx_pybuffernd_mtr.rcbuffer = &__pyx_pybuffer_mtr;
-  __pyx_pybuffer_activations.pybuffer.buf = NULL;
-  __pyx_pybuffer_activations.refcount = 0;
-  __pyx_pybuffernd_activations.data = NULL;
-  __pyx_pybuffernd_activations.rcbuffer = &__pyx_pybuffer_activations;
-  __pyx_pybuffer_net.pybuffer.buf = NULL;
-  __pyx_pybuffer_net.refcount = 0;
-  __pyx_pybuffernd_net.data = NULL;
-  __pyx_pybuffernd_net.rcbuffer = &__pyx_pybuffer_net;
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_activations.rcbuffer->pybuffer, (PyObject*)__pyx_v_activations, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 34, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_activations.diminfo[0].strides = __pyx_pybuffernd_activations.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_activations.diminfo[0].shape = __pyx_pybuffernd_activations.rcbuffer->pybuffer.shape[0];
-  {
-    __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_net.rcbuffer->pybuffer, (PyObject*)__pyx_v_net, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES| PyBUF_WRITABLE, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 34, __pyx_L1_error)
-  }
-  __pyx_pybuffernd_net.diminfo[0].strides = __pyx_pybuffernd_net.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_net.diminfo[0].shape = __pyx_pybuffernd_net.rcbuffer->pybuffer.shape[0];
-
-  /* "metameric/core/metric.pyx":40
- *     """Fast function for calculating association strength."""
- *     cdef int i, j, z
- *     cdef int n_neurons = activations.shape[0]             # <<<<<<<<<<<<<<
- * 
- *     cdef np.ndarray[np.float64_t, ndim=1] c
- */
-  __pyx_v_n_neurons = (__pyx_v_activations->dimensions[0]);
-
-  /* "metameric/core/metric.pyx":45
- *     cdef np.ndarray[np.float64_t, ndim=2] mtr
- *     # There are as many conn as mtr.
- *     for z in range(len(conn)):             # <<<<<<<<<<<<<<
- *         c = conn[z]
- *         mtr = mtrs[z]
- */
-  if (unlikely(__pyx_v_conn == Py_None)) {
-    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 45, __pyx_L1_error)
-  }
-  __pyx_t_1 = PyList_GET_SIZE(__pyx_v_conn); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 45, __pyx_L1_error)
-  for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_1; __pyx_t_2+=1) {
-    __pyx_v_z = __pyx_t_2;
-
-    /* "metameric/core/metric.pyx":46
- *     # There are as many conn as mtr.
- *     for z in range(len(conn)):
- *         c = conn[z]             # <<<<<<<<<<<<<<
- *         mtr = mtrs[z]
- *         for i in range(c.shape[0]):
- */
-    if (unlikely(__pyx_v_conn == Py_None)) {
-      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 46, __pyx_L1_error)
-    }
-    if (!(likely(((PyList_GET_ITEM(__pyx_v_conn, __pyx_v_z)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_conn, __pyx_v_z), __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 46, __pyx_L1_error)
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_v_conn, __pyx_v_z);
-    __Pyx_INCREF(__pyx_t_3);
-    {
-      __Pyx_BufFmt_StackElem __pyx_stack[1];
-      __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
-      __pyx_t_4 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_3), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
-      if (unlikely(__pyx_t_4 < 0)) {
-        PyErr_Fetch(&__pyx_t_5, &__pyx_t_6, &__pyx_t_7);
-        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_c.rcbuffer->pybuffer, (PyObject*)__pyx_v_c, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
-          Py_XDECREF(__pyx_t_5); Py_XDECREF(__pyx_t_6); Py_XDECREF(__pyx_t_7);
-          __Pyx_RaiseBufferFallbackError();
-        } else {
-          PyErr_Restore(__pyx_t_5, __pyx_t_6, __pyx_t_7);
-        }
-      }
-      __pyx_pybuffernd_c.diminfo[0].strides = __pyx_pybuffernd_c.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_c.diminfo[0].shape = __pyx_pybuffernd_c.rcbuffer->pybuffer.shape[0];
-      if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 46, __pyx_L1_error)
-    }
-    __Pyx_XDECREF_SET(__pyx_v_c, ((PyArrayObject *)__pyx_t_3));
-    __pyx_t_3 = 0;
-
-    /* "metameric/core/metric.pyx":47
- *     for z in range(len(conn)):
- *         c = conn[z]
- *         mtr = mtrs[z]             # <<<<<<<<<<<<<<
- *         for i in range(c.shape[0]):
- *             if c[i] > 0:
- */
-    if (unlikely(__pyx_v_mtrs == Py_None)) {
-      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 47, __pyx_L1_error)
-    }
-    if (!(likely(((PyList_GET_ITEM(__pyx_v_mtrs, __pyx_v_z)) == Py_None) || likely(__Pyx_TypeTest(PyList_GET_ITEM(__pyx_v_mtrs, __pyx_v_z), __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 47, __pyx_L1_error)
-    __pyx_t_3 = PyList_GET_ITEM(__pyx_v_mtrs, __pyx_v_z);
-    __Pyx_INCREF(__pyx_t_3);
-    {
-      __Pyx_BufFmt_StackElem __pyx_stack[1];
-      __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
-      __pyx_t_4 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)((PyArrayObject *)__pyx_t_3), &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
-      if (unlikely(__pyx_t_4 < 0)) {
-        PyErr_Fetch(&__pyx_t_7, &__pyx_t_6, &__pyx_t_5);
-        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer, (PyObject*)__pyx_v_mtr, &__Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
-          Py_XDECREF(__pyx_t_7); Py_XDECREF(__pyx_t_6); Py_XDECREF(__pyx_t_5);
-          __Pyx_RaiseBufferFallbackError();
-        } else {
-          PyErr_Restore(__pyx_t_7, __pyx_t_6, __pyx_t_5);
-        }
-      }
-      __pyx_pybuffernd_mtr.diminfo[0].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_mtr.diminfo[0].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_mtr.diminfo[1].strides = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_mtr.diminfo[1].shape = __pyx_pybuffernd_mtr.rcbuffer->pybuffer.shape[1];
-      if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 47, __pyx_L1_error)
-    }
-    __Pyx_XDECREF_SET(__pyx_v_mtr, ((PyArrayObject *)__pyx_t_3));
-    __pyx_t_3 = 0;
-
-    /* "metameric/core/metric.pyx":48
- *         c = conn[z]
- *         mtr = mtrs[z]
- *         for i in range(c.shape[0]):             # <<<<<<<<<<<<<<
- *             if c[i] > 0:
- *                 for j in range(n_neurons):
- */
-    __pyx_t_8 = (__pyx_v_c->dimensions[0]);
-    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_8; __pyx_t_4+=1) {
-      __pyx_v_i = __pyx_t_4;
-
-      /* "metameric/core/metric.pyx":49
- *         mtr = mtrs[z]
- *         for i in range(c.shape[0]):
- *             if c[i] > 0:             # <<<<<<<<<<<<<<
- *                 for j in range(n_neurons):
- *                     net[j] += c[i] * mtr[i, j]
- */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_10 = (((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_9, __pyx_pybuffernd_c.diminfo[0].strides)) > 0.0) != 0);
-      if (__pyx_t_10) {
-
-        /* "metameric/core/metric.pyx":50
- *         for i in range(c.shape[0]):
- *             if c[i] > 0:
- *                 for j in range(n_neurons):             # <<<<<<<<<<<<<<
- *                     net[j] += c[i] * mtr[i, j]
- * 
- */
-        __pyx_t_11 = __pyx_v_n_neurons;
-        for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
-          __pyx_v_j = __pyx_t_12;
-
-          /* "metameric/core/metric.pyx":51
- *             if c[i] > 0:
- *                 for j in range(n_neurons):
- *                     net[j] += c[i] * mtr[i, j]             # <<<<<<<<<<<<<<
- * 
- *     return net
- */
-          __pyx_t_13 = __pyx_v_i;
-          __pyx_t_14 = __pyx_v_i;
-          __pyx_t_15 = __pyx_v_j;
-          __pyx_t_16 = __pyx_v_j;
-          *__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_net.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_net.diminfo[0].strides) += ((*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_c.rcbuffer->pybuffer.buf, __pyx_t_13, __pyx_pybuffernd_c.diminfo[0].strides)) * (*__Pyx_BufPtrStrided2d(__pyx_t_5numpy_float64_t *, __pyx_pybuffernd_mtr.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_mtr.diminfo[0].strides, __pyx_t_15, __pyx_pybuffernd_mtr.diminfo[1].strides)));
-        }
-
-        /* "metameric/core/metric.pyx":49
- *         mtr = mtrs[z]
- *         for i in range(c.shape[0]):
- *             if c[i] > 0:             # <<<<<<<<<<<<<<
- *                 for j in range(n_neurons):
- *                     net[j] += c[i] * mtr[i, j]
- */
-      }
-    }
-  }
-
-  /* "metameric/core/metric.pyx":53
- *                     net[j] += c[i] * mtr[i, j]
- * 
- *     return net             # <<<<<<<<<<<<<<
- */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(((PyObject *)__pyx_v_net));
-  __pyx_r = ((PyObject *)__pyx_v_net);
-  goto __pyx_L0;
-
-  /* "metameric/core/metric.pyx":34
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def calc_net(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[np.float64_t, ndim=1] net,
- *              list conn,
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_3);
-  { PyObject *__pyx_type, *__pyx_value, *__pyx_tb;
-    __Pyx_PyThreadState_declare
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&__pyx_type, &__pyx_value, &__pyx_tb);
-    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_activations.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
+    __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("metameric.core.metric.calc_net", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("metameric.core.metric.strength", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2306,7 +2015,9 @@ static PyObject *__pyx_pf_9metameric_4core_6metric_2calc_net(CYTHON_UNUSED PyObj
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_c.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_mtr.rcbuffer->pybuffer);
   __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_net.rcbuffer->pybuffer);
+  __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_resting.rcbuffer->pybuffer);
   __pyx_L2:;
+  __Pyx_XDECREF((PyObject *)__pyx_v_net);
   __Pyx_XDECREF((PyObject *)__pyx_v_c);
   __Pyx_XDECREF((PyObject *)__pyx_v_mtr);
   __Pyx_XGIVEREF(__pyx_r);
@@ -4860,7 +4571,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
   {&__pyx_n_s_activations, __pyx_k_activations, sizeof(__pyx_k_activations), 0, 0, 1, 1},
   {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
-  {&__pyx_n_s_calc_net, __pyx_k_calc_net, sizeof(__pyx_k_calc_net), 0, 0, 1, 1},
   {&__pyx_n_s_conn, __pyx_k_conn, sizeof(__pyx_k_conn), 0, 0, 1, 1},
   {&__pyx_n_s_decay, __pyx_k_decay, sizeof(__pyx_k_decay), 0, 0, 1, 1},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
@@ -4884,7 +4594,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_resting, __pyx_k_resting, sizeof(__pyx_k_resting), 0, 0, 1, 1},
   {&__pyx_n_s_step_size, __pyx_k_step_size, sizeof(__pyx_k_step_size), 0, 0, 1, 1},
-  {&__pyx_n_s_strength_new, __pyx_k_strength_new, sizeof(__pyx_k_strength_new), 0, 0, 1, 1},
+  {&__pyx_n_s_strength, __pyx_k_strength, sizeof(__pyx_k_strength), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_kp_u_unknown_dtype_code_in_numpy_pxd, __pyx_k_unknown_dtype_code_in_numpy_pxd, sizeof(__pyx_k_unknown_dtype_code_in_numpy_pxd), 0, 1, 0, 0},
   {&__pyx_n_s_z, __pyx_k_z, sizeof(__pyx_k_z), 0, 0, 1, 1},
@@ -4892,7 +4602,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 24, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 218, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 799, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 989, __pyx_L1_error)
@@ -5005,26 +4715,14 @@ static int __Pyx_InitCachedConstants(void) {
   /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[np.float64_t, ndim=1] resting,
- *                  list conn,
- */
-  __pyx_tuple__10 = PyTuple_Pack(10, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtrs, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_n_neurons, __pyx_n_s_net); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__10);
-  __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(7, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength_new, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 8, __pyx_L1_error)
-
-  /* "metameric/core/metric.pyx":34
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def calc_net(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[np.float64_t, ndim=1] net,
+ * def strength(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *              np.ndarray[np.float64_t, ndim=1] resting,
  *              list conn,
  */
-  __pyx_tuple__12 = PyTuple_Pack(10, __pyx_n_s_activations, __pyx_n_s_net, __pyx_n_s_conn, __pyx_n_s_mtrs, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_z, __pyx_n_s_n_neurons, __pyx_n_s_c, __pyx_n_s_mtr); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 34, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__12);
-  __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(4, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_calc_net, 34, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(14, __pyx_n_s_activations, __pyx_n_s_resting, __pyx_n_s_conn, __pyx_n_s_mtrs, __pyx_n_s_minimum, __pyx_n_s_decay, __pyx_n_s_step_size, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_z, __pyx_n_s_n_neurons, __pyx_n_s_net, __pyx_n_s_c, __pyx_n_s_mtr); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 8, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(7, 0, 14, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_stephantulkens_Documents, __pyx_n_s_strength, 8, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5158,25 +4856,13 @@ PyMODINIT_FUNC PyInit_metric(void)
   /* "metameric/core/metric.pyx":8
  * @cython.wraparound(False)
  * @cython.boundscheck(False)
- * def strength_new(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *                  np.ndarray[np.float64_t, ndim=1] resting,
- *                  list conn,
- */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9metameric_4core_6metric_1strength_new, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength_new, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "metameric/core/metric.pyx":34
- * @cython.wraparound(False)
- * @cython.boundscheck(False)
- * def calc_net(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
- *              np.ndarray[np.float64_t, ndim=1] net,
+ * def strength(np.ndarray[np.float64_t, ndim=1] activations,             # <<<<<<<<<<<<<<
+ *              np.ndarray[np.float64_t, ndim=1] resting,
  *              list conn,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9metameric_4core_6metric_3calc_net, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_9metameric_4core_6metric_1strength, NULL, __pyx_n_s_metameric_core_metric); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calc_net, __pyx_t_1) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_strength, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "metameric/core/metric.pyx":1
@@ -6020,144 +5706,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
                  Py_TYPE(obj)->tp_name, type->tp_name);
     return 0;
 }
-
-/* PyFunctionFastCall */
-    #if CYTHON_FAST_PYCALL
-#include "frameobject.h"
-static PyObject* __Pyx_PyFunction_FastCallNoKw(PyCodeObject *co, PyObject **args, Py_ssize_t na,
-                                               PyObject *globals) {
-    PyFrameObject *f;
-    PyThreadState *tstate = PyThreadState_GET();
-    PyObject **fastlocals;
-    Py_ssize_t i;
-    PyObject *result;
-    assert(globals != NULL);
-    /* XXX Perhaps we should create a specialized
-       PyFrame_New() that doesn't take locals, but does
-       take builtins without sanity checking them.
-       */
-    assert(tstate != NULL);
-    f = PyFrame_New(tstate, co, globals, NULL);
-    if (f == NULL) {
-        return NULL;
-    }
-    fastlocals = f->f_localsplus;
-    for (i = 0; i < na; i++) {
-        Py_INCREF(*args);
-        fastlocals[i] = *args++;
-    }
-    result = PyEval_EvalFrameEx(f,0);
-    ++tstate->recursion_depth;
-    Py_DECREF(f);
-    --tstate->recursion_depth;
-    return result;
-}
-#if 1 || PY_VERSION_HEX < 0x030600B1
-static PyObject *__Pyx_PyFunction_FastCallDict(PyObject *func, PyObject **args, int nargs, PyObject *kwargs) {
-    PyCodeObject *co = (PyCodeObject *)PyFunction_GET_CODE(func);
-    PyObject *globals = PyFunction_GET_GLOBALS(func);
-    PyObject *argdefs = PyFunction_GET_DEFAULTS(func);
-    PyObject *closure;
-#if PY_MAJOR_VERSION >= 3
-    PyObject *kwdefs;
-#endif
-    PyObject *kwtuple, **k;
-    PyObject **d;
-    Py_ssize_t nd;
-    Py_ssize_t nk;
-    PyObject *result;
-    assert(kwargs == NULL || PyDict_Check(kwargs));
-    nk = kwargs ? PyDict_Size(kwargs) : 0;
-    if (Py_EnterRecursiveCall((char*)" while calling a Python object")) {
-        return NULL;
-    }
-    if (
-#if PY_MAJOR_VERSION >= 3
-            co->co_kwonlyargcount == 0 &&
-#endif
-            likely(kwargs == NULL || nk == 0) &&
-            co->co_flags == (CO_OPTIMIZED | CO_NEWLOCALS | CO_NOFREE)) {
-        if (argdefs == NULL && co->co_argcount == nargs) {
-            result = __Pyx_PyFunction_FastCallNoKw(co, args, nargs, globals);
-            goto done;
-        }
-        else if (nargs == 0 && argdefs != NULL
-                 && co->co_argcount == Py_SIZE(argdefs)) {
-            /* function called with no arguments, but all parameters have
-               a default value: use default values as arguments .*/
-            args = &PyTuple_GET_ITEM(argdefs, 0);
-            result =__Pyx_PyFunction_FastCallNoKw(co, args, Py_SIZE(argdefs), globals);
-            goto done;
-        }
-    }
-    if (kwargs != NULL) {
-        Py_ssize_t pos, i;
-        kwtuple = PyTuple_New(2 * nk);
-        if (kwtuple == NULL) {
-            result = NULL;
-            goto done;
-        }
-        k = &PyTuple_GET_ITEM(kwtuple, 0);
-        pos = i = 0;
-        while (PyDict_Next(kwargs, &pos, &k[i], &k[i+1])) {
-            Py_INCREF(k[i]);
-            Py_INCREF(k[i+1]);
-            i += 2;
-        }
-        nk = i / 2;
-    }
-    else {
-        kwtuple = NULL;
-        k = NULL;
-    }
-    closure = PyFunction_GET_CLOSURE(func);
-#if PY_MAJOR_VERSION >= 3
-    kwdefs = PyFunction_GET_KW_DEFAULTS(func);
-#endif
-    if (argdefs != NULL) {
-        d = &PyTuple_GET_ITEM(argdefs, 0);
-        nd = Py_SIZE(argdefs);
-    }
-    else {
-        d = NULL;
-        nd = 0;
-    }
-#if PY_MAJOR_VERSION >= 3
-    result = PyEval_EvalCodeEx((PyObject*)co, globals, (PyObject *)NULL,
-                               args, nargs,
-                               k, (int)nk,
-                               d, (int)nd, kwdefs, closure);
-#else
-    result = PyEval_EvalCodeEx(co, globals, (PyObject *)NULL,
-                               args, nargs,
-                               k, (int)nk,
-                               d, (int)nd, closure);
-#endif
-    Py_XDECREF(kwtuple);
-done:
-    Py_LeaveRecursiveCall();
-    return result;
-}
-#endif  // CPython < 3.6
-#endif  // CYTHON_FAST_PYCALL
-
-/* PyCFunctionFastCall */
-    #if CYTHON_FAST_PYCCALL
-static CYTHON_INLINE PyObject * __Pyx_PyCFunction_FastCall(PyObject *func_obj, PyObject **args, Py_ssize_t nargs) {
-    PyCFunctionObject *func = (PyCFunctionObject*)func_obj;
-    PyCFunction meth = PyCFunction_GET_FUNCTION(func);
-    PyObject *self = PyCFunction_GET_SELF(func);
-    assert(PyCFunction_Check(func));
-    assert(METH_FASTCALL == (PyCFunction_GET_FLAGS(func) & ~(METH_CLASS | METH_STATIC | METH_COEXIST)));
-    assert(nargs >= 0);
-    assert(nargs == 0 || args != NULL);
-    /* _PyCFunction_FastCallDict() must not be called with an exception set,
-       because it may clear it (directly or indirectly) and so the
-       caller loses its exception */
-    assert(!PyErr_Occurred());
-    return (*((__Pyx_PyCFunctionFast)meth)) (self, args, nargs, NULL);
-}
-#endif  // CYTHON_FAST_PYCCALL
 
 /* BufferFallbackError */
     static void __Pyx_RaiseBufferFallbackError(void) {
