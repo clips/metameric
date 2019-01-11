@@ -389,7 +389,7 @@ class Network(object):
         """Do a run while tracking all positive and negative connections."""
         # Make a simpler thing, we are not interested in error checking.
         strengths = []
-        for x in X:
+        for x in tqdm(X):
             # Always reset
             s = []
             self._reset()
