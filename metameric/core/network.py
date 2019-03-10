@@ -206,7 +206,8 @@ class Network(object):
                  threshold=.7,
                  strict=True,
                  inputs=None,
-                 shallow_run=False):
+                 shallow_run=False,
+                 show_progressbar=True):
         """
         Activate the model by clamping an input and letting it oscillate.
 
@@ -236,8 +237,10 @@ class Network(object):
         inputs : tuple of strings
             Use this field to override the behavior of the network and to
             specify your own inputs.
-        shallow_run : bool, optiodefault False
+        shallow_run : bool, optional, default False
             If a run is shallow, only the final activations are returned.
+        show_progressbar : bool, optional, default True
+            Whether to show the progress bar.
 
         """
         if not self.checked:
@@ -262,7 +265,7 @@ class Network(object):
         else:
             input_layers = self.inputs
 
-        for x in tqdm(X):
+        for x in tqdm(X, disable=not show_progressbar):
 
             # Reset all layers to their resting levels.
             if reset:

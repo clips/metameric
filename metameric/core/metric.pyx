@@ -5,7 +5,8 @@ import numpy as np
 
 @cython.wraparound(False)
 @cython.boundscheck(False)
-def strength(np.ndarray[np.float64_t, ndim=1] activations,
+def strength(np.ndarray[np.float64_t, ndim=1] net,
+             np.ndarray[np.float64_t, ndim=1] activations,
              np.ndarray[np.float64_t, ndim=1] resting,
              list conn,
              list mtrs,
@@ -15,9 +16,6 @@ def strength(np.ndarray[np.float64_t, ndim=1] activations,
     """Fast function for calculating association strength."""
     cdef int i, j, z
     cdef int n_neurons = activations.shape[0]
-    cdef np.ndarray[np.float64_t, ndim=1] net = np.zeros([n_neurons],
-                                                         dtype=np.float64)
-
     cdef np.ndarray[np.float64_t, ndim=1] c
     cdef np.ndarray[np.float64_t, ndim=2] mtr
     # There are as many conn as mtr.
