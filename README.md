@@ -19,7 +19,7 @@ These innovations are:
 * Space padding the input
 * Weight adaptation
 
-These three innovations are fully explained in the companion paper, which is currently under review.
+These three innovations are fully explained in the companion paper, which has been accepted for publication to the Mental Lexicon.
 
 # Name
 
