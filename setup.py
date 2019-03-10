@@ -17,7 +17,7 @@ if cython:
     from Cython.Build import cythonize
     extensions = cythonize([Extension("metameric.core.metric",
                                       ["metameric/core/metric.pyx"])],
-                           include_dirs=[np.get_include()])
+                           include_path=[np.get_include()])
 else:
     extensions = [Extension("metameric.core.metric",
                             ["metameric/core/metric.c"])]
@@ -38,5 +38,4 @@ setup(name='metameric',
       keywords='computational psycholinguistics neural networks',
       zip_safe=False,
       ext_modules=extensions,
-      include_dirs=[np.get_include()],
       include_package_data=True)
