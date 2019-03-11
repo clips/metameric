@@ -30,7 +30,7 @@ def is_slot(x):
 
 def read_input_file(f):
     """Read an input file."""
-    df = pd.read_csv(f)
+    df = pd.read_csv(f, keep_default_na=False)
     dtypes = [col for col, dtype in zip(df.columns, df.dtypes)
               if dtype == object]
     items = df.to_dict('records')
