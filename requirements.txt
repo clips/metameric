@@ -1,8 +1,8 @@
+pandas>=0.24.1
+numpy>=1.14.0
+Cython==0.25.2
 Flask==1.0.2
 tqdm==4.14.0
-wordkit==2.0.1
-numpy==1.12.1
 matplotlib==2.0.2
 setuptools==39.0.1
-Cython==0.25.2
-pandas==0.20.3
+wordkit>=2.0.0
