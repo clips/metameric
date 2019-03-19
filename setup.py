@@ -6,6 +6,16 @@ from setuptools import setup
 from setuptools import find_packages
 from setuptools.extension import Extension
 from Cython.Build import cythonize
+import re
+
+VERSIONFILE = "metameric/_version.py"
+verstrline = open(VERSIONFILE, "rt").read()
+mo = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", verstrline, re.M)
+
+if mo:
+    version_string = mo.group(1)
+else:
+    raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
 
 
 extensions = cythonize([Extension("metameric.core.metric",
@@ -13,13 +23,13 @@ extensions = cythonize([Extension("metameric.core.metric",
                        include_dirs=[np.get_include()])])
 
 setup(name='metameric',
-      version='1.0.4',
+      version=version_string,
       description='Interactive activation',
       author='Stéphan Tulkens',
       author_email='stephan.tulkens@uantwerpen.be',
       url='https://github.com/stephantul/metameric',
       license='MIT',
-      packages=find_packages(),
+      packages=find_packages(exclude=['experiments']),
       install_requires=['numpy>=1.11.0'],
       classifiers=[
           'Intended Audience :: Developers',
