@@ -1,26 +1,16 @@
 # -*- coding: utf-8 -*-
 """Setup file."""
-import sys
+import numpy as np
+
 from setuptools import setup
 from setuptools import find_packages
 from setuptools.extension import Extension
-import numpy as np
+from Cython.Build import cythonize
 
 
-cython = False
-
-if "--cython" in sys.argv:
-    cython = True
-    sys.argv.remove("--cython")
-
-if cython:
-    from Cython.Build import cythonize
-    extensions = cythonize([Extension("metameric.core.metric",
-                                      ["metameric/core/metric.pyx"])],
-                           include_path=[np.get_include()])
-else:
-    extensions = [Extension("metameric.core.metric",
-                            ["metameric/core/metric.c"])]
+extensions = cythonize([Extension("metameric.core.metric",
+                                  ["metameric/core/metric.pyx"],
+                       include_dirs=[np.get_include()])])
 
 setup(name='metameric',
       version='1.0.4',
