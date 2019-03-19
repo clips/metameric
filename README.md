@@ -1,7 +1,7 @@
 # metameric
 
 Metameric is a simulator for Interactive Activation (IA) networks.
-Interactive Activation networks are localist connectionist models, which means that their neurons uniquely identify a single concept, e.g. a letter for each letter, or a word neuron for each word.
+Interactive Activation networks are localist connectionist models, which means that their neurons uniquely identify a single concept, e.g. one letter neuron for each letter, or a word neuron for each word.
 Interactive Activation was first introduced in [McClelland & Rumelhart (1981)](https://www.cs.indiana.edu/~port/teach/641/McClellandRumelhart.IAC.model.1981.pdf), but has been used widely in the field computational psycholinguistics.
 
 Unlike distributed connectionist models, which have been supported by a variety of useful tools and toolkits, no such toolkit exists for localist connectionist modeling.
@@ -59,8 +59,6 @@ Then, you can run metameric with.
 ```
 python3 -m metameric -i MY_INPUT_FILE -o MY_OUTPUT_FILE
 ```
-
-Note that is most likely necessary to first move to another folder before running this due to cython dependencies.
 
 For a quick example, use `example.csv` as `MY_INPUT_FILE`
 You can also try normal preparation by running the `prepare` function.
