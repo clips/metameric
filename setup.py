@@ -16,7 +16,7 @@ if "--cython" in sys.argv:
 if cython:
     from Cython.Build import cythonize
     extensions = cythonize([Extension("metameric.core.metric",
-                                      ["metameric/core/metric.pyx"])],
+                                      ["metameric/core/metric.pyx"],include_dirs=[np.get_include()])],
                            include_path=[np.get_include()])
 else:
     extensions = [Extension("metameric.core.metric",
