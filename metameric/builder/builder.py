@@ -332,3 +332,97 @@ class Builder(object):
         # Check whether the model is valid
         m.check()
         return m
+
+
+class MatrixBuilder(object):
+    """A builder that uses matrices to connect items to each other."""
+    def __init__(self,
+                 weights=(),
+                 rla=None,
+                 global_rla=-.05,
+                 outputs=(),
+                 monitors=(),
+                 minimum=-.2,
+                 step_size=1.0,
+                 decay_rate=.07):
+        """Build a model out of a set of items."""
+        self.layer_names = sorted(set(chain(*weights.keys())))
+        self.weights = weights
+        self.rla = defaultdict(lambda: "global")
+        if rla:
+            self.rla.update(rla)
+        self.global_rla = global_rla
+        if isinstance(outputs, str):
+            outputs = (outputs,)
+        if isinstance(monitors, str):
+            monitors = (monitors,)
+
+        self.outputs = outputs
+        if not monitors:
+            self.monitors = outputs
+        else:
+            self.monitors = monitors
+        self.minimum = minimum
+        self.step_size = step_size
+        self.decay_rate = decay_rate
+
+    def build_model(self, matrices):
+        """
+        Builds a network by iterating over all items and building layers.
+
+        Parameters
+        ----------
+        matrices : dict
+            A dictionary of 2D matrices.
+
+        Returns
+        -------
+        instance : Network
+            An initialized network.
+
+        """
+        out_layers = set(self.outputs) - set(self.layer_names)
+        if out_layers:
+            raise MetaMericError("{} were selected as output layers, but were "
+                                 "not in the layer names: {}"
+                                 "".format(out_layers, self.layer_names))
+
+        rla_layers = {k for k, v in self.rla.items() if v != "global"}
+        rla_layers -= set(self.layer_names)
+        if rla_layers:
+            raise MetaMericError("{} were selected as rla layers, but were "
+                                 "not in the layer names: {}"
+                                 "".format(rla_layers, self.layer_names))
+
+        # Initialize the metameric.
+        m = Network(minimum=self.minimum,
+                    step_size=self.step_size,
+                    decay_rate=self.decay_rate)
+
+        for (a, b), mtr in matrices.items():
+            if a not in m.layers:
+                rest = np.zeros(mtr.shape[0])
+                rest += self.rla.get(a, self.global_rla)
+                m.create_layer(a,
+                               rest,
+                               np.arange(mtr.shape[0]),
+                               a in self.outputs,
+                               a in self.monitors)
+            if b not in m.layers:
+                rest = np.zeros(mtr.shape[1])
+                rest += self.rla.get(b, self.global_rla)
+                m.create_layer(b,
+                               rest,
+                               np.arange(mtr.shape[1]),
+                               b in self.outputs,
+                               b in self.monitors)
+
+        for (src, dest), mtr in matrices.items():
+            mtr = np.copy(mtr)
+            pos, neg = self.weights[(src, dest)]
+            mtr[mtr == 0] = neg
+            mtr[mtr == 1] = pos
+            m.connect_layers(src, dest, mtr)
+
+        m.check()
+        return m

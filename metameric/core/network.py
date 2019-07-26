@@ -213,7 +213,7 @@ class Network(object):
 
         Parameters
         ----------
-        X : list dictionaries.
+        X : list of dictionaries
             The inputs to the model. The dictionaries have layer names as their
             keys, and tuples of symbols as their values.
         max_cycles : int, optional, default 30
@@ -275,11 +275,14 @@ class Network(object):
             for name, layer in input_layers.items():
                 data = x[name]
                 # Can be necessary if someone wants to clamp orthography
-                if not isinstance(data, (tuple, set, list)):
-                    data = [data]
                 # Reset only the input layer to 0
                 layer.reset()
-                layer.activations[[layer.name2idx[p] for p in data]] = 1
+                if isinstance(data, np.ndarray):
+                    layer.activations[:] = np.copy(data)
+                else:
+                    if not isinstance(data, (tuple, set, list)):
+                        data = [data]
+                    layer.activations[[layer.name2idx[p] for p in data]] = 1
                 layer.clamped = True
 
             # Prepare the activations
