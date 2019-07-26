@@ -1,23 +1,30 @@
 """Load subtlex corpus and RTs."""
-import pandas as pd
 import numpy as np
+from wordkit.corpora import LexiconProject
 from string import ascii_lowercase
+
+
+LETTERS = set(ascii_lowercase)
+
+
+def orth_func(x):
+    letters = LETTERS
+    a = not set(x) - letters
+    return a
 
 
 def read_elp_format(filename, lengths=()):
     """Read RT data from the ELP."""
-    temp = set()
+    lex = LexiconProject(filename, fields=("orthography", "rt", "SUBTLWF"))
     lengths = set(lengths)
-    df = pd.read_csv(filename, keep_default_na=True)
-    df = df.dropna(subset=["Word", "I_Mean_RT", "SUBTLWF"])
-    for idx, line in df.iterrows():
-        if line['Word'] in temp:
-            continue
-        if set(line['Word']) - set(ascii_lowercase):
-            continue
-        if lengths and len(line['Word']) not in lengths:
-            continue
-        temp.add(line['Word'])
-        yield {"orthography": (line["Word"],),
-               "rt": line["I_Mean_RT"],
-               "frequency": line["SUBTLWF"]}
+    w = lex.transform(orthography=orth_func, filter_nan=("rt", "SUBTLWF"))
+    if lengths:
+        w = w.filter(orthography=lambda x: len(x) in lengths)
+
+    freq = w.get('SUBTLWF')
+    m = np.min(freq[freq > 0])
+
+    for x in w:
+        x['frequency'] = x['SUBTLWF'] + m
+
+    return w

@@ -36,10 +36,9 @@ if __name__ == "__main__":
 
     path = "../../corpora/lexicon_projects/elp-items.csv"
 
-    words = np.array(list(read_elp_format(path, lengths=list(range(3, 11)))))
-
-    freqs = [x['frequency'] + 1 for x in words]
-    freqs = np.log10(freqs)
+    words = read_elp_format(path, lengths=list(range(3, 11)))
+    for x in words:
+        x['log_frequency'] = np.log10(x['frequency'])
 
     n_cyc = 1000
 
@@ -80,4 +79,4 @@ if __name__ == "__main__":
                         c])
 
     df = pd.DataFrame(results, columns=header)
-    df.to_csv("metameric_experiment_3.csv", sep=",", index=False)
+    df.to_csv("metameric_experiment_3_1.csv", sep=",", index=False)

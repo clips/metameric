@@ -41,18 +41,19 @@ if __name__ == "__main__":
 
     path = "../../corpora/lexicon_projects/elp-items.csv"
 
-    words = np.array(list(read_elp_format(path, lengths=[4])))
+    words = read_elp_format(path, lengths=[4])
 
-    freqs = [x['frequency'] + 1 for x in words]
-    freqs = np.log10(freqs)
+    for x in words:
+        x['log_frequency'] = np.log10(x['frequency'])
 
+    freqs = words.get('log_frequency')
     sampler = BinnedSampler(words, freqs)
     np.random.seed(44)
 
     n_cyc = 1000
 
     for idx in tqdm(range(100)):
-        w = deepcopy(sampler.sample(1000))
+        w = deepcopy(sampler.sample(int(.75 * len(words))))
         rt = np.array([x['rt'] for x in w])
 
         inputs = ('letters-features',)
