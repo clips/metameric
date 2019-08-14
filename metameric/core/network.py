@@ -258,7 +258,7 @@ class Network(object):
                              "{}".format(clamp_cycles))
 
         if 0 < clamp_cycles < 1.0:
-            clamp_cycles = max_cycles // clamp_cycles
+            clamp_cycles = max_cycles * clamp_cycles
 
         if inputs:
             input_layers = {k: self.layers[k] for k in inputs}
@@ -273,17 +273,19 @@ class Network(object):
 
             # Clamp the inputs
             for name, layer in input_layers.items():
-                data = x[name]
+                if isinstance(x, dict):
+                    data = x[name]
+                else:
+                    data = x
                 # Can be necessary if someone wants to clamp orthography
                 # Reset only the input layer to 0
                 layer.reset()
                 if isinstance(data, np.ndarray):
-                    layer.activations[:] = np.copy(data)
+                    layer.ext_input[:] = np.copy(data)
                 else:
                     if not isinstance(data, (tuple, set, list)):
                         data = [data]
-                    layer.activations[[layer.name2idx[p] for p in data]] = 1
-                layer.clamped = True
+                    layer.ext_input[[layer.name2idx[p] for p in data]] = 1
 
             # Prepare the activations
             activations = defaultdict(list)
@@ -292,7 +294,7 @@ class Network(object):
 
                 if clamp_cycles is not None and idx == clamp_cycles:
                     for name, layer in self.layers.items():
-                        layer.clamped = False
+                        layer.ext_input *= 0
 
                 # Let the network oscillate once.
                 self._single_cycle()
@@ -323,7 +325,7 @@ class Network(object):
                                      "".format(max_activation, x))
 
             if shallow_run:
-                yield activations
+                yield dict(activations)
             else:
                 yield {k: np.array(v) for k, v in activations.items()}
 
@@ -335,7 +337,7 @@ class Network(object):
         # and then applied simultaneously.
         for k, layer in self.layers.items():
             # Static layers don't get updated.
-            if layer.static or layer.clamped:
+            if layer.static:
                 continue
             updates[k] = layer.activate()
         for k, v in updates.items():
