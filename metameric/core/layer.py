@@ -141,6 +141,7 @@ class Layer(object):
     def reset(self):
         """Reset the activations to resting level."""
         self.activations = np.copy(self.resting)
+        self.ext_input *= 0
 
     def net_input(self):
         """
