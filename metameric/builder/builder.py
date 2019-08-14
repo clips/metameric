@@ -344,11 +344,12 @@ class MatrixBuilder(object):
                  monitors=(),
                  minimum=-.2,
                  step_size=1.0,
-                 decay_rate=.07):
+                 decay_rate=.07,
+                 weight_adaptation=True):
         """Build a model out of a set of items."""
         self.layer_names = sorted(set(chain(*weights.keys())))
         self.weights = weights
-        self.rla = defaultdict(lambda: "global")
+        self.rla = {}
         if rla:
             self.rla.update(rla)
         self.global_rla = global_rla
@@ -365,6 +366,7 @@ class MatrixBuilder(object):
         self.minimum = minimum
         self.step_size = step_size
         self.decay_rate = decay_rate
+        self.weight_adaptation = weight_adaptation
 
     def build_model(self, matrices):
         """
@@ -387,7 +389,7 @@ class MatrixBuilder(object):
                                  "not in the layer names: {}"
                                  "".format(out_layers, self.layer_names))
 
-        rla_layers = {k for k, v in self.rla.items() if v != "global"}
+        rla_layers = set(self.rla.keys())
         rla_layers -= set(self.layer_names)
         if rla_layers:
             raise MetaMericError("{} were selected as rla layers, but were "
@@ -401,16 +403,23 @@ class MatrixBuilder(object):
 
         for (a, b), mtr in matrices.items():
             if a not in m.layers:
-                rest = np.zeros(mtr.shape[0])
-                rest += self.rla.get(a, self.global_rla)
+
+                if a in self.rla:
+                    rest = self.rla[a]
+                else:
+                    rest = np.zeros(mtr.shape[0])
+                    rest += self.global_rla
                 m.create_layer(a,
                                rest,
                                np.arange(mtr.shape[0]),
                                a in self.outputs,
                                a in self.monitors)
             if b not in m.layers:
-                rest = np.zeros(mtr.shape[1])
-                rest += self.rla.get(b, self.global_rla)
+                if b in self.rla:
+                    rest = self.rla[b]
+                else:
+                    rest = np.zeros(mtr.shape[1])
+                    rest += self.global_rla
                 m.create_layer(b,
                                rest,
                                np.arange(mtr.shape[1]),
@@ -420,8 +429,6 @@ class MatrixBuilder(object):
         for (src, dest), mtr in matrices.items():
             mtr = np.copy(mtr)
             pos, neg = self.weights[(src, dest)]
-            mtr[mtr == 0] = neg
-            mtr[mtr == 1] = pos
             m.connect_layers(src, dest, mtr)
 
         m.check()
