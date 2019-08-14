@@ -3,8 +3,10 @@ import numpy as np
 from copy import deepcopy
 from csv import reader, writer
 from itertools import chain
-from wordkit.orthography.features import fourteen, sixteen
-from wordkit.phonology.features import plunkett_phonemes, patpho_bin
+from wordkit.features import (fourteen,
+                              sixteen,
+                              plunkett_phonemes,
+                              patpho_bin)
 
 
 def convert_feature_set(feature_set, negative=True):
