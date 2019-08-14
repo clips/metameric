@@ -44,9 +44,10 @@ if __name__ == "__main__":
     words = read_elp_format(path, lengths=[4])
 
     for x in words:
-        x['log_frequency'] = np.log10(x['frequency'])
+        x['log_frequency'] = np.log10(x['frequency'] + 1)
 
-    freqs = words.get('log_frequency')
+    freqs = np.array([x['log_frequency'] for x in words])
+
     sampler = BinnedSampler(words, freqs)
     np.random.seed(44)
 
