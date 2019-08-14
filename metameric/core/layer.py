@@ -68,7 +68,6 @@ class Layer(object):
         self.decay_rate = decay_rate
         self.name = name
         self.step_size = step_size
-        self.clamped = False
         self.ext_input = np.zeros_like(resting, dtype=np.float64)
 
     @property
@@ -180,7 +179,7 @@ class Layer(object):
 
         """
         if not self._from_connections:
-            return np.zeros_like(self.activations)
+            return np.copy(self.ext_input) * self.step_size
         return strength(np.copy(self.ext_input),
                         self.activations,
                         self.resting,

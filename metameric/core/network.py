@@ -337,8 +337,6 @@ class Network(object):
         # and then applied simultaneously.
         for k, layer in self.layers.items():
             # Static layers don't get updated.
-            if layer.static:
-                continue
             updates[k] = layer.activate()
         for k, v in updates.items():
             self.layers[k].activations[:] += v
@@ -351,7 +349,7 @@ class Network(object):
         net = {}
         for k, layer in self.layers.items():
             # Static layers don't have net input.
-            if layer.static or layer.clamped:
+            if layer.static:
                 continue
             net[k] = layer.net_input()
 
@@ -360,7 +358,6 @@ class Network(object):
     def _reset(self):
         """Reset the activation of all nodes back to their resting levels."""
         for layer in self.layers.values():
-            self.clamped = False
             layer.reset()
 
     def connect_layers(self, from_name, to_name, weights):
