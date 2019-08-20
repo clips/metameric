@@ -14,8 +14,8 @@ def strength(np.ndarray[np.float64_t, ndim=1] net,
              np.float64_t decay,
              np.float64_t step_size):
     """Fast function for calculating association strength."""
-    cdef int i, j, z
-    cdef int n_neurons = activations.shape[0]
+    cdef np.intp_t i, j, z
+    cdef np.intp_t n_neurons = activations.shape[0]
     cdef np.ndarray[np.float64_t, ndim=1] c
     cdef np.ndarray[np.float64_t, ndim=2] mtr
     # There are as many conn as mtr.
