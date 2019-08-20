@@ -1,5 +1,4 @@
 """Load subtlex corpus and RTs."""
-import numpy as np
 from wordkit.corpora import lexiconproject
 from string import ascii_lowercase
 
@@ -22,8 +21,5 @@ def read_elp_format(filename, lengths=()):
     if lengths:
         w = w[w['length'].isin(lengths)]
 
-    freq = w['SUBTLWF'].values
-    m = np.min(freq[freq > 0])
-
-    w['frequency'] = w['SUBTLWF'] + m
+    w['frequency'] = w['SUBTLWF']
     return w.to_dict('records')
