@@ -208,9 +208,8 @@ class Builder(object):
                 resting = np.ones(len(self.unique_items[k])) * self.global_rla
             else:
                 resting = self.sum_over(items, k, self.rla[k])
-                if resting.min() < 1:
-                    resting += (1 - resting.min())
                 resting = np.log10(resting)
+                resting -= resting.min()
                 resting /= max(resting)
                 resting = self.global_rla * (1.0 - resting)
 
