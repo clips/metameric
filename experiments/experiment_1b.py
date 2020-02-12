@@ -1,14 +1,10 @@
 import numpy as np
 import random
-import pandas as pd
 
 from metameric.builder import Builder
 from metameric.prepare.weights import IA_WEIGHTS
 from metameric.prepare.data import process_data
 from experiments.data import read_elp_format
-from copy import deepcopy
-from tqdm import tqdm
-from binningsampler import BinnedSampler
 
 
 def accuracy(words, results, threshold=.7):
@@ -41,58 +37,39 @@ if __name__ == "__main__":
 
     path = "../../corpora/lexicon_projects/elp-items.csv"
 
-    words = read_elp_format(path, lengths=[4])
-
-    for x in words:
-        x['log_frequency'] = np.log10(x['frequency'] + 1)
-
-    freqs = np.array([x['log_frequency'] for x in words])
-
-    sampler = BinnedSampler(words, freqs)
+    w = read_elp_format(path, lengths=[4])
     np.random.seed(44)
 
     n_cyc = 1000
 
-    for idx in tqdm(range(100)):
-        w = deepcopy(sampler.sample(int(.75 * len(words))))
-        rt = np.array([x['rt'] for x in w])
+    rt = np.array([x['rt'] for x in w])
 
-        inputs = ('letters-features',)
+    inputs = ('letters-features',)
 
-        w = process_data(w,
-                         decomposable=('orthography',),
-                         decomposable_names=('letters',),
-                         feature_layers=('letters',),
-                         feature_sets=('fourteen',),
-                         negative_features=True,
-                         length_adaptation=False)
+    w = process_data(w,
+                     decomposable=('orthography',),
+                     decomposable_names=('letters',),
+                     feature_layers=('letters',),
+                     feature_sets=('fourteen',),
+                     negative_features=True,
+                     length_adaptation=True)
+    rla = {k: 'global' for k in {'letters-features', 'letters'}}
+    rla['orthography'] = 'frequency'
 
-        rla = {k: 'global' for k in {'letters-features', 'letters'}}
-        rla['orthography'] = 'frequency'
+    s = Builder(IA_WEIGHTS,
+                rla,
+                -.05,
+                outputs=('orthography',),
+                monitors=('orthography',),
+                step_size=1.0,
+                weight_adaptation=True)
 
-        s = Builder(IA_WEIGHTS,
-                    rla,
-                    -.05,
-                    outputs=('orthography',),
-                    monitors=('orthography',),
-                    step_size=.5,
-                    weight_adaptation=True)
+    m = s.build_model(w)
+    result = m.activate(w,
+                        max_cycles=n_cyc,
+                        threshold=.7,
+                        strict=False)
 
-        m = s.build_model(w)
-        result = m.activate(w,
-                            max_cycles=n_cyc,
-                            threshold=.7,
-                            strict=False)
-
-        cycles = np.array([len(x['orthography']) for x in result])
-        right = cycles == n_cyc
-        cycles[right] = -1
-        for word, c in zip(w, cycles):
-            results.append([word['orthography'][0],
-                            idx,
-                            word['rt'],
-                            word['frequency'],
-                            c])
-
-    df = pd.DataFrame(results, columns=header)
-    df.to_csv("metameric_experiment_1b.csv", sep=",", index=False)
+    cycles = np.array([len(x['orthography']) for x in result])
+    right = cycles == n_cyc
+    cycles[right] = -1

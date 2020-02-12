@@ -38,6 +38,7 @@ if __name__ == "__main__":
 
     words = read_elp_format(path, lengths=list(range(3, 11)))
     for x in words:
+        x['frequency'] += 1
         x['log_frequency'] = np.log10(x['frequency'])
 
     n_cyc = 1000
@@ -59,7 +60,7 @@ if __name__ == "__main__":
                 -.05,
                 outputs=('orthography',),
                 monitors=('orthography',),
-                step_size=.1,
+                step_size=1.0,
                 weight_adaptation=True)
 
     m = s.build_model(w)

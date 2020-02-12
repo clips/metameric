@@ -42,18 +42,15 @@ if __name__ == "__main__":
     path = "../../corpora/lexicon_projects/elp-items.csv"
 
     words = read_elp_format(path, lengths=[4])
-
     for x in words:
-        x['log_frequency'] = np.log10(x['frequency'] + 1)
+        x['frequency'] += 1
 
-    freqs = np.array([x['log_frequency'] for x in words])
-
-    sampler = BinnedSampler(words, freqs)
+    sampler = BinnedSampler(words, [x['log_frequency'] for x in words])
     np.random.seed(44)
 
     n_cyc = 1000
 
-    for idx in tqdm(range(100)):
+    for idx in tqdm(range(10)):
         w = deepcopy(sampler.sample(int(.75 * len(words))))
         rt = np.array([x['rt'] for x in w])
 
@@ -86,7 +83,7 @@ if __name__ == "__main__":
         cycles = np.array([len(x['orthography']) for x in result])
         right = cycles == n_cyc
         cycles[right] = -1
-        for x, word, c in zip(result, w, cycles):
+        for word, c in zip(w, cycles):
             results.append([word['orthography'][0],
                             idx,
                             word['rt'],
