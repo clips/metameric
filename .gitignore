@@ -1,4 +1,6 @@
 .remote-sync.json
+*.py
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
