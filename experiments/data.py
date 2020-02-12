@@ -1,5 +1,5 @@
 """Load subtlex corpus and RTs."""
-from wordkit.corpora import lexiconproject
+from wordkit.corpora import elp
 from string import ascii_lowercase
 
 
@@ -14,12 +14,11 @@ def orth_func(x):
 
 def read_elp_format(filename, lengths=()):
     """Read RT data from the ELP."""
-    w = lexiconproject(filename, fields=("orthography", "rt", "SUBTLWF"))
+    w = elp(filename, fields=("orthography", "rt", "frequency"))
     lengths = set(lengths)
 
     w = w[w['orthography'].apply(orth_func)]
     if lengths:
-        w = w[w['length'].isin(lengths)]
+        w = w[w['length'].apply(lambda x: x in lengths)]
 
-    w['frequency'] = w['SUBTLWF']
     return w.to_dict('records')
