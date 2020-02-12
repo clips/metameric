@@ -47,7 +47,11 @@ if __name__ == "__main__":
     words = np.array(list(read_elp_format(path, lengths=list(range(3, 11)))))
 
     num_to_sample = len(words) // 4
-    freqs = [x['frequency'] + 1 for x in words]
+
+    for x in words:
+        x['frequency'] += 1
+
+    freqs = [x['frequency'] for x in words]
     freqs = np.log10(freqs)
 
     sampler = BinnedSampler(words, freqs)
