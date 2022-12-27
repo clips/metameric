@@ -4,5 +4,5 @@ Cython==0.25.2
 Flask==1.0.2
 tqdm==4.14.0
 matplotlib==2.0.2
-setuptools==39.0.1
+setuptools==65.5.1
 wordkit>=2.0.0
